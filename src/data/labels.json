@@ -1,0 +1,966 @@
+[
+  {
+    "id": "RI",
+    "text": "Rithala"
+  },
+  {
+    "id": "RHW",
+    "text": "Rohini West"
+  },
+  {
+    "id": "RHE",
+    "text": "Rohini East"
+  },
+  {
+    "id": "PTP",
+    "text": "Pitampura"
+  },
+  {
+    "id": "KE",
+    "text": "Kohat Enclave"
+  },
+  {
+    "id": "NSHP",
+    "text": "Netaji Subhash Place"
+  },
+  {
+    "id": "KP",
+    "text": "Keshav Puram"
+  },
+  {
+    "id": "KN",
+    "text": "Kanhaiya Nagar"
+  },
+  {
+    "id": "ILOK",
+    "text": "Inderlok"
+  },
+  {
+    "id": "SHT",
+    "text": "Shastri Nagar"
+  },
+  {
+    "id": "PRA",
+    "text": "Pratap Nagar"
+  },
+  {
+    "id": "PBGH",
+    "text": "Pulbangash"
+  },
+  {
+    "id": "TZI",
+    "text": "Tis Hazari"
+  },
+  {
+    "id": "KG",
+    "text": "Kashmere Gate"
+  },
+  {
+    "id": "SHPK",
+    "text": "Shastri Park"
+  },
+  {
+    "id": "SLAP",
+    "text": "Seelampur"
+  },
+  {
+    "id": "WC",
+    "text": "Welcome"
+  },
+  {
+    "id": "SHD",
+    "text": "Shahdara"
+  },
+  {
+    "id": "MPK",
+    "text": "Mansarovar Park"
+  },
+  {
+    "id": "JLML",
+    "text": "Jhilmil"
+  },
+  {
+    "id": "DSG",
+    "text": "Dilshad Garden"
+  },
+  {
+    "id": "SHDN",
+    "text": "Shaheed Nagar"
+  },
+  {
+    "id": "RJBH",
+    "text": "Raj Bagh"
+  },
+  {
+    "id": "RJNM",
+    "text": "Rajendra Nagar"
+  },
+  {
+    "id": "SMPK",
+    "text": "Shyam Park"
+  },
+  {
+    "id": "MNGM",
+    "text": "Mohan Nagar"
+  },
+  {
+    "id": "ATHA",
+    "text": "Arthala"
+  },
+  {
+    "id": "HDNR",
+    "text": "Hindon River"
+  },
+  {
+    "id": "NBAA",
+    "text": "Shaheed Sthal (New Bus Adda)"
+  },
+  {
+    "id": "SPBI",
+    "text": "Samaypur Badli"
+  },
+  {
+    "id": "RISE",
+    "text": "Rohini Sector - 18,19"
+  },
+  {
+    "id": "BIMR",
+    "text": "Haiderpur Badli Mor"
+  },
+  {
+    "id": "JGPI",
+    "text": "JahangirPuri"
+  },
+  {
+    "id": "AHNR",
+    "text": "Adarsh Nagar"
+  },
+  {
+    "id": "AZU",
+    "text": "Azadpur"
+  },
+  {
+    "id": "MDTW",
+    "text": "Model Town"
+  },
+  {
+    "id": "GTBR",
+    "text": "Guru Teg Bahadur Nagar"
+  },
+  {
+    "id": "VW",
+    "text": "Vishwavidyalaya"
+  },
+  {
+    "id": "VS",
+    "text": "Vidhan Sabha"
+  },
+  {
+    "id": "CL",
+    "text": "Civil Lines"
+  },
+  {
+    "id": "CHK",
+    "text": "Chandni Chowk"
+  },
+  {
+    "id": "CWBR",
+    "text": "Chawri Bazar"
+  },
+  {
+    "id": "NDI",
+    "text": "New Delhi"
+  },
+  {
+    "id": "RCK",
+    "text": "Rajiv Chowk"
+  },
+  {
+    "id": "PTCK",
+    "text": "Patel Chowk"
+  },
+  {
+    "id": "CTST",
+    "text": "Central Secretariat"
+  },
+  {
+    "id": "UDB",
+    "text": "Udyog Bhawan"
+  },
+  {
+    "id": "LKM",
+    "text": "Lok Kalyan Marg"
+  },
+  {
+    "id": "JB",
+    "text": "Jor Bagh"
+  },
+  {
+    "id": "INA",
+    "text": "Dilli Haat-INA"
+  },
+  {
+    "id": "AIIMS",
+    "text": "AIIMS"
+  },
+  {
+    "id": "GNPK",
+    "text": "Green Park"
+  },
+  {
+    "id": "HKS",
+    "text": "Hauz Khas"
+  },
+  {
+    "id": "MVNR",
+    "text": "Malviya Nagar"
+  },
+  {
+    "id": "SAKT",
+    "text": "Saket"
+  },
+  {
+    "id": "QM",
+    "text": "Qutab Minar"
+  },
+  {
+    "id": "CHTP",
+    "text": "Chhatarpur"
+  },
+  {
+    "id": "SLTP",
+    "text": "Sultanpur"
+  },
+  {
+    "id": "GTNI",
+    "text": "Ghitorni"
+  },
+  {
+    "id": "AJG",
+    "text": "Arjan Garh"
+  },
+  {
+    "id": "GE",
+    "text": "Guru Dronacharya"
+  },
+  {
+    "id": "SKRP",
+    "text": "Sikanderpur"
+  },
+  {
+    "id": "MGRO",
+    "text": "M.G. Road"
+  },
+  {
+    "id": "IFOC",
+    "text": "IFFCO Chowk"
+  },
+  {
+    "id": "HCC",
+    "text": "Millennium City Centre Gurugram"
+  },
+  {
+    "id": "DSTO",
+    "text": "Dwarka Sector - 21"
+  },
+  {
+    "id": "DSET",
+    "text": "Dwarka Sector - 8"
+  },
+  {
+    "id": "DSN",
+    "text": "Dwarka Sector - 9"
+  },
+  {
+    "id": "DST",
+    "text": "Dwarka Sector - 10"
+  },
+  {
+    "id": "DSE",
+    "text": "Dwarka Sector - 11"
+  },
+  {
+    "id": "DSW",
+    "text": "Dwarka Sector - 12"
+  },
+  {
+    "id": "DSTN",
+    "text": "Dwarka Sector - 13"
+  },
+  {
+    "id": "DSFN",
+    "text": "Dwarka Sector - 14"
+  },
+  {
+    "id": "DW",
+    "text": "Dwarka"
+  },
+  {
+    "id": "DM",
+    "text": "Dwarka Mor"
+  },
+  {
+    "id": "NWD",
+    "text": "Nawada"
+  },
+  {
+    "id": "UNW",
+    "text": "Uttam Nagar West"
+  },
+  {
+    "id": "UNE",
+    "text": "Uttam Nagar East"
+  },
+  {
+    "id": "JPW",
+    "text": "Janakpuri West"
+  },
+  {
+    "id": "JPE",
+    "text": "Janakpuri East"
+  },
+  {
+    "id": "TN",
+    "text": "Tilak Nagar"
+  },
+  {
+    "id": "SN",
+    "text": "Subhash Nagar"
+  },
+  {
+    "id": "TG",
+    "text": "Tagore Garden"
+  },
+  {
+    "id": "RG",
+    "text": "Rajouri Garden"
+  },
+  {
+    "id": "RN",
+    "text": "Ramesh Nagar"
+  },
+  {
+    "id": "MN",
+    "text": "Moti Nagar"
+  },
+  {
+    "id": "KNR",
+    "text": "Kirti Nagar"
+  },
+  {
+    "id": "SP",
+    "text": "Shadipur"
+  },
+  {
+    "id": "PN",
+    "text": "Patel Nagar"
+  },
+  {
+    "id": "RP",
+    "text": "Rajendra Place"
+  },
+  {
+    "id": "KB",
+    "text": "Karol Bagh"
+  },
+  {
+    "id": "JW",
+    "text": "Jhandewalan"
+  },
+  {
+    "id": "RKAM",
+    "text": "Ramakrishna Ashram Marg"
+  },
+  {
+    "id": "BRKR",
+    "text": "Barakhamba Road"
+  },
+  {
+    "id": "MDHS",
+    "text": "Mandi House"
+  },
+  {
+    "id": "PTMD",
+    "text": "Supreme Court"
+  },
+  {
+    "id": "IDPT",
+    "text": "Indraprastha"
+  },
+  {
+    "id": "YB",
+    "text": "Yamuna Bank"
+  },
+  {
+    "id": "ASDM",
+    "text": "Akshardham"
+  },
+  {
+    "id": "MVP1",
+    "text": "Mayur Vihar-1"
+  },
+  {
+    "id": "MVE",
+    "text": "Mayur Vihar Extension"
+  },
+  {
+    "id": "NAGR",
+    "text": "New Ashok Nagar"
+  },
+  {
+    "id": "NSFT",
+    "text": "Noida Sec-15"
+  },
+  {
+    "id": "NSST",
+    "text": "Noida Sec-16"
+  },
+  {
+    "id": "NSET",
+    "text": "Noida Sec-18"
+  },
+  {
+    "id": "BCGN",
+    "text": "Botanical Garden"
+  },
+  {
+    "id": "GEC",
+    "text": "Golf Course"
+  },
+  {
+    "id": "NCC",
+    "text": "Noida City Centre"
+  },
+  {
+    "id": "STFN",
+    "text": "Sector-34 Noida"
+  },
+  {
+    "id": "SFTN",
+    "text": "Sec-52 Noida"
+  },
+  {
+    "id": "SSON",
+    "text": "Sec-61 Noida"
+  },
+  {
+    "id": "SFNN",
+    "text": "Sec-59 Noida"
+  },
+  {
+    "id": "SSTN",
+    "text": "Sec-62 Noida"
+  },
+  {
+    "id": "NECC",
+    "text": "Noida Electronic City"
+  },
+  {
+    "id": "LN",
+    "text": "Laxmi Nagar"
+  },
+  {
+    "id": "NV",
+    "text": "Nirman Vihar"
+  },
+  {
+    "id": "PTVR",
+    "text": "Preet Vihar"
+  },
+  {
+    "id": "KKDA",
+    "text": "Karkarduma"
+  },
+  {
+    "id": "AVIT",
+    "text": "Anand Vihar I.S.B.T"
+  },
+  {
+    "id": "KSHI",
+    "text": "Kaushambi"
+  },
+  {
+    "id": "VASI",
+    "text": "Vaishali"
+  },
+  {
+    "id": "CIPK",
+    "text": "Brig. Hoshiar Singh"
+  },
+  {
+    "id": "BUSS",
+    "text": "Bahadurgarh City"
+  },
+  {
+    "id": "MIEE",
+    "text": "Pandit Shree Ram Sharma"
+  },
+  {
+    "id": "TKBR",
+    "text": "Tikri Border"
+  },
+  {
+    "id": "TKLM",
+    "text": "Tikri Kalan"
+  },
+  {
+    "id": "GHEM",
+    "text": "Ghevra Metro Station"
+  },
+  {
+    "id": "MIAA",
+    "text": "Mundka Industrial Area (MIA)"
+  },
+  {
+    "id": "MUDK",
+    "text": "Mundka"
+  },
+  {
+    "id": "RDPK",
+    "text": "Rajdhani Park"
+  },
+  {
+    "id": "NRSN",
+    "text": "Nangloi Railway Station"
+  },
+  {
+    "id": "NNOI",
+    "text": "Nangloi"
+  },
+  {
+    "id": "SMSM",
+    "text": "Maharaja Surajmal Stadium"
+  },
+  {
+    "id": "UNRG",
+    "text": "Udyog Nagar"
+  },
+  {
+    "id": "PAGI",
+    "text": "Peeragarhi"
+  },
+  {
+    "id": "PVW",
+    "text": "Paschim Vihar West"
+  },
+  {
+    "id": "PVE",
+    "text": "Paschim Vihar East"
+  },
+  {
+    "id": "MAPR",
+    "text": "Madipur"
+  },
+  {
+    "id": "SHVP",
+    "text": "Shivaji Park"
+  },
+  {
+    "id": "PBGW",
+    "text": "Punjabi Bagh West"
+  },
+  {
+    "id": "PBGA",
+    "text": "Punjabi Bagh"
+  },
+  {
+    "id": "APMN",
+    "text": "Ashok Park Main"
+  },
+  {
+    "id": "SRSM",
+    "text": "Satguru Ram Singh Marg"
+  },
+  {
+    "id": "LLQA",
+    "text": "Lal Quila"
+  },
+  {
+    "id": "JAMD",
+    "text": "Jama Masjid"
+  },
+  {
+    "id": "DLIG",
+    "text": "Delhi Gate"
+  },
+  {
+    "id": "ITO",
+    "text": "ITO"
+  },
+  {
+    "id": "JNPH",
+    "text": "Janpath"
+  },
+  {
+    "id": "KM",
+    "text": "Khan Market"
+  },
+  {
+    "id": "JLNS",
+    "text": "JLN Stadium"
+  },
+  {
+    "id": "JGPA",
+    "text": "Jangpura"
+  },
+  {
+    "id": "LJPN",
+    "text": "Lajpat Nagar"
+  },
+  {
+    "id": "MLCD",
+    "text": "Moolchand"
+  },
+  {
+    "id": "KHCY",
+    "text": "Kailash Colony"
+  },
+  {
+    "id": "NP",
+    "text": "Nehru Place"
+  },
+  {
+    "id": "KJMD",
+    "text": "Kalkaji Mandir"
+  },
+  {
+    "id": "GDPI",
+    "text": "Govind Puri"
+  },
+  {
+    "id": "HNOK",
+    "text": "Harkesh Nagar Okhla"
+  },
+  {
+    "id": "JLA",
+    "text": "Jasola Apollo"
+  },
+  {
+    "id": "STVR",
+    "text": "Sarita Vihar"
+  },
+  {
+    "id": "METE",
+    "text": "Mohan Estate"
+  },
+  {
+    "id": "TKDS",
+    "text": "Tughlakabad Station"
+  },
+  {
+    "id": "BAPB",
+    "text": "Badarpur Border"
+  },
+  {
+    "id": "SRAI",
+    "text": "Sarai"
+  },
+  {
+    "id": "NHPC",
+    "text": "NHPC Chowk"
+  },
+  {
+    "id": "MMJR",
+    "text": "Mewala Maharajpur"
+  },
+  {
+    "id": "STTA",
+    "text": "Sector-28"
+  },
+  {
+    "id": "BKMR",
+    "text": "Badkal Mor"
+  },
+  {
+    "id": "OFDB",
+    "text": "Old Faridabad"
+  },
+  {
+    "id": "NCAJ",
+    "text": "Neelam Chowk Ajronda"
+  },
+  {
+    "id": "BACH",
+    "text": "Bata Chowk"
+  },
+  {
+    "id": "ECMJ",
+    "text": "Ecorts Mujesar"
+  },
+  {
+    "id": "NCBC",
+    "text": "Sant Surdas (Sihi)"
+  },
+  {
+    "id": "BVHM",
+    "text": "Raja Nahar Singh(Ballabgarh)"
+  },
+  {
+    "id": "MKPR",
+    "text": "Majlis Park"
+  },
+  {
+    "id": "SMBG",
+    "text": "Shalimar Bagh"
+  },
+  {
+    "id": "SAKP",
+    "text": "Shakurpur"
+  },
+  {
+    "id": "ESIH",
+    "text": "ESI-Basaidarapur"
+  },
+  {
+    "id": "MYPI",
+    "text": "Mayapuri"
+  },
+  {
+    "id": "NAVR",
+    "text": "Naraina Vihar"
+  },
+  {
+    "id": "DLIC",
+    "text": "Delhi Cantt"
+  },
+  {
+    "id": "DDSC",
+    "text": "Durgabai Deshmukh South Campus"
+  },
+  {
+    "id": "SVMB",
+    "text": "Sir M.Vishweshwaraiah Moti Bagh"
+  },
+  {
+    "id": "BKCP",
+    "text": "Bhikaji Cama Place"
+  },
+  {
+    "id": "SOJI",
+    "text": "Sarojini Nagar"
+  },
+  {
+    "id": "SOEN",
+    "text": "South Extention"
+  },
+  {
+    "id": "VNPR",
+    "text": "Vinobapuri"
+  },
+  {
+    "id": "AHRM",
+    "text": "Ashram"
+  },
+  {
+    "id": "NIZM",
+    "text": "Sarai Kale Khan Nizamuddin"
+  },
+  {
+    "id": "MVPO",
+    "text": "Mayur Vihar Pocket-1"
+  },
+  {
+    "id": "TKPR",
+    "text": "Trilokpuri-Sanjay Lake"
+  },
+  {
+    "id": "VENT",
+    "text": "East Vinod Nagar-Mayur Vihar -II"
+  },
+  {
+    "id": "VNNR",
+    "text": "Mandawali West Vinod Nagar"
+  },
+  {
+    "id": "IPE",
+    "text": "IP Extension"
+  },
+  {
+    "id": "KKDC",
+    "text": "Karkarduma Court"
+  },
+  {
+    "id": "KHNA",
+    "text": "Krishna Nagar"
+  },
+  {
+    "id": "EANR",
+    "text": "East Azad Nagar"
+  },
+  {
+    "id": "JFRB",
+    "text": "Jafrabad"
+  },
+  {
+    "id": "MUPR",
+    "text": "Maujpur-Babarpur"
+  },
+  {
+    "id": "GKPR",
+    "text": "Gokulpuri"
+  },
+  {
+    "id": "JIEE",
+    "text": "Johri Enclave"
+  },
+  {
+    "id": "SVVR",
+    "text": "Shiv Vihar"
+  },
+  {
+    "id": "DBMR",
+    "text": "Dabri Mor- Janakpuri South"
+  },
+  {
+    "id": "DSHP",
+    "text": "Dashrathpuri"
+  },
+  {
+    "id": "PALM",
+    "text": "Palam"
+  },
+  {
+    "id": "SABR",
+    "text": "Sadar Bazar Cantonment"
+  },
+  {
+    "id": "IGDA",
+    "text": "Terminal-1 IGI Airport"
+  },
+  {
+    "id": "SKVR",
+    "text": "Shankar Vihar"
+  },
+  {
+    "id": "VTVR",
+    "text": "Vasant Vihar"
+  },
+  {
+    "id": "MIRK",
+    "text": "Munirka"
+  },
+  {
+    "id": "RKPM",
+    "text": "R K Puram"
+  },
+  {
+    "id": "IIT",
+    "text": "IIT"
+  },
+  {
+    "id": "PSPK",
+    "text": "Panchsheel Park"
+  },
+  {
+    "id": "CDLI",
+    "text": "Chirag Delhi"
+  },
+  {
+    "id": "GKEI",
+    "text": "Greater Kailash"
+  },
+  {
+    "id": "NUEE",
+    "text": "Nehru Enclave"
+  },
+  {
+    "id": "OKNS",
+    "text": "Okhla NSIC"
+  },
+  {
+    "id": "IWNR",
+    "text": "Sukhdev Vihar"
+  },
+  {
+    "id": "JANR",
+    "text": "Jamia Millia Islamia"
+  },
+  {
+    "id": "OVA",
+    "text": "Okhla Vihar"
+  },
+  {
+    "id": "JLA8",
+    "text": "Jasola Vihar Shaheen Bagh"
+  },
+  {
+    "id": "KIKJ",
+    "text": "Kalindi Kunj"
+  },
+  {
+    "id": "OKBS",
+    "text": "Okhla Bird Sanctuary"
+  },
+  {
+    "id": "NNGI",
+    "text": "Nangli"
+  },
+  {
+    "id": "NFGH",
+    "text": "Najafgarh"
+  },
+  {
+    "id": "DNBT",
+    "text": "Dhansa Bus Stand"
+  },
+  {
+    "id": "DKV",
+    "text": "Dhaula Kuan"
+  },
+  {
+    "id": "SJSU",
+    "text": "Shivaji Stadium"
+  },
+  {
+    "id": "DACY",
+    "text": "Delhi Aerocity"
+  },
+  {
+    "id": "APOT",
+    "text": "Airport(T-3)"
+  },
+  {
+    "id": "IICC",
+    "text": "Yashobhoomi Dwarka Sector - 25"
+  },
+  {
+    "id": "DL2",
+    "text": "Phase-2"
+  },
+  {
+    "id": "BEL",
+    "text": "Belvedere Towers"
+  },
+  {
+    "id": "GAT",
+    "text": "Cyber City"
+  },
+  {
+    "id": "MAL",
+    "text": "Moulsari Avenue"
+  },
+  {
+    "id": "DL3",
+    "text": "Phase-3"
+  },
+  {
+    "id": "PH1",
+    "text": "Phase-1"
+  },
+  {
+    "id": "SUL",
+    "text": "Sector 42-43"
+  },
+  {
+    "id": "S53",
+    "text": "Sector 53-54"
+  },
+  {
+    "id": "AIT",
+    "text": "Sector 54 Chowk"
+  },
+  {
+    "id": "S55",
+    "text": "Sector 55-56"
+  }
+]
