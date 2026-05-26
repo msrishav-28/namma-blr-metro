@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-refresh/only-export-components */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 
 import SVGPathUtils from '../utils/index';
 
+import { useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Select, { type SingleValue, type StylesConfig } from 'react-select';
 import { create } from 'zustand';
@@ -128,12 +128,37 @@ for (const edge of edges) {
   graph.addEdge(edge.from, edge.to, 1);
 }
 
+const isStationId = (stationId: string | null) =>
+  Boolean(stationId && stations.some((station) => station.id === stationId));
+
+const getInitialRouteParams = () => {
+  if (typeof window === 'undefined') {
+    return {
+      from: stations[0]?.id || '',
+      to: stations[1]?.id || stations[0]?.id || '',
+      hasRouteQuery: false,
+    };
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get('from');
+  const to = params.get('to');
+
+  return {
+    from: isStationId(from) ? from! : stations[0]?.id || '',
+    to: isStationId(to) ? to! : stations[1]?.id || stations[0]?.id || '',
+    hasRouteQuery: isStationId(from) && isStationId(to),
+  };
+};
+
 
 export const usePath = create((set) => {
+  const initialRouteParams = getInitialRouteParams();
+
   return {
     path: '',
     route: null,
-    selectedFrom: stations[0]?.id || '',
+    selectedFrom: initialRouteParams.from,
     setSelectedFrom: (stationId: string) => set(() => ({ selectedFrom: stationId })),
     setRoute: (newPath: string, route: RouteSummary) =>
       set(() => ({ path: newPath, route })),
@@ -220,6 +245,60 @@ const getRouteInterchanges = (routePath: string[]): RouteInterchange[] =>
     }];
   });
 
+const buildRoute = (from: string, to: string) => {
+  const shortedPath = graph.findShortestPath(from, to);
+
+  if (!shortedPath) return null;
+
+  const routePath = shortedPath.path;
+  const newPath = routePath
+    .map((stationId, index) => {
+      if (stationId === to) return '';
+
+      const nextStationId = routePath[index + 1];
+      const forwardEdge = edges.find(
+        (edge) => edge.from === stationId && edge.to === nextStationId
+      )?.path;
+
+      if (forwardEdge) return forwardEdge;
+
+      const reverseEdge = edges.find(
+        (edge) => edge.from === nextStationId && edge.to === stationId
+      )?.path || "";
+
+      return utils.inversePath(reverseEdge);
+    })
+    .filter((pathSegment) => pathSegment !== undefined);
+
+  const combinedPath = newPath.reverse().join('');
+  const svgPath = utils.inversePath(combinedPath);
+
+  return {
+    svgPath,
+    route: {
+      from,
+      to,
+      fromName: stationName(from),
+      toName: stationName(to),
+      stops: shortedPath.path.map(stationName),
+      stationDetails: getRouteStationDetails(shortedPath.path),
+      interchanges: getRouteInterchanges(shortedPath.path),
+      distance: shortedPath.distance,
+      fare: estimateFare(shortedPath.distance),
+      estimatedMinutes: Math.max(2, shortedPath.distance * 2),
+    },
+  };
+};
+
+const updateRouteUrl = (from: string, to: string) => {
+  if (typeof window === 'undefined') return;
+
+  const url = new URL(window.location.href);
+  url.searchParams.set('from', from);
+  url.searchParams.set('to', to);
+  window.history.pushState({ from, to }, '', `${url.pathname}?${url.searchParams.toString()}${url.hash}`);
+};
+
 const getStationLineColors = (stationId: string) =>
   uniqueColors(edges
     .filter((edge) => edge.from === stationId || edge.to === stationId)
@@ -279,8 +358,8 @@ function LineBadge({ colors }: { colors: string[] }) {
   const color = colors[0] || '#d1d5db';
 
   return (
-    <span className="flex h-9 min-w-9 items-center justify-center rounded-full px-2 text-sm font-semibold" style={{ backgroundColor: color }}>
-      L
+    <span className="flex text-white h-9 min-w-9 items-center justify-center rounded-full px-2 text-sm font-semibold" style={{ backgroundColor: color }}>
+
     </span>
   );
 }
@@ -302,14 +381,31 @@ export function SearchBox({
   onFromChange?: () => void;
   onRoutePlan?: () => void;
 }) {
+  const initialRouteParams = getInitialRouteParams();
   const { control, getValues, handleSubmit, setValue } = useForm({
     defaultValues: {
-      from: stationOptions[0]?.value || '',
-      to: stationOptions[1]?.value || stationOptions[0]?.value || '',
+      from: initialRouteParams.from,
+      to: initialRouteParams.to,
     },
   });
   const setRoute = usePath((state: any) => state.setRoute);
   const setSelectedFrom = usePath((state: any) => state.setSelectedFrom);
+  const hydratedRouteRef = useRef(false);
+
+  useEffect(() => {
+    if (hydratedRouteRef.current || !initialRouteParams.hasRouteQuery) return;
+    hydratedRouteRef.current = true;
+
+    const plannedRoute = buildRoute(initialRouteParams.from, initialRouteParams.to);
+    if (!plannedRoute) return;
+
+    const animationFrame = requestAnimationFrame(() => {
+      setSelectedFrom(initialRouteParams.from);
+      setRoute(plannedRoute.svgPath, plannedRoute.route);
+    });
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [initialRouteParams.from, initialRouteParams.hasRouteQuery, initialRouteParams.to, setRoute, setSelectedFrom]);
 
   const swapStations = () => {
     const fromValue = getValues('from');
@@ -324,51 +420,12 @@ export function SearchBox({
   return (
     <form
       onSubmit={handleSubmit((e) => {
-        const shortedPath = graph.findShortestPath(e.from, e.to);
+        const plannedRoute = buildRoute(e.from, e.to);
+        if (!plannedRoute) return;
 
-        if (!shortedPath) return;
-
-        shortedPath.path;
-
-        const nPath = shortedPath.path;
-        const newPath = nPath
-          .map((i, num) => {
-            if (i === e.to) return '';
-            const toRoute = nPath[num + 1];
-
-            const item = edges.find(
-              (item) => item.from === i && item.to === toRoute
-            )?.path;
-
-            console.log(i, toRoute, item);
-            if (item) return item;
-            else {
-              const second = edges.find(
-                (item) => item.from === toRoute && item.to === i
-              )?.path || "";
-              const inversePath = utils.inversePath(second);
-              return inversePath;
-            }
-          })
-          .filter((e) => e !== undefined);
-
-        const newpt = newPath.reverse().join('');
-        const inversepath = utils.inversePath(newpt);
-        setRoute(inversepath, {
-          from: e.from,
-          to: e.to,
-          fromName: stationName(e.from),
-          toName: stationName(e.to),
-          stops: shortedPath.path.map(stationName),
-          stationDetails: getRouteStationDetails(shortedPath.path),
-          interchanges: getRouteInterchanges(shortedPath.path),
-          distance: shortedPath.distance,
-          fare: estimateFare(shortedPath.distance),
-          estimatedMinutes: Math.max(2, shortedPath.distance * 2),
-        });
+        setRoute(plannedRoute.svgPath, plannedRoute.route);
+        updateRouteUrl(e.from, e.to);
         onRoutePlan?.();
-
-        console.log(shortedPath.path, newPath, newpt);
       })}
       className='grid gap-4'
     >

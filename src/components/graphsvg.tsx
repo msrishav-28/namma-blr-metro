@@ -221,7 +221,7 @@ function SvgComponent({
     });
 
     return () => tween.kill();
-  }, { dependencies: [selectedStationId, play], revertOnUpdate: true });
+  }, { dependencies: [selectedStationId], revertOnUpdate: true });
 
   useGSAP(() => {
     tweenRef.current?.kill();
