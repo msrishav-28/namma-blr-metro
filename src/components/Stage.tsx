@@ -10,7 +10,7 @@ import { SearchBox, usePath } from './SearchBox';
 
 function MetroMapStage() {
     const [play, setPlay] = useState(false);
-    const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>('128px');
+    const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>('220px');
 
 
     const path = usePath((state: any) => state.path);
@@ -19,7 +19,10 @@ function MetroMapStage() {
     const cockpitBody = (
         <>
             <SearchBox
-                onFromChange={() => setPlay(false)}
+                onFromChange={() => {
+                    setPlay(false);
+                    setActiveSnapPoint(1);
+                }}
                 onRoutePlan={() => {
                     setActiveSnapPoint('128px');
                     setPlay(true);
@@ -53,8 +56,8 @@ function MetroMapStage() {
     );
 
     return (
-        <div className="min-h-screen overflow-hidden bg-[#f4f0e8] p-2 text-neutral-950 sm:p-4 lg:overflow-visible lg:p-6">
-            <div className="grid min-h-[calc(100vh-1.5rem)] gap-4 sm:min-h-[calc(100vh-2rem)] lg:min-h-[calc(100vh-3rem)] lg:grid-cols-2">
+        <div className="min-h-svh overflow-hidden bg-[#f4f0e8] p-2 text-neutral-950 sm:p-4 lg:overflow-visible lg:p-6">
+            <div className="grid min-h-[calc(100svh-1.5rem)] gap-4 sm:min-h-[calc(100svh-2rem)] lg:min-h-[calc(100svh-3rem)] lg:grid-cols-2">
                 <main className="relative min-h-[calc(100svh-1.5rem)] overflow-hidden rounded-lg border border-neutral-200 shadow-sm sm:min-h-[calc(100svh-2rem)] lg:min-h-0">
                     <SvgComponent
                         path={path}
@@ -70,12 +73,22 @@ function MetroMapStage() {
                     defaultOpen
                     dismissible={false}
                     modal={false}
-                    snapPoints={['128px', '320px', 1]}
+                    snapPoints={['100px', '220px', 1]}
                     handleOnly
                 >
                     <Drawer.Portal>
-                        <Drawer.Content className="fixed inset-x-2 bottom-2 z-30 flex max-h-[76svh] min-h-[240px] flex-col gap-3 rounded-[24px] border border-neutral-200 bg-white p-3 shadow-2xl outline-none sm:inset-x-4 sm:bottom-4 sm:max-h-[82svh] sm:min-h-[280px] sm:gap-5 sm:rounded-[28px] sm:p-5 lg:hidden">
-                            <Drawer.Handle className="mx-auto h-1 w-20 rounded-full bg-neutral-200 sm:w-24" />
+                        <Drawer.Content
+                            className="fixed inset-x-2 bottom-2 z-30 flex flex-col gap-2 overflow-hidden rounded-3xl border border-neutral-200 bg-white p-3 shadow-2xl outline-none sm:inset-x-4 sm:bottom-4 sm:gap-4 sm:rounded-[28px] sm:p-5 lg:hidden"
+                            style={{
+                                bottom: 'calc(env(safe-area-inset-bottom, 0px) + 8px)',
+                                height: 'calc(100svh - env(safe-area-inset-bottom, 0px) - 16px)',
+                                paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)'
+                            }}
+                        >
+                            <Drawer.Title className="sr-only">Route planner</Drawer.Title>
+                            <div className="-mx-3 -mt-3 flex shrink-0 justify-center px-3 pb-2 pt-3 sm:-mx-5 sm:-mt-5 sm:px-5 sm:pb-3 sm:pt-5">
+                                <Drawer.Handle className="h-1 w-20 rounded-full bg-neutral-200 sm:w-24" />
+                            </div>
                             <div className="min-h-0 overflow-y-auto pr-1">
                                 <div className="grid gap-3 sm:gap-5">
                                     {cockpitBody}

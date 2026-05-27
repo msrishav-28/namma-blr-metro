@@ -311,19 +311,26 @@ const stationOptions: StationOption[] = stations.map((station) => ({
 }));
 
 const selectStyles: StylesConfig<StationOption, false> = {
-  control: (base) => ({
+  control: (base, state) => ({
     ...base,
     minHeight: 'var(--station-select-height)',
-    border: 0,
     borderRadius: 999,
     backgroundColor: 'white',
-    boxShadow: 'none',
+    boxShadow: state.isFocused ? '0 0 0 4px rgba(0,0,0,0.04)' : 'none',
     paddingLeft: 'var(--station-select-x-padding)',
     paddingRight: 6,
+    border: '1px solid',
+    borderColor: state.isFocused ? '#111827' : '#e5e7eb',
+    cursor: 'pointer',
   }),
   valueContainer: (base) => ({
     ...base,
     padding: 0,
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: '#737373',
+    fontWeight: 500,
   }),
   indicatorsContainer: (base) => ({
     ...base,
@@ -375,8 +382,8 @@ export function SearchBox({
   const initialRouteParams = getInitialRouteParams();
   const { control, getValues, handleSubmit, setValue } = useForm({
     defaultValues: {
-      from: initialRouteParams.from,
-      to: initialRouteParams.to,
+      from: initialRouteParams.hasRouteQuery ? initialRouteParams.from : '',
+      to: initialRouteParams.hasRouteQuery ? initialRouteParams.to : '',
     },
   });
   const setRoute = usePath((state: any) => state.setRoute);
@@ -411,6 +418,8 @@ export function SearchBox({
   return (
     <form
       onSubmit={handleSubmit((e) => {
+        if (!e.from || !e.to) return;
+
         const plannedRoute = buildRoute(e.from, e.to);
         if (!plannedRoute) return;
 
@@ -428,7 +437,8 @@ export function SearchBox({
             <Select
               instanceId="from-station"
               options={stationOptions}
-              value={stationOptions.find((option) => option.value === field.value)}
+              placeholder="From station"
+              value={stationOptions.find((option) => option.value === field.value) || null}
               onChange={(option: SingleValue<StationOption>) => {
                 const nextValue = option?.value || '';
                 field.onChange(nextValue);
@@ -441,14 +451,7 @@ export function SearchBox({
             />
           )}
         />
-        <button
-          type="button"
-          className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm transition hover:scale-105 sm:mx-0 sm:h-11 sm:w-11"
-          onClick={swapStations}
-          title="Swap stations"
-        >
-          <ToggleIcon />
-        </button>
+
         <Controller
           control={control}
           name="to"
@@ -456,7 +459,8 @@ export function SearchBox({
             <Select
               instanceId="to-station"
               options={stationOptions}
-              value={stationOptions.find((option) => option.value === field.value)}
+              placeholder="To station"
+              value={stationOptions.find((option) => option.value === field.value) || null}
               onChange={(option: SingleValue<StationOption>) => field.onChange(option?.value || '')}
               formatOptionLabel={(option) => <StationOptionLabel option={option} />}
               styles={selectStyles}
@@ -465,9 +469,20 @@ export function SearchBox({
           )}
         />
       </div>
-      <button className='h-11 rounded-full bg-neutral-950 px-4 text-sm font-semibold text-white transition hover:bg-neutral-800 sm:h-12'>
-        Plan journey
-      </button>
+      <div className='flex items-center gap-3'>
+        <button className='h-11 rounded-full bg-neutral-950 px-4 text-sm font-semibold text-white transition hover:bg-neutral-800 sm:h-12'>
+          Plan journey
+        </button>
+        <button
+          type="button"
+          aria-label="Swap from and to stations"
+          onClick={swapStations}
+          title="Swap stations"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white transition hover:border-neutral-300 hover:bg-neutral-50 sm:h-12 sm:w-12"
+        >
+          <ToggleIcon />
+        </button>
+      </div>
     </form>
   );
 }
