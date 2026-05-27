@@ -55,7 +55,7 @@ function MetricItem({
     label: string;
 }) {
     return (
-        <div className="flex items-center gap-2 text-[15px] font-medium text-neutral-950">
+        <div className="flex items-center gap-1.5 text-[13px] font-medium text-neutral-950 sm:gap-2 sm:text-[15px]">
             {icon}
             <span>{label}</span>
         </div>
@@ -64,7 +64,7 @@ function MetricItem({
 
 function JourneyMetrics({ route }: { route: RouteSummary | null }) {
     return (
-        <div className="grid grid-cols-3 gap-3 border-b border-neutral-300 pb-5">
+        <div className="grid grid-cols-3 gap-2 border-b border-neutral-300 pb-3 sm:gap-3 sm:pb-5">
             <MetricItem icon={<ClockIcon />} label={route ? `${route.estimatedMinutes} mins` : '-- mins'} />
             <MetricItem icon={<StopsIcon />} label={route ? `${route.distance} stops` : '-- stops'} />
             <MetricItem icon={<InterchangeIcon />} label={route ? `${route.interchanges.length} change` : '-- change'} />
@@ -95,17 +95,17 @@ function InterchangeStations({ route }: { route: RouteSummary | null }) {
 
     if (!route) {
         return (
-            <div className="rounded-[18px] bg-white/70 p-5 text-sm text-neutral-500">
+            <div className="rounded-[16px] bg-white/70 p-3 text-sm text-neutral-500 sm:rounded-[18px] sm:p-5">
                 Select source and destination to see interchange stations.
             </div>
         );
     }
 
     return (
-        <div className="rounded-[22px] bg-white/70 p-3">
+        <div className="rounded-[18px] bg-white/70 p-2 sm:rounded-[22px] sm:p-3">
             <button
                 type="button"
-                className="flex w-full items-center justify-between rounded-full bg-white px-4 py-3 text-left text-sm font-semibold shadow-sm"
+                className="flex w-full items-center justify-between rounded-full bg-white px-3 py-2.5 text-left text-sm font-semibold shadow-sm sm:px-4 sm:py-3"
                 onClick={() => setOpen((current) => !current)}
             >
                 <span>{open ? 'All stations' : 'Interchange stations'}</span>
@@ -115,9 +115,9 @@ function InterchangeStations({ route }: { route: RouteSummary | null }) {
                 </span>
             </button>
 
-            <div className={open ? 'mt-3 grid gap-2' : 'hidden'}>
+            <div className={open ? 'mt-2 grid gap-2 sm:mt-3' : 'hidden'}>
                 {stations.map((station) => (
-                    <div key={station.id} className="flex items-center justify-between rounded-[16px] bg-[#EDEDED] p-3 text-sm">
+                    <div key={station.id} className="flex items-center justify-between rounded-[14px] bg-[#EDEDED] p-2.5 text-sm sm:rounded-[16px] sm:p-3">
                         <span className="truncate font-medium">{station.name}</span>
                         <span className="flex shrink-0 items-center gap-1.5">
                             {station.lineColors.map((color) => (
@@ -128,21 +128,21 @@ function InterchangeStations({ route }: { route: RouteSummary | null }) {
                 ))}
             </div>
 
-            <div className={open ? 'hidden' : 'mt-3 grid gap-2'}>
+            <div className={open ? 'hidden' : 'mt-2 grid gap-2 sm:mt-3'}>
                 {interchanges.length ? interchanges.map((interchange) => (
-                    <div key={interchange.id} className="grid grid-cols-[18px_minmax(0,1fr)] gap-3 rounded-[16px] bg-[#EDEDED] p-3">
+                    <div key={interchange.id} className="grid grid-cols-[18px_minmax(0,1fr)] gap-2 rounded-[14px] bg-[#EDEDED] p-2.5 sm:gap-3 sm:rounded-[16px] sm:p-3">
                         <div className="flex flex-col items-center pt-1">
                             <span className="h-3.5 w-3.5 rounded-full border-2 border-white" style={{ backgroundColor: interchange.fromColor }} />
                             <span className="h-5 w-0.5 bg-neutral-300" />
                             <span className="h-3.5 w-3.5 rounded-full border-2 border-white" style={{ backgroundColor: interchange.toColor }} />
                         </div>
                         <div className="min-w-0">
-                            <p className="truncate text-base font-semibold">{interchange.name}</p>
+                            <p className="truncate text-sm font-semibold sm:text-base">{interchange.name}</p>
                             <p className="mt-1 text-xs text-neutral-500">Change metro line here</p>
                         </div>
                     </div>
                 )) : (
-                    <div className="rounded-[16px] bg-[#EDEDED] p-3 text-sm text-neutral-500">
+                    <div className="rounded-[14px] bg-[#EDEDED] p-2.5 text-sm text-neutral-500 sm:rounded-[16px] sm:p-3">
                         No interchange needed for this route.
                     </div>
                 )}
@@ -153,7 +153,7 @@ function InterchangeStations({ route }: { route: RouteSummary | null }) {
 
 function JourneyInfoPanel({ route }: { route: RouteSummary | null }) {
     return (
-        <section className="grid gap-6 rounded-[28px] bg-[#EDEDED] p-5">
+        <section className="grid gap-4 rounded-[22px] bg-[#EDEDED] p-3 sm:gap-6 sm:rounded-[28px] sm:p-5">
             <JourneyMetrics route={route} />
             <InterchangeStations route={route} />
         </section>

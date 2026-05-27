@@ -313,12 +313,12 @@ const stationOptions: StationOption[] = stations.map((station) => ({
 const selectStyles: StylesConfig<StationOption, false> = {
   control: (base) => ({
     ...base,
-    minHeight: 58,
+    minHeight: 'var(--station-select-height)',
     border: 0,
     borderRadius: 999,
     backgroundColor: 'white',
     boxShadow: 'none',
-    paddingLeft: 14,
+    paddingLeft: 'var(--station-select-x-padding)',
     paddingRight: 6,
   }),
   valueContainer: (base) => ({
@@ -354,21 +354,12 @@ function ToggleIcon() {
   );
 }
 
-function LineBadge({ colors }: { colors: string[] }) {
-  const color = colors[0] || '#d1d5db';
 
-  return (
-    <span className="flex text-white h-9 min-w-9 items-center justify-center rounded-full px-2 text-sm font-semibold" style={{ backgroundColor: color }}>
-
-    </span>
-  );
-}
 
 function StationOptionLabel({ option }: { option: StationOption }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="truncate text-lg font-medium">{option.label}</span>
-      <LineBadge colors={option.lineColors} />
+      <span className="truncate text-base font-medium sm:text-lg">{option.label}</span>
     </div>
   );
 }
@@ -427,9 +418,9 @@ export function SearchBox({
         updateRouteUrl(e.from, e.to);
         onRoutePlan?.();
       })}
-      className='grid gap-4'
+      className='grid gap-3 [--station-select-height:48px] [--station-select-x-padding:12px] sm:gap-4 sm:[--station-select-height:58px] sm:[--station-select-x-padding:14px]'
     >
-      <div className='grid grid-cols-[minmax(0,1fr)_44px_minmax(0,1fr)] items-center gap-3'>
+      <div className='grid grid-cols-1 items-center gap-2 sm:grid-cols-[minmax(0,1fr)_44px_minmax(0,1fr)] sm:gap-3'>
         <Controller
           control={control}
           name="from"
@@ -452,7 +443,7 @@ export function SearchBox({
         />
         <button
           type="button"
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-sm transition hover:scale-105"
+          className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm transition hover:scale-105 sm:mx-0 sm:h-11 sm:w-11"
           onClick={swapStations}
           title="Swap stations"
         >
@@ -474,7 +465,7 @@ export function SearchBox({
           )}
         />
       </div>
-      <button className='h-12 rounded-full bg-neutral-950 px-4 text-sm font-semibold text-white transition hover:bg-neutral-800'>
+      <button className='h-11 rounded-full bg-neutral-950 px-4 text-sm font-semibold text-white transition hover:bg-neutral-800 sm:h-12'>
         Plan journey
       </button>
     </form>
