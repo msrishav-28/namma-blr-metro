@@ -19,10 +19,7 @@ function MetroMapStage() {
     const cockpitBody = (
         <>
             <SearchBox
-                onFromChange={() => {
-                    setPlay(false);
-                    setActiveSnapPoint(1);
-                }}
+                onFromChange={() => setPlay(false)}
                 onRoutePlan={() => {
                     setActiveSnapPoint('128px');
                     setPlay(true);
