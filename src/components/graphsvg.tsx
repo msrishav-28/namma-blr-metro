@@ -379,7 +379,7 @@ function SvgComponent({
         translateY: VIEWBOX_HEIGHT / 2 - firstPoint.y * routeCameraScale,
       }, true);
     });
-  }, [path, routeStationIds, applyTransform, onActiveStationChange]);
+  }, [path, routeStationIds, applyTransform, onActiveStationChange, routeCameraScale]);
 
   useEffect(() => {
     if (!pathLengthRef.current) return;
@@ -761,7 +761,6 @@ function SvgComponent({
   }, [
     animationMode,
     applyTransform,
-    cinematicZoom,
     drawSvgToCanvas,
     isExportingVideo,
     path,
@@ -886,4 +885,4 @@ function SvgComponent({
   );
 }
 
-export default SvgComponent;
+export default React.memo(SvgComponent);
