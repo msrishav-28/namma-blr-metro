@@ -4,6 +4,7 @@ import {
   EnterFullScreenIcon,
   ResetIcon,
   UpdateIcon,
+  VideoIcon,
 } from '@radix-ui/react-icons';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
@@ -11,6 +12,8 @@ import * as React from 'react';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import edges from '../data/edge.json';
+import MetroTrain from '../assets/metro.svg?react';
+import type { CinematicZoomLevel, RouteAnimationMode } from './SearchBox';
 import Map, { type MapControls, type MapTransform } from './metromap';
 
 gsap.registerPlugin(useGSAP);
@@ -18,11 +21,12 @@ gsap.registerPlugin(useGSAP);
 const VIEWBOX_WIDTH = 1500;
 const VIEWBOX_HEIGHT = 1450;
 const ROUTE_CAMERA_SCALE = 12.6;
-const MIN_MAP_SCALE = 0.45;
+const MIN_MAP_SCALE = 1.8;
 const MAX_MAP_SCALE = ROUTE_CAMERA_SCALE;
-const WHEEL_ZOOM_IN_SCALE = 1.65;
-const WHEEL_ZOOM_OUT_SCALE = 0.65;
+const WHEEL_ZOOM_IN_SCALE = 1.1625;
+const WHEEL_ZOOM_OUT_SCALE = 0.9125;
 const STATION_DWELL_SECONDS = 0.55;
+const EXPORT_FONT_STACK = '"Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", system-ui, sans-serif';
 
 const fitTransform: MapTransform = {
   scaleX: 1,
@@ -30,6 +34,9 @@ const fitTransform: MapTransform = {
   translateX: 0,
   translateY: 0,
 };
+
+const transformToString = ({ scaleX, scaleY, translateX, translateY }: MapTransform) =>
+  `matrix(${scaleX} 0 0 ${scaleY} ${translateX} ${translateY})`;
 
 const coordinatePattern = /[-+]?\d*\.?\d+/g;
 
@@ -165,21 +172,26 @@ const findClosestProgressOnPath = (
   return clamp((low + high) / 2 / pathLength, 0, 1);
 };
 
-const getRouteStopProgresses = (
+const getRouteStops = (
   measure: SVGPathElement,
   pathLength: number,
   routeStationIds: string[]
 ) => {
   const stationProgresses = routeStationIds
-    .map((stationId) => stationCoordinates[stationId])
-    .filter(Boolean)
-    .map((point) => findClosestProgressOnPath(measure, pathLength, point))
-    .sort((a, b) => a - b);
+    .map((stationId) => {
+      const point = stationCoordinates[stationId];
+      if (!point) return null;
 
-  const allProgresses = [0, ...stationProgresses, 1];
+      return {
+        stationId,
+        progress: findClosestProgressOnPath(measure, pathLength, point),
+      };
+    })
+    .filter((stop): stop is { stationId: string; progress: number } => Boolean(stop))
+    .sort((a, b) => a.progress - b.progress);
 
-  return allProgresses.filter((progress, index) => (
-    index === 0 || Math.abs(progress - allProgresses[index - 1]) > 0.001
+  return stationProgresses.filter((stop, index) => (
+    index === 0 || Math.abs(stop.progress - stationProgresses[index - 1].progress) > 0.001
   ));
 };
 
@@ -189,20 +201,32 @@ function SvgComponent({
   path,
   selectedStationId,
   routeStationIds,
+  onActiveStationChange,
+  animationMode,
+  cinematicZoom,
 }: {
   setPlay: React.Dispatch<React.SetStateAction<boolean>>;
   play: boolean;
   path: string;
   selectedStationId: string;
   routeStationIds: string[];
+  onActiveStationChange?: (stationId: string | null) => void;
+  animationMode: RouteAnimationMode;
+  cinematicZoom: CinematicZoomLevel;
 }) {
-  const [transform, setTransform] = useState<MapTransform>(fitTransform);
   const [isDragging, setIsDragging] = useState(false);
+  const [isExportingVideo, setIsExportingVideo] = useState(false);
+  const [canExportVideo, setCanExportVideo] = useState(false);
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const mapGroupRef = useRef<SVGGElement | null>(null);
   const trainRef = useRef<SVGGElement | null>(null);
   const routePathRef = useRef<SVGPathElement | null>(null);
   const pathMeasureRef = useRef<SVGPathElement | null>(null);
   const pathLengthRef = useRef(0);
+  const transformRef = useRef<MapTransform>(fitTransform);
+  const pendingTransformRef = useRef<MapTransform | null>(null);
+  const transformFrameRef = useRef<number | null>(null);
+  const routeProgressRef = useRef(0);
   const dragRef = useRef({
     x: 0,
     y: 0,
@@ -211,12 +235,50 @@ function SvgComponent({
   });
   const tweenRef = useRef<gsap.core.Timeline | null>(null);
   const playRef = useRef(play);
+  const routeCameraScale = ROUTE_CAMERA_SCALE * (cinematicZoom / 3);
 
   useEffect(() => {
     playRef.current = play;
   }, [play]);
 
-  const setCameraForProgress = React.useCallback((progress: number) => {
+  useEffect(() => {
+    setCanExportVideo(typeof VideoEncoder !== 'undefined');
+  }, []);
+
+  useEffect(() => () => {
+    if (transformFrameRef.current !== null) {
+      cancelAnimationFrame(transformFrameRef.current);
+    }
+  }, []);
+
+  const applyTransform = React.useCallback((nextTransform: MapTransform, immediate = false) => {
+    transformRef.current = nextTransform;
+    pendingTransformRef.current = nextTransform;
+
+    if (immediate) {
+      if (transformFrameRef.current !== null) {
+        cancelAnimationFrame(transformFrameRef.current);
+        transformFrameRef.current = null;
+      }
+
+      mapGroupRef.current?.setAttribute('transform', transformToString(nextTransform));
+      pendingTransformRef.current = null;
+      return;
+    }
+
+    if (transformFrameRef.current !== null) return;
+
+    transformFrameRef.current = requestAnimationFrame(() => {
+      transformFrameRef.current = null;
+      const pendingTransform = pendingTransformRef.current;
+      if (!pendingTransform) return;
+
+      mapGroupRef.current?.setAttribute('transform', transformToString(pendingTransform));
+      pendingTransformRef.current = null;
+    });
+  }, []);
+
+  const setCameraForProgress = React.useCallback((progress: number, cameraScale = routeCameraScale) => {
     const measure = pathMeasureRef.current;
     const train = trainRef.current;
     const pathLength = pathLengthRef.current;
@@ -226,16 +288,17 @@ function SvgComponent({
     const point = measure.getPointAtLength(distance);
     const nextPoint = measure.getPointAtLength(clamp(distance + 4, 0, pathLength));
     const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * (180 / Math.PI);
-    const targetScale = ROUTE_CAMERA_SCALE;
+    const targetScale = cameraScale;
 
+    routeProgressRef.current = progress;
     train.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle})`);
-    setTransform({
+    applyTransform({
       scaleX: targetScale,
       scaleY: targetScale,
       translateX: VIEWBOX_WIDTH / 2 - point.x * targetScale,
       translateY: VIEWBOX_HEIGHT / 2 - point.y * targetScale,
-    });
-  }, []);
+    }, true);
+  }, [applyTransform, routeCameraScale]);
 
   useLayoutEffect(() => {
     tweenRef.current?.kill();
@@ -244,6 +307,7 @@ function SvgComponent({
     pathLengthRef.current = 0;
 
     if (!path) {
+      onActiveStationChange?.(null);
       return;
     }
 
@@ -253,39 +317,46 @@ function SvgComponent({
     pathLengthRef.current = length;
 
     const firstPoint = measure.getPointAtLength(0);
+    routeProgressRef.current = 0;
     trainRef.current?.setAttribute('transform', `translate(${firstPoint.x} ${firstPoint.y})`);
+    onActiveStationChange?.(routeStationIds[0] || null);
     requestAnimationFrame(() => {
-      setTransform({
-        scaleX: ROUTE_CAMERA_SCALE,
-        scaleY: ROUTE_CAMERA_SCALE,
-        translateX: VIEWBOX_WIDTH / 2 - firstPoint.x * ROUTE_CAMERA_SCALE,
-        translateY: VIEWBOX_HEIGHT / 2 - firstPoint.y * ROUTE_CAMERA_SCALE,
-      });
+      applyTransform({
+        scaleX: routeCameraScale,
+        scaleY: routeCameraScale,
+        translateX: VIEWBOX_WIDTH / 2 - firstPoint.x * routeCameraScale,
+        translateY: VIEWBOX_HEIGHT / 2 - firstPoint.y * routeCameraScale,
+      }, true);
     });
-  }, [path]);
+  }, [path, routeStationIds, applyTransform, onActiveStationChange]);
+
+  useEffect(() => {
+    if (!pathLengthRef.current) return;
+    setCameraForProgress(routeProgressRef.current);
+  }, [routeCameraScale, setCameraForProgress]);
 
   useGSAP(() => {
     const focusPoint = stationCoordinates[selectedStationId];
     if (!focusPoint || play) return;
 
-    const proxy = { ...transform };
-    const focusedTransform = createFocusTransform(focusPoint);
+    const proxy = { ...transformRef.current };
+    const focusedTransform = createFocusTransform(focusPoint, routeCameraScale);
     const tween = gsap.to(proxy, {
       ...focusedTransform,
       duration: 1,
       ease: 'power3.out',
-      onUpdate: () => {
-        setTransform({
+      onUpdate: () =>
+        applyTransform({
           scaleX: proxy.scaleX,
           scaleY: proxy.scaleY,
           translateX: proxy.translateX,
           translateY: proxy.translateY,
-        });
-      },
+        }),
+      onComplete: () => applyTransform(focusedTransform, true),
     });
 
     return () => tween.kill();
-  }, { dependencies: [selectedStationId], revertOnUpdate: true });
+  }, { dependencies: [selectedStationId, applyTransform, routeCameraScale], revertOnUpdate: true });
 
   useGSAP(() => {
     tweenRef.current?.kill();
@@ -294,36 +365,60 @@ function SvgComponent({
     if (!path || !pathLength) return;
 
     const proxy = { progress: 0 };
-    const stopProgresses = getRouteStopProgresses(
+    const routeStops = getRouteStops(
       pathMeasureRef.current!,
       pathLength,
       routeStationIds
     );
     const timeline = gsap.timeline({
       paused: true,
-      onComplete: () => setPlay(false),
+      onComplete: () => {
+        applyTransform(transformRef.current, true);
+        setPlay(false);
+      },
     });
 
     setCameraForProgress(0);
 
-    for (let index = 1; index < stopProgresses.length; index += 1) {
-      const previousProgress = stopProgresses[index - 1];
-      const nextProgress = stopProgresses[index];
-      const segmentLength = (nextProgress - previousProgress) * pathLength;
+    if (animationMode === 'smooth') {
+      const firstStop = routeStops[0];
+      const lastStop = routeStops[routeStops.length - 1];
 
-      timeline.to(proxy, {
-        progress: nextProgress,
-        duration: clamp(segmentLength / 95, 0.35, 5),
-        ease: 'power2.inOut',
-        onUpdate: () => setCameraForProgress(proxy.progress),
-      });
-
-      if (index < stopProgresses.length - 1) {
+      if (firstStop && lastStop) {
+        proxy.progress = firstStop.progress;
+        setCameraForProgress(firstStop.progress);
         timeline.to(proxy, {
-          progress: nextProgress,
-          duration: STATION_DWELL_SECONDS,
-          ease: 'none',
+          progress: lastStop.progress,
+          duration: clamp(Math.abs(lastStop.progress - firstStop.progress) * pathLength / 95, 0.7, 8),
+          ease: 'power1.inOut',
+          onUpdate: () => setCameraForProgress(proxy.progress),
         });
+        timeline.call(() => onActiveStationChange?.(lastStop.stationId));
+      }
+    } else {
+      for (let index = 1; index < routeStops.length; index += 1) {
+        const previousStop = routeStops[index - 1];
+        const nextStop = routeStops[index];
+        const segmentLength = (nextStop.progress - previousStop.progress) * pathLength;
+
+        timeline.to(proxy, {
+          progress: nextStop.progress,
+          duration: clamp(segmentLength / 95, 0.35, 5),
+          ease: 'power2.inOut',
+          onUpdate: () => setCameraForProgress(proxy.progress),
+        });
+
+        timeline.call(() => {
+          onActiveStationChange?.(nextStop.stationId);
+        });
+
+        if (index < routeStops.length - 1) {
+          timeline.to(proxy, {
+            progress: nextStop.progress,
+            duration: STATION_DWELL_SECONDS,
+            ease: 'none',
+          });
+        }
       }
     }
 
@@ -335,7 +430,7 @@ function SvgComponent({
       tweenRef.current?.kill();
       tweenRef.current = null;
     };
-  }, { dependencies: [path, routeStationIds, setCameraForProgress, setPlay], revertOnUpdate: true });
+  }, { dependencies: [path, routeStationIds, setCameraForProgress, setPlay, applyTransform, onActiveStationChange, animationMode], revertOnUpdate: true });
 
   useEffect(() => {
     if (!tweenRef.current) return;
@@ -344,15 +439,15 @@ function SvgComponent({
   }, [play]);
 
   const mapControls = useMemo<MapControls>(() => ({
-    transform,
+    transform: fitTransform,
     isDragging,
     dragStart: (event) => {
       const point = getEventPoint(event);
       dragRef.current = {
         x: point.x,
         y: point.y,
-        translateX: transform.translateX,
-        translateY: transform.translateY,
+        translateX: transformRef.current.translateX,
+        translateY: transformRef.current.translateY,
       };
       setIsDragging(true);
     },
@@ -363,26 +458,29 @@ function SvgComponent({
       const scaleX = rect ? VIEWBOX_WIDTH / rect.width : 1;
       const scaleY = rect ? VIEWBOX_HEIGHT / rect.height : 1;
 
-      setTransform((current) => ({
-        ...current,
+      applyTransform({
+        ...transformRef.current,
         translateX: dragRef.current.translateX + (point.x - dragRef.current.x) * scaleX,
         translateY: dragRef.current.translateY + (point.y - dragRef.current.y) * scaleY,
-      }));
+      });
     },
-    dragEnd: () => setIsDragging(false),
+    dragEnd: () => {
+      setIsDragging(false);
+      applyTransform(transformRef.current, true);
+    },
     zoomAt: (scale, event) => {
       if (!svgRef.current) return;
       const point = toSvgPoint(event, svgRef.current);
-      setTransform((current) => {
-        const nextScale = clamp(current.scaleX * scale, MIN_MAP_SCALE, MAX_MAP_SCALE);
-        const factor = nextScale / current.scaleX;
-        return {
-          scaleX: nextScale,
-          scaleY: nextScale,
-          translateX: point.x - (point.x - current.translateX) * factor,
-          translateY: point.y - (point.y - current.translateY) * factor,
-        };
-      });
+      const current = transformRef.current;
+      const nextScale = clamp(current.scaleX * scale, MIN_MAP_SCALE, MAX_MAP_SCALE);
+      const factor = nextScale / current.scaleX;
+
+      applyTransform({
+        scaleX: nextScale,
+        scaleY: nextScale,
+        translateX: point.x - (point.x - current.translateX) * factor,
+        translateY: point.y - (point.y - current.translateY) * factor,
+      }, true);
     },
     wheelZoom: (event) => {
       event.preventDefault();
@@ -391,38 +489,236 @@ function SvgComponent({
       const point = toSvgPoint(event, svgRef.current);
       const wheelScale = event.deltaY < 0 ? WHEEL_ZOOM_IN_SCALE : WHEEL_ZOOM_OUT_SCALE;
 
-      setTransform((current) => {
-        const nextScale = clamp(current.scaleX * wheelScale, MIN_MAP_SCALE, MAX_MAP_SCALE);
-        const factor = nextScale / current.scaleX;
+      const current = transformRef.current;
+      const nextScale = clamp(current.scaleX * wheelScale, MIN_MAP_SCALE, MAX_MAP_SCALE);
+      const factor = nextScale / current.scaleX;
 
-        return {
-          scaleX: nextScale,
-          scaleY: nextScale,
-          translateX: point.x - (point.x - current.translateX) * factor,
-          translateY: point.y - (point.y - current.translateY) * factor,
-        };
-      });
-    },
-  }), [isDragging, transform]);
-
-  const zoomBy = (scale: number) => {
-    setTransform((current) => {
-      const nextScale = clamp(current.scaleX * scale, MIN_MAP_SCALE, MAX_MAP_SCALE);
-      return {
+      applyTransform({
         scaleX: nextScale,
         scaleY: nextScale,
-        translateX: VIEWBOX_WIDTH / 2 - (VIEWBOX_WIDTH / 2 - current.translateX) * (nextScale / current.scaleX),
-        translateY: VIEWBOX_HEIGHT / 2 - (VIEWBOX_HEIGHT / 2 - current.translateY) * (nextScale / current.scaleY),
-      };
-    });
+        translateX: point.x - (point.x - current.translateX) * factor,
+        translateY: point.y - (point.y - current.translateY) * factor,
+      });
+    },
+  }), [applyTransform, isDragging]);
+
+  const zoomBy = (scale: number) => {
+    const current = transformRef.current;
+    const nextScale = clamp(current.scaleX * scale, MIN_MAP_SCALE, MAX_MAP_SCALE);
+
+    applyTransform({
+      scaleX: nextScale,
+      scaleY: nextScale,
+      translateX: VIEWBOX_WIDTH / 2 - (VIEWBOX_WIDTH / 2 - current.translateX) * (nextScale / current.scaleX),
+      translateY: VIEWBOX_HEIGHT / 2 - (VIEWBOX_HEIGHT / 2 - current.translateY) * (nextScale / current.scaleY),
+    }, true);
   };
 
   const focusSelectedStation = () => {
     const focusPoint = stationCoordinates[selectedStationId];
-    setTransform(focusPoint ? createFocusTransform(focusPoint) : fitTransform);
+    applyTransform(focusPoint ? createFocusTransform(focusPoint, routeCameraScale) : fitTransform, true);
   };
 
   const selectedStationPoint = stationCoordinates[selectedStationId];
+
+  const drawSvgToCanvas = React.useCallback(async (
+    canvas: HTMLCanvasElement | OffscreenCanvas,
+    context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+    width: number,
+    height: number
+  ) => {
+    if (!svgRef.current) return;
+
+    const svgClone = svgRef.current.cloneNode(true) as SVGSVGElement;
+    svgClone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svgClone.setAttribute('width', String(width));
+    svgClone.setAttribute('height', String(height));
+    svgClone.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+    const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    style.textContent = `
+      text,
+      tspan {
+        font-family: ${EXPORT_FONT_STACK};
+      }
+    `;
+    svgClone.insertBefore(style, svgClone.firstChild);
+
+    const svgText = new XMLSerializer().serializeToString(svgClone);
+    const url = URL.createObjectURL(new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' }));
+
+    try {
+      const image = new Image();
+      image.decoding = 'sync';
+      await new Promise<void>((resolve, reject) => {
+        image.onload = () => resolve();
+        image.onerror = () => reject(new Error('Could not render map frame.'));
+        image.src = url;
+      });
+      context.fillStyle = '#f4f0e8';
+      context.fillRect(0, 0, width, height);
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  }, []);
+
+  const downloadRouteVideo = React.useCallback(async () => {
+    const svg = svgRef.current;
+    const measure = pathMeasureRef.current;
+    const pathLength = pathLengthRef.current;
+
+    if (!path || !svg || !measure || !pathLength || isExportingVideo) return;
+
+    setIsExportingVideo(true);
+    tweenRef.current?.pause();
+    setPlay(false);
+
+    const previousTrainTransform = trainRef.current?.getAttribute('transform');
+    const previousMapTransform = transformRef.current;
+
+    try {
+      const {
+        BufferTarget,
+        CanvasSource,
+        Mp4OutputFormat,
+        Output,
+        QUALITY_HIGH,
+        canEncodeVideo,
+      } = await import('mediabunny');
+
+      const rect = svg.getBoundingClientRect();
+      const aspectRatio = rect.width && rect.height ? rect.height / rect.width : VIEWBOX_HEIGHT / VIEWBOX_WIDTH;
+      const width = 1280;
+      const height = Math.round(width * aspectRatio);
+      const frameRate = 30;
+      const frameDuration = 1 / frameRate;
+      const canvas = typeof OffscreenCanvas !== 'undefined'
+        ? new OffscreenCanvas(width, height)
+        : document.createElement('canvas');
+
+      if (canvas instanceof HTMLCanvasElement) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+
+      const context = canvas.getContext('2d') as CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D | null;
+
+      if (!context) throw new Error('Canvas export is not supported in this browser.');
+
+      await document.fonts?.ready;
+
+      const codec = await canEncodeVideo('avc', { width, height, bitrate: QUALITY_HIGH })
+        ? 'avc'
+        : null;
+
+      if (!codec) throw new Error('This browser cannot encode MP4 video.');
+
+      const target = new BufferTarget();
+      const output = new Output({
+        format: new Mp4OutputFormat({ fastStart: 'in-memory' }),
+        target,
+      });
+      const source = new CanvasSource(canvas, {
+        codec,
+        bitrate: QUALITY_HIGH,
+      });
+
+      output.addVideoTrack(source);
+      await output.start();
+
+      const routeStops = getRouteStops(measure, pathLength, routeStationIds);
+      const firstStop = routeStops[0];
+      const lastStop = routeStops[routeStops.length - 1];
+      if (!firstStop || !lastStop) throw new Error('Route animation is not ready to export.');
+
+      const smoothDuration = clamp(Math.abs(lastStop.progress - firstStop.progress) * pathLength / 95, 0.7, 8);
+      const stepSegments = routeStops.slice(1).map((stop, index) => {
+        const previousStop = routeStops[index];
+        return {
+          from: previousStop.progress,
+          to: stop.progress,
+          travelDuration: clamp((stop.progress - previousStop.progress) * pathLength / 95, 0.35, 5),
+          dwellDuration: index < routeStops.length - 2 ? STATION_DWELL_SECONDS : 0,
+        };
+      });
+      const stepDuration = stepSegments.reduce(
+        (duration, segment) => duration + segment.travelDuration + segment.dwellDuration,
+        0
+      );
+      const duration = animationMode === 'smooth' ? smoothDuration : stepDuration;
+      const frameCount = Math.max(2, Math.ceil(duration * frameRate));
+      const exportCameraScale = routeCameraScale;
+
+      for (let frame = 0; frame <= frameCount; frame += 1) {
+        const timestamp = frame * frameDuration;
+        let progress = firstStop.progress;
+
+        if (animationMode === 'smooth') {
+          const linearProgress = clamp(timestamp / smoothDuration, 0, 1);
+          const easedProgress = linearProgress < 0.5
+            ? 2 * linearProgress * linearProgress
+            : 1 - Math.pow(-2 * linearProgress + 2, 2) / 2;
+          progress = firstStop.progress + (lastStop.progress - firstStop.progress) * easedProgress;
+        } else {
+          let remainingTime = timestamp;
+          for (const segment of stepSegments) {
+            if (remainingTime <= segment.travelDuration) {
+              const segmentProgress = clamp(remainingTime / segment.travelDuration, 0, 1);
+              const easedProgress = segmentProgress < 0.5
+                ? 2 * segmentProgress * segmentProgress
+                : 1 - Math.pow(-2 * segmentProgress + 2, 2) / 2;
+              progress = segment.from + (segment.to - segment.from) * easedProgress;
+              break;
+            }
+
+            remainingTime -= segment.travelDuration;
+            progress = segment.to;
+
+            if (remainingTime <= segment.dwellDuration) break;
+            remainingTime -= segment.dwellDuration;
+          }
+        }
+
+        setCameraForProgress(progress, exportCameraScale);
+        await drawSvgToCanvas(canvas, context, width, height);
+        await source.add(timestamp, frameDuration, { keyFrame: frame % frameRate === 0 });
+      }
+
+      await output.finalize();
+      if (!target.buffer) throw new Error('Video export did not produce a file.');
+
+      const blob = new Blob([target.buffer], { type: 'video/mp4' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `delhi-metro-route-${animationMode}.mp4`;
+      link.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 0);
+    } catch (error) {
+      console.error(error);
+      window.alert(error instanceof Error ? error.message : 'Could not export route video.');
+    } finally {
+      if (previousTrainTransform) {
+        trainRef.current?.setAttribute('transform', previousTrainTransform);
+      } else {
+        trainRef.current?.removeAttribute('transform');
+      }
+      applyTransform(previousMapTransform, true);
+      setIsExportingVideo(false);
+    }
+  }, [
+    animationMode,
+    applyTransform,
+    cinematicZoom,
+    drawSvgToCanvas,
+    isExportingVideo,
+    path,
+    routeCameraScale,
+    routeStationIds,
+    setCameraForProgress,
+    setPlay,
+  ]);
 
   return (
     <div className="absolute inset-0">
@@ -433,6 +729,7 @@ function SvgComponent({
           cursor: isDragging ? 'grabbing' : 'grab',
           touchAction: 'none',
         }}
+        mapGroupRef={mapGroupRef}
         train={
           <>
             {selectedStationPoint ? (
@@ -449,13 +746,18 @@ function SvgComponent({
                 <path ref={routePathRef} stroke="transparent" d={path} />
                 <path stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" d={path} />
                 <path stroke="#111827" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" d={path} />
-                <g ref={trainRef}>
-                  <circle r={18} fill="rgba(255,255,255,0.28)" />
-                  <image
+                <g
+                  ref={trainRef}
+                  style={{ willChange: 'auto' }}
+                  className={animationMode === 'step' ? 'route-train-step' : 'route-train-smooth'}
+                >
+                  <MetroTrain
                     width={34}
                     height={30}
-                    href="/images/metro.png"
-                    transform="translate(-17 -15)"
+                    x={-17}
+                    y={-15}
+                    aria-hidden="true"
+                    focusable="false"
                   />
                 </g>
               </>
@@ -490,6 +792,7 @@ function SvgComponent({
           <button type="button" className="flex h-9 w-9 items-center justify-center rounded bg-white text-neutral-950" onClick={() => {
             tweenRef.current?.restart().pause();
             setPlay(false);
+            onActiveStationChange?.(routeStationIds[0] || null);
             if (pathLengthRef.current) setCameraForProgress(0);
           }} title="Reset route">
             <ResetIcon />
@@ -510,6 +813,21 @@ function SvgComponent({
             }}
           >
             <EnterFullScreenIcon />
+          </button>
+          <button
+            type="button"
+            className="flex h-9 w-9 items-center justify-center rounded bg-white text-neutral-950 disabled:cursor-not-allowed disabled:opacity-40"
+            title={canExportVideo ? 'Download route video' : 'Video export is not supported in this browser'}
+            aria-label="Download route video"
+            aria-busy={isExportingVideo}
+            disabled={!path || !canExportVideo || isExportingVideo}
+            onClick={downloadRouteVideo}
+          >
+            {isExportingVideo ? (
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-950" />
+            ) : (
+              <VideoIcon />
+            )}
           </button>
         </div>
       </div>

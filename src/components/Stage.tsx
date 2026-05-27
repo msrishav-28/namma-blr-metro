@@ -4,13 +4,17 @@ import { Drawer } from 'vaul';
 
 
 import JourneyInfoPanel from './JourneyInfoPanel';
+import JourneyTimeline from './JourneyTimeline';
 import SvgComponent from './graphsvg';
-import { SearchBox, usePath } from './SearchBox';
+import { SearchBox, type CinematicZoomLevel, usePath } from './SearchBox';
 
 
 function MetroMapStage() {
     const [play, setPlay] = useState(false);
+    const [animationMode, setAnimationMode] = useState<'smooth' | 'step'>('smooth');
+    const [cinematicZoom, setCinematicZoom] = useState<CinematicZoomLevel>(1);
     const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>('220px');
+    const [activeRouteStationId, setActiveRouteStationId] = useState<string | null>(null);
 
 
     const path = usePath((state: any) => state.path);
@@ -23,6 +27,10 @@ function MetroMapStage() {
     const cockpitBody = (
         <>
             <SearchBox
+                animationMode={animationMode}
+                cinematicZoom={cinematicZoom}
+                onAnimationModeChange={setAnimationMode}
+                onCinematicZoomChange={setCinematicZoom}
                 onFromChange={() => setPlay(false)}
                 onRoutePlan={() => {
                     setActiveSnapPoint('100px');
@@ -35,6 +43,8 @@ function MetroMapStage() {
                         {route ? `${route.fromName} to ${route.toName}` : 'Choose a route'}
                     </h2>
                 </div>
+                <JourneyTimeline route={route} activeStationId={activeRouteStationId} />
+
 
                 <div className="grid grid-cols-3 gap-2">
                     <div className="rounded-md bg-neutral-100 p-2 sm:p-3">
@@ -51,6 +61,7 @@ function MetroMapStage() {
                     </div>
                 </div>
 
+
                 <JourneyInfoPanel route={route} />
             </section>
         </>
@@ -64,6 +75,9 @@ function MetroMapStage() {
                         path={path}
                         selectedStationId={selectedFrom}
                         routeStationIds={routeStationIds}
+                        onActiveStationChange={setActiveRouteStationId}
+                        animationMode={animationMode}
+                        cinematicZoom={cinematicZoom}
                         setPlay={setPlay}
                         play={play}
                     />
@@ -102,8 +116,7 @@ function MetroMapStage() {
 
                 <aside className="hidden min-h-0 flex-col gap-5 overflow-y-auto rounded-lg border border-neutral-200 bg-white p-4 shadow-sm sm:p-5 lg:flex lg:max-h-[calc(100vh-3rem)]">
                     <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-red-700">Delhi Metro</p>
-                        <h1 className="mt-2 text-2xl font-semibold">Route cockpit</h1>
+                        <h1 className="mt-2 text-md font-semibold uppercase  text-red-700">Delhi Metro</h1>
                     </div>
 
                     {cockpitBody}

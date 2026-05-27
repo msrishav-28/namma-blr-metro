@@ -3,6 +3,7 @@
 
 import SVGPathUtils from '../utils/index';
 
+import { PlayIcon } from '@radix-ui/react-icons';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Select, { type SingleValue, type StylesConfig } from 'react-select';
@@ -192,6 +193,9 @@ export interface RouteInterchange {
   fromColor: string;
   toColor: string;
 }
+
+export type RouteAnimationMode = 'smooth' | 'step';
+export type CinematicZoomLevel = 1 | 2 | 3;
 
 const stationName = (id: string) =>
   stations.find((station) => station.id === id)?.text || id;
@@ -392,9 +396,17 @@ function useIsMobile() {
 
 
 export function SearchBox({
+  animationMode = 'smooth',
+  cinematicZoom = 1,
+  onAnimationModeChange,
+  onCinematicZoomChange,
   onFromChange,
   onRoutePlan,
 }: {
+  animationMode?: RouteAnimationMode;
+  cinematicZoom?: CinematicZoomLevel;
+  onAnimationModeChange?: (mode: RouteAnimationMode) => void;
+  onCinematicZoomChange?: (zoom: CinematicZoomLevel) => void;
   onFromChange?: () => void;
   onRoutePlan?: () => void;
 }) {
@@ -433,6 +445,10 @@ export function SearchBox({
     setValue('to', fromValue);
     setSelectedFrom(toValue);
     onFromChange?.();
+  };
+
+  const toggleAnimationMode = () => {
+    onAnimationModeChange?.(animationMode === 'smooth' ? 'step' : 'smooth');
   };
 
   return (
@@ -489,10 +505,44 @@ export function SearchBox({
           )}
         />
       </div>
-      <div className='flex items-center gap-3'>
-        <button className='h-11 rounded-full bg-neutral-950 px-4 text-sm font-semibold text-white transition hover:bg-neutral-800 sm:h-12'>
+      <div className='flex flex-wrap items-center gap-3'>
+        <button className='inline-flex h-11 items-center gap-2 rounded-full bg-neutral-950 px-4 text-sm font-semibold text-white transition hover:bg-neutral-800 sm:h-12'>
+          <PlayIcon />
           Plan journey
         </button>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={animationMode === 'smooth'}
+          aria-label="Use smooth route animation"
+          onClick={toggleAnimationMode}
+          className={`route-mode-switch ${animationMode === 'smooth' ? 'route-mode-switch-on' : 'route-mode-switch-off'}`}
+          title={animationMode === 'smooth' ? 'Smooth route animation' : 'Step route animation'}
+        >
+          <span className="route-mode-switch-label">
+            {animationMode === 'smooth' ? 'Smooth' : 'Step'}
+          </span>
+          <span className="route-mode-switch-thumb" />
+        </button>
+        <div
+          className="cinematic-zoom-control"
+          role="radiogroup"
+          aria-label="Cinematic export zoom"
+          title="Cinematic export zoom"
+        >
+          {([1, 2, 3] as const).map((zoom) => (
+            <button
+              key={zoom}
+              type="button"
+              role="radio"
+              aria-checked={cinematicZoom === zoom}
+              onClick={() => onCinematicZoomChange?.(zoom)}
+              className={cinematicZoom === zoom ? 'cinematic-zoom-option-active' : ''}
+            >
+              {zoom}x
+            </button>
+          ))}
+        </div>
         <button
           type="button"
           aria-label="Swap from and to stations"

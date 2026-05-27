@@ -20,7 +20,7 @@ export interface MapControls {
 
 interface MapProps {
     style: React.CSSProperties;
-    ref?: React.RefObject<SVGSVGElement>;
+    mapGroupRef: React.RefObject<SVGGElement | null>;
     zoomFunction: MapControls;
     train: React.ReactNode;
 }
@@ -29,7 +29,7 @@ const transformToString = ({ scaleX, scaleY, translateX, translateY }: MapTransf
     `matrix(${scaleX} 0 0 ${scaleY} ${translateX} ${translateY})`;
 
 const SvgComponent = forwardRef<SVGSVGElement, MapProps>(
-    ({ style, zoomFunction, train }: MapProps, ref) => (
+    ({ style, mapGroupRef, zoomFunction, train }: MapProps, ref) => (
         <svg
             xmlns='http://www.w3.org/2000/svg'
             // style={{
@@ -50,7 +50,7 @@ const SvgComponent = forwardRef<SVGSVGElement, MapProps>(
             onWheel={zoomFunction.wheelZoom}
             onDoubleClick={(event) => zoomFunction.zoomAt(1.18, event)}
         >
-            <g transform={transformToString(zoomFunction.transform)}>
+            <g ref={mapGroupRef} transform={transformToString(zoomFunction.transform)}>
                 <g
                     className='river'
                     style={{
