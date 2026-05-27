@@ -12,9 +12,11 @@ import * as React from 'react';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import edges from '../data/edge.json';
+import stationLabels from '../data/labels.json';
 import MetroTrain from '../assets/metro.svg?react';
 import type { CinematicZoomLevel, RouteAnimationMode } from './SearchBox';
 import Map, { type MapControls, type MapTransform } from './metromap';
+import { getLocalizedStationName, useI18n } from '../i18n';
 
 gsap.registerPlugin(useGSAP);
 
@@ -95,6 +97,20 @@ const resolveStationCoordinates = () => {
 };
 
 const stationCoordinates = resolveStationCoordinates();
+
+const normalizeLabelText = (text: string) => text.replace(/\s+/g, ' ').trim();
+
+const stationByEnglishName = new globalThis.Map(stationLabels.map((station) => [station.text, station]));
+const stationBySvgLabel = new globalThis.Map([
+  ['Major Mohit Sharma Rajendra Nagar', 'RJNM'],
+  ['Vishweshwaraiah Moti', 'SVMB'],
+  ['Sadar Bazar Cantonment', 'SABR'],
+  ['Terminal-1 IGI Airport', 'IGDA'],
+]);
+const stationBySvgClass = new globalThis.Map([
+  ['SABR-PALM IGDA-SABR', 'SABR'],
+  ['IGDA-SABR SKVR-IGDA', 'IGDA'],
+]);
 
 const createFocusTransform = (point: { x: number; y: number }, scale = ROUTE_CAMERA_SCALE): MapTransform => ({
   scaleX: scale,
@@ -214,6 +230,7 @@ function SvgComponent({
   animationMode: RouteAnimationMode;
   cinematicZoom: CinematicZoomLevel;
 }) {
+  const { language } = useI18n();
   const [isDragging, setIsDragging] = useState(false);
   const [isExportingVideo, setIsExportingVideo] = useState(false);
   const [canExportVideo, setCanExportVideo] = useState(false);
@@ -236,6 +253,40 @@ function SvgComponent({
   const tweenRef = useRef<gsap.core.Timeline | null>(null);
   const playRef = useRef(play);
   const routeCameraScale = ROUTE_CAMERA_SCALE * (cinematicZoom / 3);
+
+  useLayoutEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    svg.querySelectorAll<SVGTextElement>('g.label text').forEach((label) => {
+      const stationId = label.dataset.stationId;
+      const fallbackName = label.dataset.stationName || normalizeLabelText(label.textContent || '');
+      const svgLabelStationId = stationBySvgLabel.get(fallbackName);
+      const svgClassStationId = stationBySvgClass.get(label.getAttribute('class') || '');
+      const station = stationId
+        ? stationLabels.find((item) => item.id === stationId)
+        : svgLabelStationId ? stationLabels.find((item) => item.id === svgLabelStationId)
+        : svgClassStationId ? stationLabels.find((item) => item.id === svgClassStationId)
+        : stationByEnglishName.get(fallbackName);
+
+      if (!station) return;
+
+      label.dataset.stationId = station.id;
+      label.dataset.stationName = station.text;
+
+      const localizedName = getLocalizedStationName(station.id, station.text, language);
+      const tspans = Array.from(label.querySelectorAll('tspan'));
+
+      if (!tspans.length) {
+        label.textContent = localizedName;
+        return;
+      }
+
+      tspans.forEach((tspan, index) => {
+        tspan.textContent = index === 0 ? localizedName : '';
+      });
+    });
+  }, [language]);
 
   useEffect(() => {
     playRef.current = play;

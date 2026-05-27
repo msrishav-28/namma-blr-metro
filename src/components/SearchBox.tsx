@@ -4,13 +4,14 @@
 import SVGPathUtils from '../utils/index';
 
 import { PlayIcon } from '@radix-ui/react-icons';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Select, { type SingleValue, type StylesConfig } from 'react-select';
 import { create } from 'zustand';
 
 import edges from '../data/edge.json';
 import stations from '../data/labels.json';
+import { availableLanguages, getLocalizedStationName, useI18n, type Language } from '../i18n';
 
 
 
@@ -197,8 +198,10 @@ export interface RouteInterchange {
 export type RouteAnimationMode = 'smooth' | 'step';
 export type CinematicZoomLevel = 1 | 2 | 3;
 
-const stationName = (id: string) =>
-  stations.find((station) => station.id === id)?.text || id;
+const stationName = (id: string, language: Language) => {
+  const fallbackName = stations.find((station) => station.id === id)?.text || id;
+  return getLocalizedStationName(id, fallbackName, language);
+};
 
 const estimateFare = (stops: number) => {
   if (stops <= 2) return 10;
@@ -221,19 +224,19 @@ const getRouteEdge = (from: string, to: string) =>
 
 const uniqueColors = (colors: string[]) => [...new Set(colors.filter(Boolean))];
 
-const getRouteStationDetails = (routePath: string[]): RouteStationDetail[] =>
+const getRouteStationDetails = (routePath: string[], language: Language): RouteStationDetail[] =>
   routePath.map((stationId, index) => {
     const previousEdge = index > 0 ? getRouteEdge(routePath[index - 1], stationId) : undefined;
     const nextEdge = index < routePath.length - 1 ? getRouteEdge(stationId, routePath[index + 1]) : undefined;
 
     return {
       id: stationId,
-      name: stationName(stationId),
+      name: stationName(stationId, language),
       lineColors: uniqueColors([previousEdge?.stroke || '', nextEdge?.stroke || '']),
     };
   });
 
-const getRouteInterchanges = (routePath: string[]): RouteInterchange[] =>
+const getRouteInterchanges = (routePath: string[], language: Language): RouteInterchange[] =>
   routePath.slice(1, -1).flatMap((stationId, index) => {
     const routeIndex = index + 1;
     const previousEdge = getRouteEdge(routePath[routeIndex - 1], stationId);
@@ -243,13 +246,13 @@ const getRouteInterchanges = (routePath: string[]): RouteInterchange[] =>
 
     return [{
       id: stationId,
-      name: stationName(stationId),
+      name: stationName(stationId, language),
       fromColor: previousEdge.stroke,
       toColor: nextEdge.stroke,
     }];
   });
 
-const buildRoute = (from: string, to: string) => {
+const buildRoute = (from: string, to: string, language: Language) => {
   const shortedPath = graph.findShortestPath(from, to);
 
   if (!shortedPath) return null;
@@ -282,11 +285,11 @@ const buildRoute = (from: string, to: string) => {
     route: {
       from,
       to,
-      fromName: stationName(from),
-      toName: stationName(to),
-      stops: shortedPath.path.map(stationName),
-      stationDetails: getRouteStationDetails(shortedPath.path),
-      interchanges: getRouteInterchanges(shortedPath.path),
+      fromName: stationName(from, language),
+      toName: stationName(to, language),
+      stops: shortedPath.path.map((stationId) => stationName(stationId, language)),
+      stationDetails: getRouteStationDetails(shortedPath.path, language),
+      interchanges: getRouteInterchanges(shortedPath.path, language),
       distance: shortedPath.distance,
       fare: estimateFare(shortedPath.distance),
       estimatedMinutes: Math.max(2, shortedPath.distance * 2),
@@ -308,8 +311,8 @@ const getStationLineColors = (stationId: string) =>
     .filter((edge) => edge.from === stationId || edge.to === stationId)
     .map((edge) => edge.stroke));
 
-const stationOptions: StationOption[] = stations.map((station) => ({
-  label: station.text,
+const getStationOptions = (language: Language): StationOption[] => stations.map((station) => ({
+  label: getLocalizedStationName(station.id, station.text, language),
   value: station.id,
   lineColors: getStationLineColors(station.id),
 }));
@@ -410,6 +413,7 @@ export function SearchBox({
   onFromChange?: () => void;
   onRoutePlan?: () => void;
 }) {
+  const { language, setLanguage, t } = useI18n();
   const initialRouteParams = getInitialRouteParams();
   const { control, getValues, handleSubmit, setValue } = useForm({
     defaultValues: {
@@ -421,12 +425,13 @@ export function SearchBox({
   const setSelectedFrom = usePath((state: any) => state.setSelectedFrom);
   const hydratedRouteRef = useRef(false);
   const isMobile = useIsMobile();
+  const stationOptions = useMemo(() => getStationOptions(language), [language]);
 
   useEffect(() => {
     if (hydratedRouteRef.current || !initialRouteParams.hasRouteQuery) return;
     hydratedRouteRef.current = true;
 
-    const plannedRoute = buildRoute(initialRouteParams.from, initialRouteParams.to);
+    const plannedRoute = buildRoute(initialRouteParams.from, initialRouteParams.to, language);
     if (!plannedRoute) return;
 
     const animationFrame = requestAnimationFrame(() => {
@@ -435,7 +440,7 @@ export function SearchBox({
     });
 
     return () => cancelAnimationFrame(animationFrame);
-  }, [initialRouteParams.from, initialRouteParams.hasRouteQuery, initialRouteParams.to, setRoute, setSelectedFrom]);
+  }, [initialRouteParams.from, initialRouteParams.hasRouteQuery, initialRouteParams.to, language, setRoute, setSelectedFrom]);
 
   const swapStations = () => {
     const fromValue = getValues('from');
@@ -456,7 +461,7 @@ export function SearchBox({
       onSubmit={handleSubmit((e) => {
         if (!e.from || !e.to) return;
 
-        const plannedRoute = buildRoute(e.from, e.to);
+        const plannedRoute = buildRoute(e.from, e.to, language);
         if (!plannedRoute) return;
 
         setRoute(plannedRoute.svgPath, plannedRoute.route);
@@ -473,7 +478,7 @@ export function SearchBox({
             <Select
               instanceId="from-station"
               options={stationOptions}
-              placeholder="From station"
+              placeholder={t('fromStation')}
               value={stationOptions.find((option) => option.value === field.value) || null}
               onChange={(option: SingleValue<StationOption>) => {
                 const nextValue = option?.value || '';
@@ -495,7 +500,7 @@ export function SearchBox({
             <Select
               instanceId="to-station"
               options={stationOptions}
-              placeholder="To station"
+              placeholder={t('toStation')}
               value={stationOptions.find((option) => option.value === field.value) || null}
               onChange={(option: SingleValue<StationOption>) => field.onChange(option?.value || '')}
               formatOptionLabel={(option) => <StationOptionLabel option={option} />}
@@ -506,29 +511,29 @@ export function SearchBox({
         />
       </div>
       <div className='flex flex-wrap items-center gap-3'>
-        <button className='inline-flex h-11 items-center gap-2 rounded-full bg-neutral-950 px-4 text-sm font-semibold text-white transition hover:bg-neutral-800 sm:h-12'>
+        <button className='inline-flex h-11 items-center gap-2 rounded-full bg-[#009b50] px-4 text-sm font-semibold text-white transition hover:bg-[#007f42]'>
           <PlayIcon />
-          Plan journey
+          {t('planJourney')}
         </button>
         <button
           type="button"
           role="switch"
           aria-checked={animationMode === 'smooth'}
-          aria-label="Use smooth route animation"
+          aria-label={t('useSmoothRouteAnimation')}
           onClick={toggleAnimationMode}
           className={`route-mode-switch ${animationMode === 'smooth' ? 'route-mode-switch-on' : 'route-mode-switch-off'}`}
-          title={animationMode === 'smooth' ? 'Smooth route animation' : 'Step route animation'}
+          title={animationMode === 'smooth' ? t('smoothRouteAnimation') : t('stepRouteAnimation')}
         >
           <span className="route-mode-switch-label">
-            {animationMode === 'smooth' ? 'Smooth' : 'Step'}
+            {animationMode === 'smooth' ? t('smooth') : t('step')}
           </span>
           <span className="route-mode-switch-thumb" />
         </button>
         <div
           className="cinematic-zoom-control"
           role="radiogroup"
-          aria-label="Cinematic export zoom"
-          title="Cinematic export zoom"
+          aria-label={t('cinematicExportZoom')}
+          title={t('cinematicExportZoom')}
         >
           {([1, 2, 3] as const).map((zoom) => (
             <button
@@ -545,13 +550,28 @@ export function SearchBox({
         </div>
         <button
           type="button"
-          aria-label="Swap from and to stations"
+          aria-label={t('swapFromAndToStations')}
           onClick={swapStations}
-          title="Swap stations"
+          title={t('swapStations')}
           className="flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white transition hover:border-neutral-300 hover:bg-neutral-50 sm:h-12 sm:w-12"
         >
           <ToggleIcon />
         </button>
+        <label className="inline-flex h-11 items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 text-sm font-semibold text-neutral-700 sm:h-12">
+          <span className="sr-only">{t('language')}</span>
+          <select
+            value={language}
+            onChange={(event) => setLanguage(event.target.value as Language)}
+            className="bg-transparent text-sm font-semibold outline-none"
+            aria-label={t('language')}
+          >
+            {availableLanguages.map((option) => (
+              <option key={option} value={option}>
+                {option === 'en' ? t('english') : t('hindi')}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
     </form>
   );

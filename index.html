@@ -2,9 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <base href="/" />
     <link rel="icon" type="image/png" href="/icons/icon-192.png" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="canonical" href="http://metro.coolhead.in/" />
+    <link rel="alternate" hreflang="en" href="http://metro.coolhead.in/" />
+    <link rel="alternate" hreflang="hi" href="http://metro.coolhead.in/?lang=hi" />
+    <link rel="alternate" hreflang="x-default" href="http://metro.coolhead.in/" />
+    <link rel="preload" as="image" href="/images/showcase.png" imagesrcset="/images/showcase.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -23,27 +29,37 @@
     <meta name="theme-color" content="#f4f0e8" />
 
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://metro.coolhead.in/" />
     <meta property="og:title" content="Delhi Metro Route Planner | Map, Fare, Stops & Interchanges" />
     <meta
       property="og:description"
       content="Search Delhi Metro stations, compare route details, view interchange information, and follow your journey on an animated metro map."
     />
     <meta property="og:site_name" content="Delhi Metro Route Planner" />
+    <meta property="og:image" content="http://metro.coolhead.in/images/showcase.png" />
+    <meta property="og:image:alt" content="Delhi Metro route planner with interactive map and journey details" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:locale:alternate" content="hi_IN" />
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Delhi Metro Route Planner | Map, Fare, Stops & Interchanges" />
     <meta
       name="twitter:description"
       content="Interactive Delhi Metro route planning with station search, fare estimate, stop count, interchange details, and line-color route guidance."
     />
+    <meta name="twitter:image" content="http://metro.coolhead.in/images/showcase.png" />
+    <meta name="twitter:image:alt" content="Delhi Metro route planner with interactive map and journey details" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Delhi Metro Route Planner",
+        "url": "http://metro.coolhead.in/",
         "applicationCategory": "TravelApplication",
         "operatingSystem": "Web",
+        "inLanguage": ["en-IN", "hi-IN"],
+        "image": "http://metro.coolhead.in/images/showcase.png",
         "description": "Interactive Delhi Metro route planner with station search, animated metro map, fare estimate, travel time, stop count, interchange details, and line-color guidance.",
         "keywords": "Delhi Metro route planner, Delhi Metro map, Delhi Metro fare calculator, Delhi Metro station search, Delhi Metro interchanges",
         "offers": {
@@ -51,6 +67,46 @@
           "price": "0",
           "priceCurrency": "INR"
         }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I find the shortest Delhi Metro route?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Select a source station and destination station in the Delhi Metro Route Planner to see the shortest available route, stop count, estimated travel time, fare, and interchange details."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I check Delhi Metro fare and travel time?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The planner shows an estimated Delhi Metro fare and journey time after you choose the origin and destination stations."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does this planner show Delhi Metro interchange stations?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Route results include interchange stations and line-color guidance so you can see where to change metro lines."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Hindi supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The route planner supports English and Hindi for interface labels and Delhi Metro station names."
+            }
+          }
+        ]
       }
     </script>
 

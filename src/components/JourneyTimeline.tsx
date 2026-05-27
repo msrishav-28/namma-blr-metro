@@ -6,14 +6,17 @@ import edges from '../data/edge.json';
 import stations from '../data/labels.json';
 import RouteDirectionCard from './RouteDirectionCard';
 import type { RouteSummary, RouteStationDetail } from './SearchBox';
+import { getLocalizedStationName, useI18n, type Language } from '../i18n';
 
 interface JourneyTimelineProps {
     route: RouteSummary | null;
     activeStationId: string | null;
 }
 
-const stationName = (id: string) =>
-    stations.find((station) => station.id === id)?.text || id;
+const stationName = (id: string, language: Language) => {
+    const fallbackName = stations.find((station) => station.id === id)?.text || id;
+    return getLocalizedStationName(id, fallbackName, language);
+};
 
 const getRouteEdge = (from: string, to: string) =>
     edges.find((edge) => edge.from === from && edge.to === to) ||
@@ -27,7 +30,7 @@ const getSegmentColor = (stationsList: RouteStationDetail[], index: number) => {
     return getRouteEdge(currentStation.id, nextStation.id)?.stroke || currentStation.lineColors[0] || '#f5d618';
 };
 
-const getLineTerminal = (fromStationId: string, nextStationId: string, color: string) => {
+const getLineTerminal = (fromStationId: string, nextStationId: string, color: string, language: Language) => {
     let previousStationId = fromStationId;
     let currentStationId = nextStationId;
     const visited = new Set([fromStationId]);
@@ -48,10 +51,11 @@ const getLineTerminal = (fromStationId: string, nextStationId: string, color: st
         currentStationId = nextEdge.from === currentStationId ? nextEdge.to : nextEdge.from;
     }
 
-    return stationName(currentStationId);
+    return stationName(currentStationId, language);
 };
 
 function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
+    const { language, t } = useI18n();
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const captureRef = useRef<HTMLDivElement | null>(null);
     const stationRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -59,13 +63,16 @@ function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
 
     const timelineItems = useMemo(() => {
         const routeStations = route?.stationDetails || [];
+        if (!route) return [];
 
         return routeStations.map((station, index) => {
             const previousColor = index > 0 ? getSegmentColor(routeStations, index - 1) : '';
             const nextColor = getSegmentColor(routeStations, index);
             const isInterchange = Boolean(previousColor && nextColor && previousColor !== nextColor);
             const nextStation = routeStations[index + 1];
-            const terminalName = nextStation ? getLineTerminal(station.id, nextStation.id, nextColor) : route?.toName;
+            const terminalName = nextStation
+                ? getLineTerminal(station.id, nextStation.id, nextColor, language)
+                : getLocalizedStationName(route.to, route.toName, language);
 
             return {
                 station,
@@ -78,7 +85,7 @@ function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
                 isLast: index === routeStations.length - 1,
             };
         });
-    }, [route]);
+    }, [language, route]);
 
     useEffect(() => {
         if (!activeStationId) return;
@@ -109,7 +116,7 @@ function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
                 },
             });
             const link = document.createElement('a');
-            const filename = `${route.fromName}-to-${route.toName}-timeline`
+            const filename = `${route.from}-to-${route.to}-timeline`
                 .toLowerCase()
                 .replace(/[^a-z0-9]+/g, '-')
                 .replace(/^-|-$/g, '');
@@ -124,7 +131,7 @@ function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
     if (!route) {
         return (
             <section className="rounded-lg bg-white p-3 text-sm text-neutral-500">
-                Plan a journey to see the station timeline.
+                {t('journeyTimelinePrompt')}
             </section>
         );
     }
@@ -132,13 +139,13 @@ function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
     return (
         <section className="grid gap-3">
             <div className="flex items-center justify-between gap-3">
-                <h3 className="text-sm font-semibold text-neutral-950">Journey timeline</h3>
+                <h3 className="text-sm font-semibold text-neutral-950">{t('journeyTimeline')}</h3>
                 <div className="flex items-center gap-2">
-                    <span className="text-xs font-medium text-neutral-500">{route.stationDetails.length} stations</span>
+                    <span className="text-xs font-medium text-neutral-500">{t('stations', { count: route.stationDetails.length })}</span>
                     <button
                         type="button"
-                        aria-label="Download journey timeline as PNG"
-                        title="Download timeline"
+                        aria-label={t('downloadJourneyTimeline')}
+                        title={t('downloadTimeline')}
                         disabled={isDownloading}
                         onClick={downloadTimeline}
                         className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 transition hover:border-neutral-300 hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
@@ -157,18 +164,19 @@ function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
                         const isActive = station.id === activeStationId;
                         const dotColor = isLast ? previousColor || nextColor : nextColor;
                         const placeAbove = showDirection || isFirst;
+                        const stationDisplayName = getLocalizedStationName(station.id, station.name, language);
                         const label = showDirection ? (
                             <RouteDirectionCard
-                                fromName={station.name}
+                                fromName={stationDisplayName}
                                 toName={terminalName}
                                 lineColor={nextColor}
-                                label="Toward"
+                                label={t('toward')}
                                 className={`rounded-lg ${isActive ? 'ring-2 ring-neutral-950/10' : ''}`}
                                 compact
                             />
                         ) : (
                             <span className={`block max-w-full whitespace-normal text-center text-sm font-semibold leading-tight transition-colors ${isActive ? 'text-neutral-950' : 'text-neutral-500'}`}>
-                                {station.name}
+                                {stationDisplayName}
                             </span>
                         );
 
@@ -202,7 +210,7 @@ function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
                                 <div className="flex h-full w-full flex-col items-center justify-start px-1 pt-2">
                                     {placeAbove ? null : label}
                                     <span className={`mt-1 text-[11px] font-semibold ${isInterchange ? 'text-neutral-400' : 'text-transparent'}`}>
-                                        Change
+                                        {t('change')}
                                     </span>
                                 </div>
                             </div>

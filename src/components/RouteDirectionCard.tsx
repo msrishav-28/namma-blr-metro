@@ -1,3 +1,5 @@
+import { useI18n } from '../i18n';
+
 interface RouteDirectionCardProps {
     fromName: string;
     toName?: string;
@@ -8,6 +10,8 @@ interface RouteDirectionCardProps {
 }
 
 function RouteDirectionCard({ fromName, toName, lineColor = '#111827', label = 'To', className = '', compact = false }: RouteDirectionCardProps) {
+    const { t } = useI18n();
+
     return (
         <div className={`flex w-full items-center rounded-[16px] bg-[#F5F5F5] ${compact ? 'max-w-[176px] gap-2 px-2.5 py-2' : 'aspect-[293.4/101.89] max-w-[293.4px] gap-3 px-3'} ${className}`}>
             <svg
@@ -27,7 +31,7 @@ function RouteDirectionCard({ fromName, toName, lineColor = '#111827', label = '
             <div className="min-w-0">
                 <p className={`truncate font-semibold text-neutral-950 ${compact ? 'text-[11px]' : 'text-sm'}`}>{fromName}</p>
                 <p className={`mt-0.5 truncate font-medium text-neutral-500 ${compact ? 'text-[9px]' : 'text-xs'}`}>
-                    {toName ? `${label} ${toName}` : 'Select destination'}
+                    {toName ? `${label} ${toName}` : t('selectDestination')}
                 </p>
             </div>
         </div>

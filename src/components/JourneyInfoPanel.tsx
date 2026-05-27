@@ -2,6 +2,7 @@ import type React from 'react';
 import { useState } from 'react';
 
 import type { RouteSummary } from './SearchBox';
+import { getLocalizedStationName, useI18n } from '../i18n';
 
 function ClockIcon() {
     return (
@@ -63,11 +64,13 @@ function MetricItem({
 }
 
 function JourneyMetrics({ route }: { route: RouteSummary | null }) {
+    const { t } = useI18n();
+
     return (
         <div className="grid grid-cols-3 gap-2 border-b border-neutral-300 pb-3 sm:gap-3 sm:pb-5">
-            <MetricItem icon={<ClockIcon />} label={route ? `${route.estimatedMinutes} mins` : '-- mins'} />
-            <MetricItem icon={<StopsIcon />} label={route ? `${route.distance} stops` : '-- stops'} />
-            <MetricItem icon={<InterchangeIcon />} label={route ? `${route.interchanges.length} change` : '-- change'} />
+            <MetricItem icon={<ClockIcon />} label={route ? t('minutes', { count: route.estimatedMinutes }) : t('minutes', { count: '--' })} />
+            <MetricItem icon={<StopsIcon />} label={route ? t('stations', { count: route.distance }) : t('stations', { count: '--' })} />
+            <MetricItem icon={<InterchangeIcon />} label={route ? `${route.interchanges.length} ${t('change')}` : `-- ${t('change')}`} />
         </div>
     );
 }
@@ -89,6 +92,7 @@ function CollapseIcon({ open }: { open: boolean }) {
 }
 
 function InterchangeStations({ route }: { route: RouteSummary | null }) {
+    const { language, t } = useI18n();
     const [open, setOpen] = useState(false);
     const interchanges = route?.interchanges || [];
     const stations = route?.stationDetails || [];
@@ -96,7 +100,7 @@ function InterchangeStations({ route }: { route: RouteSummary | null }) {
     if (!route) {
         return (
             <div className="rounded-[16px] bg-white/70 p-3 text-sm text-neutral-500 sm:rounded-[18px] sm:p-5">
-                Select source and destination to see interchange stations.
+                {t('selectInterchangePrompt')}
             </div>
         );
     }
@@ -108,7 +112,7 @@ function InterchangeStations({ route }: { route: RouteSummary | null }) {
                 className="flex w-full items-center justify-between rounded-full bg-white px-3 py-2.5 text-left text-sm font-semibold shadow-sm sm:px-4 sm:py-3"
                 onClick={() => setOpen((current) => !current)}
             >
-                <span>{open ? 'All stations' : 'Interchange stations'}</span>
+                <span>{open ? t('allStations') : t('interchangeStations')}</span>
                 <span className="flex items-center gap-2 text-xs text-neutral-500">
                     {open ? stations.length : interchanges.length}
                     <CollapseIcon open={open} />
@@ -118,7 +122,7 @@ function InterchangeStations({ route }: { route: RouteSummary | null }) {
             <div className={open ? 'mt-2 grid gap-2 sm:mt-3' : 'hidden'}>
                 {stations.map((station) => (
                     <div key={station.id} className="flex items-center justify-between rounded-[14px] bg-[#EDEDED] p-2.5 text-sm sm:rounded-[16px] sm:p-3">
-                        <span className="truncate font-medium">{station.name}</span>
+                        <span className="truncate font-medium">{getLocalizedStationName(station.id, station.name, language)}</span>
                         <span className="flex shrink-0 items-center gap-1.5">
                             {station.lineColors.map((color) => (
                                 <span key={color} className="h-3.5 w-3.5 rounded-full border border-white" style={{ backgroundColor: color }} />
@@ -137,13 +141,13 @@ function InterchangeStations({ route }: { route: RouteSummary | null }) {
                             <span className="h-3.5 w-3.5 rounded-full border-2 border-white" style={{ backgroundColor: interchange.toColor }} />
                         </div>
                         <div className="min-w-0">
-                            <p className="truncate text-sm font-semibold sm:text-base">{interchange.name}</p>
-                            <p className="mt-1 text-xs text-neutral-500">Change metro line here</p>
+                            <p className="truncate text-sm font-semibold sm:text-base">{getLocalizedStationName(interchange.id, interchange.name, language)}</p>
+                            <p className="mt-1 text-xs text-neutral-500">{t('changeMetroLineHere')}</p>
                         </div>
                     </div>
                 )) : (
                     <div className="rounded-[14px] bg-[#EDEDED] p-2.5 text-sm text-neutral-500 sm:rounded-[16px] sm:p-3">
-                        No interchange needed for this route.
+                        {t('noInterchangeNeeded')}
                     </div>
                 )}
             </div>

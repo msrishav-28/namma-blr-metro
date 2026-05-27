@@ -35,14 +35,16 @@ body {
 }
 
 .route-mode-switch-on {
-  background: #009b50;
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.14);
+  background: #171717;
+  color: white;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
 }
 
 .route-mode-switch-off {
-  background: white;
-  border-color: #d4d4d4;
-  color: #171717;
+  background: #171717;
+  border-color: transparent;
+  color: white;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
 }
 
 .route-mode-switch-label {
@@ -66,7 +68,7 @@ body {
 }
 
 .route-mode-switch-off .route-mode-switch-thumb {
-  background: #171717;
+  background: white;
   transform: translateX(-72px);
 }
 
