@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Drawer } from 'vaul';
 
 
@@ -16,12 +16,16 @@ function MetroMapStage() {
     const path = usePath((state: any) => state.path);
     const route = usePath((state: any) => state.route);
     const selectedFrom = usePath((state: any) => state.selectedFrom);
+    const routeStationIds = useMemo(
+        () => route?.stationDetails.map((station: { id: string }) => station.id) || [],
+        [route]
+    );
     const cockpitBody = (
         <>
             <SearchBox
                 onFromChange={() => setPlay(false)}
                 onRoutePlan={() => {
-                    setActiveSnapPoint('128px');
+                    setActiveSnapPoint('100px');
                     setPlay(true);
                 }}
             />
@@ -59,6 +63,7 @@ function MetroMapStage() {
                     <SvgComponent
                         path={path}
                         selectedStationId={selectedFrom}
+                        routeStationIds={routeStationIds}
                         setPlay={setPlay}
                         play={play}
                     />

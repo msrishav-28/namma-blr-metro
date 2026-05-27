@@ -17,10 +17,12 @@ gsap.registerPlugin(useGSAP);
 
 const VIEWBOX_WIDTH = 1500;
 const VIEWBOX_HEIGHT = 1450;
-const ROUTE_CAMERA_SCALE = 3.15;
+const ROUTE_CAMERA_SCALE = 12.6;
+const MIN_MAP_SCALE = 0.45;
+const MAX_MAP_SCALE = ROUTE_CAMERA_SCALE;
 const WHEEL_ZOOM_IN_SCALE = 1.65;
 const WHEEL_ZOOM_OUT_SCALE = 0.65;
-const INITIAL_MAP_SCALE = 4.5;
+const STATION_DWELL_SECONDS = 0.55;
 
 const fitTransform: MapTransform = {
   scaleX: 1,
@@ -87,7 +89,7 @@ const resolveStationCoordinates = () => {
 
 const stationCoordinates = resolveStationCoordinates();
 
-const createFocusTransform = (point: { x: number; y: number }, scale = INITIAL_MAP_SCALE): MapTransform => ({
+const createFocusTransform = (point: { x: number; y: number }, scale = ROUTE_CAMERA_SCALE): MapTransform => ({
   scaleX: scale,
   scaleY: scale,
   translateX: VIEWBOX_WIDTH / 2 - point.x * scale,
@@ -121,16 +123,78 @@ const makePathElement = (path: string) => {
   return element;
 };
 
+const distanceSquared = (a: { x: number; y: number }, b: { x: number; y: number }) =>
+  (a.x - b.x) ** 2 + (a.y - b.y) ** 2;
+
+const findClosestProgressOnPath = (
+  measure: SVGPathElement,
+  pathLength: number,
+  point: { x: number; y: number }
+) => {
+  const sampleCount = 180;
+  let bestLength = 0;
+  let bestDistance = Infinity;
+
+  for (let index = 0; index <= sampleCount; index += 1) {
+    const sampleLength = (pathLength * index) / sampleCount;
+    const samplePoint = measure.getPointAtLength(sampleLength);
+    const sampleDistance = distanceSquared(samplePoint, point);
+
+    if (sampleDistance < bestDistance) {
+      bestDistance = sampleDistance;
+      bestLength = sampleLength;
+    }
+  }
+
+  let low = clamp(bestLength - pathLength / sampleCount, 0, pathLength);
+  let high = clamp(bestLength + pathLength / sampleCount, 0, pathLength);
+
+  for (let index = 0; index < 16; index += 1) {
+    const left = low + (high - low) / 3;
+    const right = high - (high - low) / 3;
+    const leftDistance = distanceSquared(measure.getPointAtLength(left), point);
+    const rightDistance = distanceSquared(measure.getPointAtLength(right), point);
+
+    if (leftDistance < rightDistance) {
+      high = right;
+    } else {
+      low = left;
+    }
+  }
+
+  return clamp((low + high) / 2 / pathLength, 0, 1);
+};
+
+const getRouteStopProgresses = (
+  measure: SVGPathElement,
+  pathLength: number,
+  routeStationIds: string[]
+) => {
+  const stationProgresses = routeStationIds
+    .map((stationId) => stationCoordinates[stationId])
+    .filter(Boolean)
+    .map((point) => findClosestProgressOnPath(measure, pathLength, point))
+    .sort((a, b) => a - b);
+
+  const allProgresses = [0, ...stationProgresses, 1];
+
+  return allProgresses.filter((progress, index) => (
+    index === 0 || Math.abs(progress - allProgresses[index - 1]) > 0.001
+  ));
+};
+
 function SvgComponent({
   setPlay,
   play,
   path,
   selectedStationId,
+  routeStationIds,
 }: {
   setPlay: React.Dispatch<React.SetStateAction<boolean>>;
   play: boolean;
   path: string;
   selectedStationId: string;
+  routeStationIds: string[];
 }) {
   const [transform, setTransform] = useState<MapTransform>(fitTransform);
   const [isDragging, setIsDragging] = useState(false);
@@ -145,7 +209,7 @@ function SvgComponent({
     translateX: 0,
     translateY: 0,
   });
-  const tweenRef = useRef<gsap.core.Tween | null>(null);
+  const tweenRef = useRef<gsap.core.Timeline | null>(null);
   const playRef = useRef(play);
 
   useEffect(() => {
@@ -230,14 +294,40 @@ function SvgComponent({
     if (!path || !pathLength) return;
 
     const proxy = { progress: 0 };
-    tweenRef.current = gsap.to(proxy, {
-      progress: 1,
-      duration: clamp(pathLength / 95, 3.5, 18),
-      ease: 'power2.inOut',
+    const stopProgresses = getRouteStopProgresses(
+      pathMeasureRef.current!,
+      pathLength,
+      routeStationIds
+    );
+    const timeline = gsap.timeline({
       paused: true,
-      onUpdate: () => setCameraForProgress(proxy.progress),
       onComplete: () => setPlay(false),
     });
+
+    setCameraForProgress(0);
+
+    for (let index = 1; index < stopProgresses.length; index += 1) {
+      const previousProgress = stopProgresses[index - 1];
+      const nextProgress = stopProgresses[index];
+      const segmentLength = (nextProgress - previousProgress) * pathLength;
+
+      timeline.to(proxy, {
+        progress: nextProgress,
+        duration: clamp(segmentLength / 95, 0.35, 5),
+        ease: 'power2.inOut',
+        onUpdate: () => setCameraForProgress(proxy.progress),
+      });
+
+      if (index < stopProgresses.length - 1) {
+        timeline.to(proxy, {
+          progress: nextProgress,
+          duration: STATION_DWELL_SECONDS,
+          ease: 'none',
+        });
+      }
+    }
+
+    tweenRef.current = timeline;
 
     if (playRef.current) tweenRef.current.play(0);
 
@@ -245,7 +335,7 @@ function SvgComponent({
       tweenRef.current?.kill();
       tweenRef.current = null;
     };
-  }, { dependencies: [path, setCameraForProgress, setPlay], revertOnUpdate: true });
+  }, { dependencies: [path, routeStationIds, setCameraForProgress, setPlay], revertOnUpdate: true });
 
   useEffect(() => {
     if (!tweenRef.current) return;
@@ -284,7 +374,7 @@ function SvgComponent({
       if (!svgRef.current) return;
       const point = toSvgPoint(event, svgRef.current);
       setTransform((current) => {
-        const nextScale = clamp(current.scaleX * scale, 0.45, 3.5);
+        const nextScale = clamp(current.scaleX * scale, MIN_MAP_SCALE, MAX_MAP_SCALE);
         const factor = nextScale / current.scaleX;
         return {
           scaleX: nextScale,
@@ -302,7 +392,7 @@ function SvgComponent({
       const wheelScale = event.deltaY < 0 ? WHEEL_ZOOM_IN_SCALE : WHEEL_ZOOM_OUT_SCALE;
 
       setTransform((current) => {
-        const nextScale = clamp(current.scaleX * wheelScale, 0.45, 4.5);
+        const nextScale = clamp(current.scaleX * wheelScale, MIN_MAP_SCALE, MAX_MAP_SCALE);
         const factor = nextScale / current.scaleX;
 
         return {
@@ -317,7 +407,7 @@ function SvgComponent({
 
   const zoomBy = (scale: number) => {
     setTransform((current) => {
-      const nextScale = clamp(current.scaleX * scale, 0.45, 3.5);
+      const nextScale = clamp(current.scaleX * scale, MIN_MAP_SCALE, MAX_MAP_SCALE);
       return {
         scaleX: nextScale,
         scaleY: nextScale,
