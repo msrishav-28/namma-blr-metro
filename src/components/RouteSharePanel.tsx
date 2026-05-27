@@ -3,8 +3,8 @@ import { toPng } from 'html-to-image';
 import { memo, useMemo, useRef, useState } from 'react';
 
 import { useI18n } from '../i18n';
+import type { RouteSummary } from '../types/route';
 import { copyText } from '../utils/clipboard';
-import type { RouteSummary } from './SearchBox';
 
 interface RouteSharePanelProps {
     route: RouteSummary;

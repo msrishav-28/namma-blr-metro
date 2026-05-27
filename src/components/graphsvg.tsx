@@ -14,9 +14,9 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import edges from '../data/edge.json';
 import stationLabels from '../data/labels.json';
 import MetroTrain from '../assets/metro.svg?react';
-import type { CinematicZoomLevel, RouteAnimationMode } from './SearchBox';
 import Map, { type MapControls, type MapTransform } from './metromap';
 import { getLocalizedStationName, useI18n } from '../i18n';
+import type { CinematicZoomLevel, RouteAnimationMode } from '../types/route';
 
 gsap.registerPlugin(useGSAP);
 

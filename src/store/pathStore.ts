@@ -1,0 +1,44 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { create } from 'zustand';
+
+import stations from '../data/labels.json';
+import type { RouteSummary } from '../types/route';
+
+const isStationId = (stationId: string | null) =>
+  Boolean(stationId && stations.some((station) => station.id === stationId));
+
+export const getInitialRouteParams = () => {
+  if (typeof window === 'undefined') {
+    return {
+      from: stations[0]?.id || '',
+      to: stations[1]?.id || stations[0]?.id || '',
+      hasRouteQuery: false,
+    };
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get('from');
+  const to = params.get('to');
+
+  return {
+    from: isStationId(from) ? from! : stations[0]?.id || '',
+    to: isStationId(to) ? to! : stations[1]?.id || stations[0]?.id || '',
+    hasRouteQuery: isStationId(from) && isStationId(to),
+  };
+};
+
+export const usePath = create((set: any) => {
+  const initialRouteParams = getInitialRouteParams();
+
+  return {
+    path: '',
+    route: null,
+    selectedFrom: initialRouteParams.from,
+    setSelectedFrom: (stationId: string) => set(() => ({ selectedFrom: stationId })),
+    setRoute: (newPath: string, route: RouteSummary) =>
+      set(() => ({ path: newPath, route })),
+    setPath: (newPath: string) => set(() => ({ path: newPath })),
+    setInverse: (newPath: string) => set(() => ({ path: newPath })),
+  };
+});

@@ -3,11 +3,13 @@ import { lazy, memo, Suspense, useCallback, useEffect, useMemo, useState } from 
 import { Drawer } from 'vaul';
 
 import { getLocalizedStationName, useI18n } from '../i18n';
+import { usePath } from '../store/pathStore';
+import type { CinematicZoomLevel } from '../types/route';
 import CreatorLinks from './CreatorLinks';
 import JourneyInfoPanel from './JourneyInfoPanel';
-import { SearchBox, type CinematicZoomLevel, usePath } from './SearchBox';
 
 const SvgComponent = lazy(() => import('./graphsvg'));
+const SearchBox = lazy(() => import('./SearchBox'));
 const RouteSharePanel = lazy(() => import('./RouteSharePanel'));
 const JourneyTimeline = lazy(() => import('./JourneyTimeline'));
 
@@ -30,10 +32,53 @@ function useIsDesktop() {
     return isDesktop;
 }
 
+function useDeferredInteractiveLoad() {
+    const [isReady, setIsReady] = useState(false);
+
+    useEffect(() => {
+        let timeoutId = 0;
+        let frameId = 0;
+        let idleId = 0;
+
+        const markReady = () => setIsReady(true);
+        frameId = window.requestAnimationFrame(() => {
+            if (typeof window.requestIdleCallback === 'function') {
+                idleId = window.requestIdleCallback(markReady, { timeout: 1200 });
+            } else {
+                timeoutId = globalThis.setTimeout(markReady, 350);
+            }
+        });
+
+        return () => {
+            window.cancelAnimationFrame(frameId);
+            if (idleId) window.cancelIdleCallback(idleId);
+            if (timeoutId) window.clearTimeout(timeoutId);
+        };
+    }, []);
+
+    return isReady;
+}
+
 function MapFallback() {
     return (
         <div className="flex h-full min-h-[inherit] items-center justify-center bg-[#f4f0e8] text-sm font-semibold text-neutral-500">
             Loading metro map...
+        </div>
+    );
+}
+
+function SearchFallback() {
+    return (
+        <div className="grid gap-3 [--station-select-height:48px] sm:gap-4 sm:[--station-select-height:58px]">
+            <div className="grid grid-cols-1 items-center gap-2 sm:grid-cols-2 sm:gap-3">
+                <div className="h-[var(--station-select-height)] rounded-full bg-neutral-100" />
+                <div className="h-[var(--station-select-height)] rounded-full bg-neutral-100" />
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+                <div className="h-11 w-32 rounded-full bg-neutral-100" />
+                <div className="h-11 w-28 rounded-full bg-neutral-100" />
+                <div className="h-11 w-32 rounded-full bg-neutral-100" />
+            </div>
         </div>
     );
 }
@@ -71,6 +116,7 @@ function MetroMapStage() {
     const [activeSnapPoint, setActiveSnapPoint] = useState<number | string | null>('220px');
     const [activeRouteStationId, setActiveRouteStationId] = useState<string | null>(null);
     const isDesktop = useIsDesktop();
+    const canLoadInteractiveMap = useDeferredInteractiveLoad();
 
     const path = usePath((state: any) => state.path);
     const route = usePath((state: any) => state.route);
@@ -91,14 +137,16 @@ function MetroMapStage() {
 
     const cockpitBody = (
         <>
-            <SearchBox
-                animationMode={animationMode}
-                cinematicZoom={cinematicZoom}
-                onAnimationModeChange={setAnimationMode}
-                onCinematicZoomChange={setCinematicZoom}
-                onFromChange={handleFromChange}
-                onRoutePlan={handleRoutePlan}
-            />
+            <Suspense fallback={<SearchFallback />}>
+                <SearchBox
+                    animationMode={animationMode}
+                    cinematicZoom={cinematicZoom}
+                    onAnimationModeChange={setAnimationMode}
+                    onCinematicZoomChange={setCinematicZoom}
+                    onFromChange={handleFromChange}
+                    onRoutePlan={handleRoutePlan}
+                />
+            </Suspense>
             <section className="grid gap-3 border-t border-neutral-200 pt-3 sm:gap-4 sm:pt-5">
                 <div>
                     <h2 className="text-lg font-semibold sm:mt-2 sm:text-xl">
@@ -132,18 +180,22 @@ function MetroMapStage() {
         <div className="min-h-svh overflow-hidden bg-[#f4f0e8] p-2 text-neutral-950 sm:p-4 lg:overflow-visible lg:p-6">
             <div className="grid min-h-[calc(100svh-1.5rem)] gap-4 sm:min-h-[calc(100svh-2rem)] lg:min-h-[calc(100svh-3rem)] lg:grid-cols-2">
                 <main className="relative min-h-[calc(100svh-1.5rem)] overflow-hidden rounded-lg border border-neutral-200 shadow-sm sm:min-h-[calc(100svh-2rem)] lg:min-h-0">
-                    <Suspense fallback={<MapFallback />}>
-                        <SvgComponent
-                            path={path}
-                            selectedStationId={selectedFrom}
-                            routeStationIds={routeStationIds}
-                            onActiveStationChange={setActiveRouteStationId}
-                            animationMode={animationMode}
-                            cinematicZoom={cinematicZoom}
-                            setPlay={setPlay}
-                            play={play}
-                        />
-                    </Suspense>
+                    {canLoadInteractiveMap ? (
+                        <Suspense fallback={<MapFallback />}>
+                            <SvgComponent
+                                path={path}
+                                selectedStationId={selectedFrom}
+                                routeStationIds={routeStationIds}
+                                onActiveStationChange={setActiveRouteStationId}
+                                animationMode={animationMode}
+                                cinematicZoom={cinematicZoom}
+                                setPlay={setPlay}
+                                play={play}
+                            />
+                        </Suspense>
+                    ) : (
+                        <MapFallback />
+                    )}
                 </main>
 
                 {!isDesktop ? (

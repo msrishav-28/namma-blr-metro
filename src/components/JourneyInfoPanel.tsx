@@ -1,8 +1,8 @@
 import type React from 'react';
 import { useState } from 'react';
 
-import type { RouteSummary } from './SearchBox';
 import { getLocalizedStationName, useI18n } from '../i18n';
+import type { RouteSummary } from '../types/route';
 
 function ClockIcon() {
     return (

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-refresh/only-export-components */
 
 import SVGPathUtils from '../utils/index';
 
@@ -7,11 +6,12 @@ import { PlayIcon } from '@radix-ui/react-icons';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Select, { type SingleValue, type StylesConfig } from 'react-select';
-import { create } from 'zustand';
 
 import edges from '../data/edge.json';
 import stations from '../data/labels.json';
 import { availableLanguages, getLocalizedStationName, useI18n, type Language } from '../i18n';
+import { getInitialRouteParams, usePath } from '../store/pathStore';
+import type { CinematicZoomLevel, RouteAnimationMode, RouteInterchange, RouteStationDetail } from '../types/route';
 
 
 
@@ -129,74 +129,6 @@ for (const station of stations) {
 for (const edge of edges) {
   graph.addEdge(edge.from, edge.to, 1);
 }
-
-const isStationId = (stationId: string | null) =>
-  Boolean(stationId && stations.some((station) => station.id === stationId));
-
-const getInitialRouteParams = () => {
-  if (typeof window === 'undefined') {
-    return {
-      from: stations[0]?.id || '',
-      to: stations[1]?.id || stations[0]?.id || '',
-      hasRouteQuery: false,
-    };
-  }
-
-  const params = new URLSearchParams(window.location.search);
-  const from = params.get('from');
-  const to = params.get('to');
-
-  return {
-    from: isStationId(from) ? from! : stations[0]?.id || '',
-    to: isStationId(to) ? to! : stations[1]?.id || stations[0]?.id || '',
-    hasRouteQuery: isStationId(from) && isStationId(to),
-  };
-};
-
-
-export const usePath = create((set) => {
-  const initialRouteParams = getInitialRouteParams();
-
-  return {
-    path: '',
-    route: null,
-    selectedFrom: initialRouteParams.from,
-    setSelectedFrom: (stationId: string) => set(() => ({ selectedFrom: stationId })),
-    setRoute: (newPath: string, route: RouteSummary) =>
-      set(() => ({ path: newPath, route })),
-    setPath: (newPath: string) => set(() => ({ path: newPath })),
-    setInverse: (newPath: string) => set(() => ({ path: newPath })),
-  };
-});
-
-export interface RouteSummary {
-  from: string;
-  to: string;
-  fromName: string;
-  toName: string;
-  stops: string[];
-  stationDetails: RouteStationDetail[];
-  interchanges: RouteInterchange[];
-  distance: number;
-  fare: number;
-  estimatedMinutes: number;
-}
-
-export interface RouteStationDetail {
-  id: string;
-  name: string;
-  lineColors: string[];
-}
-
-export interface RouteInterchange {
-  id: string;
-  name: string;
-  fromColor: string;
-  toColor: string;
-}
-
-export type RouteAnimationMode = 'smooth' | 'step';
-export type CinematicZoomLevel = 1 | 2 | 3;
 
 const stationName = (id: string, language: Language) => {
   const fallbackName = stations.find((station) => station.id === id)?.text || id;
@@ -475,21 +407,29 @@ export function SearchBox({
           control={control}
           name="from"
           render={({ field }) => (
-            <Select
-              instanceId="from-station"
-              options={stationOptions}
-              placeholder={t('fromStation')}
-              value={stationOptions.find((option) => option.value === field.value) || null}
-              onChange={(option: SingleValue<StationOption>) => {
-                const nextValue = option?.value || '';
-                field.onChange(nextValue);
-                setSelectedFrom(nextValue);
-                onFromChange?.();
-              }}
-              formatOptionLabel={(option) => <StationOptionLabel option={option} />}
-              styles={selectStyles}
-              isSearchable={!isMobile}
-            />
+            <div>
+              <label id="from-station-label" htmlFor="from-station-input" className="sr-only">
+                {t('fromStation')}
+              </label>
+              <Select
+                inputId="from-station-input"
+                instanceId="from-station"
+                name="from"
+                aria-labelledby="from-station-label"
+                options={stationOptions}
+                placeholder={t('fromStation')}
+                value={stationOptions.find((option) => option.value === field.value) || null}
+                onChange={(option: SingleValue<StationOption>) => {
+                  const nextValue = option?.value || '';
+                  field.onChange(nextValue);
+                  setSelectedFrom(nextValue);
+                  onFromChange?.();
+                }}
+                formatOptionLabel={(option) => <StationOptionLabel option={option} />}
+                styles={selectStyles}
+                isSearchable={!isMobile}
+              />
+            </div>
           )}
         />
 
@@ -497,16 +437,24 @@ export function SearchBox({
           control={control}
           name="to"
           render={({ field }) => (
-            <Select
-              instanceId="to-station"
-              options={stationOptions}
-              placeholder={t('toStation')}
-              value={stationOptions.find((option) => option.value === field.value) || null}
-              onChange={(option: SingleValue<StationOption>) => field.onChange(option?.value || '')}
-              formatOptionLabel={(option) => <StationOptionLabel option={option} />}
-              styles={selectStyles}
-              isSearchable={!isMobile}
-            />
+            <div>
+              <label id="to-station-label" htmlFor="to-station-input" className="sr-only">
+                {t('toStation')}
+              </label>
+              <Select
+                inputId="to-station-input"
+                instanceId="to-station"
+                name="to"
+                aria-labelledby="to-station-label"
+                options={stationOptions}
+                placeholder={t('toStation')}
+                value={stationOptions.find((option) => option.value === field.value) || null}
+                onChange={(option: SingleValue<StationOption>) => field.onChange(option?.value || '')}
+                formatOptionLabel={(option) => <StationOptionLabel option={option} />}
+                styles={selectStyles}
+                isSearchable={!isMobile}
+              />
+            </div>
           )}
         />
       </div>
@@ -576,3 +524,5 @@ export function SearchBox({
     </form>
   );
 }
+
+export default SearchBox;

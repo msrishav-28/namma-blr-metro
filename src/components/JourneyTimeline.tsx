@@ -5,8 +5,8 @@ import { toPng } from 'html-to-image';
 import edges from '../data/edge.json';
 import stations from '../data/labels.json';
 import RouteDirectionCard from './RouteDirectionCard';
-import type { RouteSummary, RouteStationDetail } from './SearchBox';
 import { getLocalizedStationName, useI18n, type Language } from '../i18n';
+import type { RouteStationDetail, RouteSummary } from '../types/route';
 
 interface JourneyTimelineProps {
     route: RouteSummary | null;
