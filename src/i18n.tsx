@@ -46,7 +46,19 @@ type TranslationKey =
   | 'linkedin'
   | 'github'
   | 'copySupportEmail'
-  | 'supportEmailCopied';
+  | 'supportEmailCopied'
+  | 'shareRoute'
+  | 'copyRouteLink'
+  | 'routeLinkCopied'
+  | 'shareVia'
+  | 'shareOnTwitter'
+  | 'shareOnReddit'
+  | 'shareOnInstagram'
+  | 'instagramLinkCopied'
+  | 'downloadRoutePng'
+  | 'routePngDownloading'
+  | 'routePng'
+  | 'shareRouteText';
 
 type TranslationValues = Record<string, string | number>;
 
@@ -94,6 +106,18 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     github: 'GitHub',
     copySupportEmail: 'Copy support email',
     supportEmailCopied: 'Email copied',
+    shareRoute: 'Share route',
+    copyRouteLink: 'Copy route link',
+    routeLinkCopied: 'Route link copied',
+    shareVia: 'Share via',
+    shareOnTwitter: 'Twitter/X',
+    shareOnReddit: 'Reddit',
+    shareOnInstagram: 'Instagram',
+    instagramLinkCopied: 'Link copied for Instagram',
+    downloadRoutePng: 'Download route PNG',
+    routePngDownloading: 'Preparing PNG',
+    routePng: 'Route PNG',
+    shareRouteText: 'Delhi Metro route from {{from}} to {{to}} with {{stops}} stops, {{time}} travel time, and ₹{{fare}} fare.',
   },
   hi: {
     language: 'भाषा',
@@ -138,6 +162,18 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     github: 'गिटहब',
     copySupportEmail: 'सपोर्ट ईमेल कॉपी करें',
     supportEmailCopied: 'ईमेल कॉपी हो गया',
+    shareRoute: 'रूट शेयर करें',
+    copyRouteLink: 'रूट लिंक कॉपी करें',
+    routeLinkCopied: 'रूट लिंक कॉपी हो गया',
+    shareVia: 'शेयर करें',
+    shareOnTwitter: 'ट्विटर/X',
+    shareOnReddit: 'रेडिट',
+    shareOnInstagram: 'इंस्टाग्राम',
+    instagramLinkCopied: 'इंस्टाग्राम के लिए लिंक कॉपी हो गया',
+    downloadRoutePng: 'रूट PNG डाउनलोड करें',
+    routePngDownloading: 'PNG तैयार हो रहा है',
+    routePng: 'रूट PNG',
+    shareRouteText: '{{from}} से {{to}} तक दिल्ली मेट्रो रूट: {{stops}} स्टॉप, {{time}} यात्रा समय, और ₹{{fare}} किराया।',
   },
 };
 
