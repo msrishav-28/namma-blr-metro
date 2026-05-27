@@ -449,7 +449,7 @@ export function SearchBox({
       })}
       className='grid gap-3 [--station-select-height:48px] [--station-select-x-padding:12px] sm:gap-4 sm:[--station-select-height:58px] sm:[--station-select-x-padding:14px]'
     >
-      <div className='grid grid-cols-1 items-center gap-2 sm:grid-cols-[minmax(0,1fr)_44px_minmax(0,1fr)] sm:gap-3'>
+      <div className='grid grid-cols-1 items-center gap-2 sm:grid-cols-2 sm:gap-3'>
         <Controller
           control={control}
           name="from"

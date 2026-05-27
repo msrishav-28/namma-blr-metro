@@ -435,22 +435,6 @@ function SvgComponent({
         }}
         train={
           <>
-            {path ? (
-            <>
-              <path ref={routePathRef} stroke="transparent" d={path} />
-              <path stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" d={path} />
-              <path stroke="#111827" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" d={path} />
-              <g ref={trainRef}>
-                <circle r={18} fill="rgba(255,255,255,0.28)" />
-                <image
-                  width={34}
-                  height={30}
-                  href="/images/metro.png"
-                  transform="translate(-17 -15)"
-                />
-              </g>
-            </>
-            ) : null}
             {selectedStationPoint ? (
               <g transform={`translate(${selectedStationPoint.x} ${selectedStationPoint.y})`} pointerEvents="none">
                 <circle r={16} fill="#dc2626" opacity={0.16}>
@@ -460,13 +444,31 @@ function SvgComponent({
                 <circle r={7} fill="#dc2626" stroke="#fff" strokeWidth={2.5} />
               </g>
             ) : null}
+            {path ? (
+              <>
+                <path ref={routePathRef} stroke="transparent" d={path} />
+                <path stroke="white" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" d={path} />
+                <path stroke="#111827" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" d={path} />
+                <g ref={trainRef}>
+                  <circle r={18} fill="rgba(255,255,255,0.28)" />
+                  <image
+                    width={34}
+                    height={30}
+                    href="/images/metro.png"
+                    transform="translate(-17 -15)"
+                  />
+                </g>
+              </>
+            ) : null}
+
+
           </>
         }
         ref={svgRef}
         zoomFunction={mapControls}
       />
 
-      <div className="absolute right-4 top-4">
+      <div className="absolute right-0 top-0">
         <div className="flex flex-col gap-2 rounded-md border border-white/15  p-2 shadow-lg backdrop-blur">
           <button
             onClick={() => path && setPlay((p) => !p)}
