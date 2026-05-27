@@ -515,7 +515,13 @@ export function SearchBox({
           >
             {availableLanguages.map((option) => (
               <option key={option} value={option}>
-                {option === 'en' ? t('english') : t('hindi')}
+                {option === 'en'
+                  ? t('english')
+                  : option === 'hi'
+                    ? t('hindi')
+                    : option === 'mr'
+                      ? t('marathi')
+                      : t('bengali')}
               </option>
             ))}
           </select>

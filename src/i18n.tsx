@@ -2,12 +2,14 @@
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
-export type Language = 'en' | 'hi';
+export type Language = 'en' | 'hi' | 'mr' | 'bn';
 
 type TranslationKey =
   | 'language'
   | 'english'
   | 'hindi'
+  | 'marathi'
+  | 'bengali'
   | 'fromStation'
   | 'toStation'
   | 'planJourney'
@@ -67,6 +69,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     language: 'Language',
     english: 'English',
     hindi: 'Hindi',
+    marathi: 'Marathi',
+    bengali: 'Bengali',
     fromStation: 'From station',
     toStation: 'To station',
     planJourney: 'Plan journey',
@@ -123,6 +127,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     language: 'भाषा',
     english: 'अंग्रेज़ी',
     hindi: 'हिंदी',
+    marathi: 'मराठी',
+    bengali: 'बंगाली',
     fromStation: 'प्रस्थान स्टेशन',
     toStation: 'गंतव्य स्टेशन',
     planJourney: 'यात्रा योजना',
@@ -174,6 +180,122 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     routePngDownloading: 'PNG तैयार हो रहा है',
     routePng: 'रूट PNG',
     shareRouteText: '{{from}} से {{to}} तक दिल्ली मेट्रो रूट: {{stops}} स्टॉप, {{time}} यात्रा समय, और ₹{{fare}} किराया।',
+  },
+  mr: {
+    language: 'भाषा',
+    english: 'इंग्रजी',
+    hindi: 'हिंदी',
+    marathi: 'मराठी',
+    bengali: 'बंगाली',
+    fromStation: 'प्रस्थान स्थानक',
+    toStation: 'गंतव्य स्थानक',
+    planJourney: 'प्रवास नियोजित करा',
+    useSmoothRouteAnimation: 'स्मूथ मार्ग अॅनिमेशन वापरा',
+    smoothRouteAnimation: 'स्मूथ मार्ग अॅनिमेशन',
+    stepRouteAnimation: 'स्टेप मार्ग अॅनिमेशन',
+    smooth: 'स्मूथ',
+    step: 'स्टेप',
+    cinematicExportZoom: 'सिनेमॅटिक एक्सपोर्ट झूम',
+    swapFromAndToStations: 'प्रस्थान आणि गंतव्य स्थानके बदला',
+    swapStations: 'स्थानके बदला',
+    chooseRoute: 'मार्ग निवडा',
+    routeTitle: '{{from}} ते {{to}}',
+    routePlanner: 'मार्ग नियोजक',
+    delhiMetro: 'दिल्ली मेट्रो',
+    fare: 'भाडे',
+    stops: 'थांबे',
+    time: 'वेळ',
+    minutesShort: '{{count}}मि',
+    minutes: '{{count}} मिनिटे',
+    change: 'बदला',
+    selectInterchangePrompt: 'इंटरचेंज स्थानके पाहण्यासाठी प्रस्थान आणि गंतव्य निवडा.',
+    allStations: 'सर्व स्थानके',
+    interchangeStations: 'इंटरचेंज स्थानके',
+    changeMetroLineHere: 'इथे मेट्रो लाईन बदला',
+    noInterchangeNeeded: 'या मार्गावर इंटरचेंजची गरज नाही.',
+    journeyTimelinePrompt: 'स्थानक टाइमलाइन पाहण्यासाठी प्रवास नियोजित करा.',
+    journeyTimeline: 'प्रवास टाइमलाइन',
+    stations: '{{count}} स्थानके',
+    downloadJourneyTimeline: 'प्रवास टाइमलाइन PNG म्हणून डाउनलोड करा',
+    downloadTimeline: 'टाइमलाइन डाउनलोड करा',
+    toward: 'च्या दिशेने',
+    selectDestination: 'गंतव्य निवडा',
+    creatorLinks: 'निर्मात्याचे दुवे',
+    createdBy: 'निर्मिती',
+    linkedin: 'LinkedIn',
+    github: 'GitHub',
+    copySupportEmail: 'सपोर्ट ईमेल कॉपी करा',
+    supportEmailCopied: 'ईमेल कॉपी झाला',
+    shareRoute: 'मार्ग शेअर करा',
+    copyRouteLink: 'मार्ग लिंक कॉपी करा',
+    routeLinkCopied: 'मार्ग लिंक कॉपी झाली',
+    shareVia: 'शेअर करा',
+    shareOnTwitter: 'Twitter/X',
+    shareOnReddit: 'Reddit',
+    shareOnInstagram: 'Instagram',
+    instagramLinkCopied: 'Instagram साठी लिंक कॉपी झाली',
+    downloadRoutePng: 'मार्ग PNG डाउनलोड करा',
+    routePngDownloading: 'PNG तयार होत आहे',
+    routePng: 'मार्ग PNG',
+    shareRouteText: '{{from}} ते {{to}} दिल्ली मेट्रो मार्ग: {{stops}} थांबे, {{time}} प्रवास वेळ, आणि ₹{{fare}} भाडे.',
+  },
+  bn: {
+    language: 'ভাষা',
+    english: 'ইংরেজি',
+    hindi: 'হিন্দি',
+    marathi: 'মারাঠি',
+    bengali: 'বাংলা',
+    fromStation: 'যাত্রার স্টেশন',
+    toStation: 'গন্তব্য স্টেশন',
+    planJourney: 'যাত্রা পরিকল্পনা করুন',
+    useSmoothRouteAnimation: 'স্মুথ রুট অ্যানিমেশন ব্যবহার করুন',
+    smoothRouteAnimation: 'স্মুথ রুট অ্যানিমেশন',
+    stepRouteAnimation: 'ধাপে ধাপে রুট অ্যানিমেশন',
+    smooth: 'স্মুথ',
+    step: 'ধাপে ধাপে',
+    cinematicExportZoom: 'সিনেম্যাটিক এক্সপোর্ট জুম',
+    swapFromAndToStations: 'যাত্রার এবং গন্তব্য স্টেশন বদলান',
+    swapStations: 'স্টেশন বদলান',
+    chooseRoute: 'রুট বেছে নিন',
+    routeTitle: '{{from}} থেকে {{to}}',
+    routePlanner: 'রুট প্ল্যানার',
+    delhiMetro: 'দিল্লি মেট্রো',
+    fare: 'ভাড়া',
+    stops: 'স্টপ',
+    time: 'সময়',
+    minutesShort: '{{count}}মি',
+    minutes: '{{count}} মিনিট',
+    change: 'পরিবর্তন',
+    selectInterchangePrompt: 'ইন্টারচেঞ্জ স্টেশন দেখতে যাত্রার এবং গন্তব্য স্টেশন নির্বাচন করুন।',
+    allStations: 'সব স্টেশন',
+    interchangeStations: 'ইন্টারচেঞ্জ স্টেশন',
+    changeMetroLineHere: 'এখানে মেট্রো লাইন বদলান',
+    noInterchangeNeeded: 'এই রুটে ইন্টারচেঞ্জের প্রয়োজন নেই।',
+    journeyTimelinePrompt: 'স্টেশন টাইমলাইন দেখতে একটি যাত্রা পরিকল্পনা করুন।',
+    journeyTimeline: 'যাত্রার টাইমলাইন',
+    stations: '{{count}} স্টেশন',
+    downloadJourneyTimeline: 'যাত্রার টাইমলাইন PNG হিসেবে ডাউনলোড করুন',
+    downloadTimeline: 'টাইমলাইন ডাউনলোড করুন',
+    toward: 'দিকে',
+    selectDestination: 'গন্তব্য নির্বাচন করুন',
+    creatorLinks: 'ক্রিয়েটর লিংক',
+    createdBy: 'তৈরি করেছেন',
+    linkedin: 'LinkedIn',
+    github: 'GitHub',
+    copySupportEmail: 'সাপোর্ট ইমেল কপি করুন',
+    supportEmailCopied: 'ইমেল কপি হয়েছে',
+    shareRoute: 'রুট শেয়ার করুন',
+    copyRouteLink: 'রুট লিংক কপি করুন',
+    routeLinkCopied: 'রুট লিংক কপি হয়েছে',
+    shareVia: 'শেয়ার করুন',
+    shareOnTwitter: 'Twitter/X',
+    shareOnReddit: 'Reddit',
+    shareOnInstagram: 'Instagram',
+    instagramLinkCopied: 'Instagram-এর জন্য লিংক কপি হয়েছে',
+    downloadRoutePng: 'রুট PNG ডাউনলোড করুন',
+    routePngDownloading: 'PNG প্রস্তুত হচ্ছে',
+    routePng: 'রুট PNG',
+    shareRouteText: '{{from}} থেকে {{to}} দিল্লি মেট্রো রুট: {{stops}} স্টপ, {{time}} যাত্রার সময়, এবং ₹{{fare}} ভাড়া।',
   },
 };
 
@@ -421,7 +543,235 @@ const stationNamesHi: Record<string, string> = {
   S55: 'सेक्टर 55-56',
 };
 
-const languageOptions: Language[] = ['en', 'hi'];
+const languageOptions: Language[] = ['en', 'hi', 'mr', 'bn'];
+
+type TransliterationScript = 'devanagari' | 'bengali';
+
+const transliterationMaps = {
+  devanagari: {
+    virama: '्',
+    vowels: {
+      a: ['अ', ''],
+      aa: ['आ', 'ा'],
+      i: ['इ', 'ि'],
+      ee: ['ई', 'ी'],
+      u: ['उ', 'ु'],
+      oo: ['ऊ', 'ू'],
+      e: ['ए', 'े'],
+      ai: ['ऐ', 'ै'],
+      o: ['ओ', 'ो'],
+      au: ['औ', 'ौ'],
+    },
+    consonants: {
+      kh: 'ख',
+      gh: 'घ',
+      chh: 'छ',
+      ch: 'च',
+      jh: 'झ',
+      th: 'थ',
+      dh: 'ध',
+      ph: 'फ',
+      bh: 'भ',
+      sh: 'श',
+      k: 'क',
+      g: 'ग',
+      j: 'ज',
+      t: 'ट',
+      d: 'ड',
+      n: 'न',
+      p: 'प',
+      b: 'ब',
+      m: 'म',
+      y: 'य',
+      r: 'र',
+      l: 'ल',
+      v: 'व',
+      w: 'व',
+      s: 'स',
+      h: 'ह',
+      f: 'फ',
+      z: 'ज़',
+      q: 'क',
+      x: 'क्स',
+    },
+    letters: {
+      a: 'ए',
+      b: 'बी',
+      c: 'सी',
+      d: 'डी',
+      e: 'ई',
+      f: 'एफ',
+      g: 'जी',
+      h: 'एच',
+      i: 'आई',
+      j: 'जे',
+      k: 'के',
+      l: 'एल',
+      m: 'एम',
+      n: 'एन',
+      o: 'ओ',
+      p: 'पी',
+      q: 'क्यू',
+      r: 'आर',
+      s: 'एस',
+      t: 'टी',
+      u: 'यू',
+      v: 'वी',
+      w: 'डब्ल्यू',
+      x: 'एक्स',
+      y: 'वाई',
+      z: 'ज़ेड',
+    },
+  },
+  bengali: {
+    virama: '্',
+    vowels: {
+      a: ['অ', ''],
+      aa: ['আ', 'া'],
+      i: ['ই', 'ি'],
+      ee: ['ঈ', 'ী'],
+      u: ['উ', 'ু'],
+      oo: ['ঊ', 'ূ'],
+      e: ['এ', 'ে'],
+      ai: ['ঐ', 'ৈ'],
+      o: ['ও', 'ো'],
+      au: ['ঔ', 'ৌ'],
+    },
+    consonants: {
+      kh: 'খ',
+      gh: 'ঘ',
+      chh: 'ছ',
+      ch: 'চ',
+      jh: 'ঝ',
+      th: 'থ',
+      dh: 'ধ',
+      ph: 'ফ',
+      bh: 'ভ',
+      sh: 'শ',
+      k: 'ক',
+      g: 'গ',
+      j: 'জ',
+      t: 'ট',
+      d: 'ড',
+      n: 'ন',
+      p: 'প',
+      b: 'ব',
+      m: 'ম',
+      y: 'য',
+      r: 'র',
+      l: 'ল',
+      v: 'ভ',
+      w: 'ও',
+      s: 'স',
+      h: 'হ',
+      f: 'ফ',
+      z: 'জ',
+      q: 'ক',
+      x: 'ক্স',
+    },
+    letters: {
+      a: 'এ',
+      b: 'বি',
+      c: 'সি',
+      d: 'ডি',
+      e: 'ই',
+      f: 'এফ',
+      g: 'জি',
+      h: 'এইচ',
+      i: 'আই',
+      j: 'জে',
+      k: 'কে',
+      l: 'এল',
+      m: 'এম',
+      n: 'এন',
+      o: 'ও',
+      p: 'পি',
+      q: 'কিউ',
+      r: 'আর',
+      s: 'এস',
+      t: 'টি',
+      u: 'ইউ',
+      v: 'ভি',
+      w: 'ডব্লিউ',
+      x: 'এক্স',
+      y: 'ওয়াই',
+      z: 'জেড',
+    },
+  },
+} as const;
+
+const vowelPatterns = ['ai', 'au', 'aa', 'ee', 'oo', 'ei', 'ou', 'a', 'i', 'u', 'e', 'o'] as const;
+const consonantPatterns = ['chh', 'kh', 'gh', 'ch', 'jh', 'th', 'dh', 'ph', 'bh', 'sh', 'k', 'g', 'j', 't', 'd', 'n', 'p', 'b', 'm', 'y', 'r', 'l', 'v', 'w', 's', 'h', 'f', 'z', 'q', 'x'] as const;
+const softFinalConsonants = new Set(['r', 'n', 'm', 'l', 's', 'h', 'y']);
+
+const normalizeVowel = (vowel: string) => {
+  if (vowel === 'ei') return 'ai';
+  if (vowel === 'ou') return 'au';
+  return vowel as keyof typeof transliterationMaps.devanagari.vowels;
+};
+
+const matchPattern = <T extends readonly string[]>(text: string, index: number, patterns: T) =>
+  patterns.find((pattern) => text.startsWith(pattern, index));
+
+const transliterateAcronym = (word: string, script: TransliterationScript) => {
+  const { letters } = transliterationMaps[script];
+  return word
+    .toLowerCase()
+    .split('')
+    .map((letter) => letters[letter as keyof typeof letters] || letter)
+    .join(' ');
+};
+
+const transliterateWord = (word: string, script: TransliterationScript) => {
+  if (/^[A-Z]{2,}$/.test(word)) return transliterateAcronym(word, script);
+
+  const map = transliterationMaps[script];
+  const text = word.toLowerCase();
+  let result = '';
+  let index = 0;
+
+  while (index < text.length) {
+    const current = text[index];
+
+    if (!/[a-z]/.test(current)) {
+      result += current;
+      index += 1;
+      continue;
+    }
+
+    const vowel = matchPattern(text, index, vowelPatterns);
+    if (vowel) {
+      result += map.vowels[normalizeVowel(vowel)][0];
+      index += vowel.length;
+      continue;
+    }
+
+    const consonant = matchPattern(text, index, consonantPatterns);
+    if (!consonant) {
+      result += current;
+      index += 1;
+      continue;
+    }
+
+    const nextIndex = index + consonant.length;
+    const nextVowel = matchPattern(text, nextIndex, vowelPatterns);
+
+    if (nextVowel) {
+      result += map.consonants[consonant as keyof typeof map.consonants] + map.vowels[normalizeVowel(nextVowel)][1];
+      index = nextIndex + nextVowel.length;
+      continue;
+    }
+
+    const isSoftFinal = nextIndex >= text.length && softFinalConsonants.has(consonant);
+    result += map.consonants[consonant as keyof typeof map.consonants] + (isSoftFinal ? '' : map.virama);
+    index = nextIndex;
+  }
+
+  return result;
+};
+
+const transliterateStationName = (name: string, script: TransliterationScript) =>
+  name.replace(/[A-Za-z]+/g, (word) => transliterateWord(word, script));
 
 interface I18nContextValue {
   language: Language;
@@ -449,7 +799,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     window.localStorage.setItem('language', language);
 
     const url = new URL(window.location.href);
-    if (language === 'hi') {
+    if (language !== 'en') {
       url.searchParams.set('lang', language);
     } else {
       url.searchParams.delete('lang');
@@ -486,5 +836,10 @@ export const useI18n = () => {
 
 export const availableLanguages = languageOptions;
 
-export const getLocalizedStationName = (id: string, fallbackName: string, language: Language) =>
-  language === 'hi' ? stationNamesHi[id] || fallbackName : fallbackName;
+export const getLocalizedStationName = (id: string, fallbackName: string, language: Language) => {
+  if (language === 'hi') return stationNamesHi[id] || transliterateStationName(fallbackName, 'devanagari');
+  if (language === 'mr') return transliterateStationName(fallbackName, 'devanagari');
+  if (language === 'bn') return transliterateStationName(fallbackName, 'bengali');
+
+  return fallbackName;
+};
