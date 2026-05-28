@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: http://metro.coolhead.in/sitemap.xml
+Sitemap: https://metro.coolhead.in/sitemap.xml

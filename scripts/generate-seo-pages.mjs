@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const indexPath = path.join(distDir, 'index.html');
-const baseUrl = (process.env.SITE_URL || 'http://metro.coolhead.in').replace(/\/$/, '');
+const baseUrl = (process.env.SITE_URL || 'https://metro.coolhead.in').replace(/\/$/, '');
 const sitemapUrlLimit = 45000;
 const today = new Date().toISOString().slice(0, 10);
 
@@ -283,5 +283,10 @@ ${sitemapChunks.map((_, index) => `  <sitemap>
 `;
 
 await writeFile(path.join(distDir, 'sitemap.xml'), sitemapIndex);
+await writeFile(path.join(distDir, 'robots.txt'), `User-agent: *
+Allow: /
+
+Sitemap: ${baseUrl}/sitemap.xml
+`);
 
 console.log(`Generated ${stations.length} station pages, ${routes.length} route pages, ${sitemapChunks.length} sitemap files, and sitemap.xml index.`);
