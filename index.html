@@ -22,7 +22,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="scrolllaunch-verify" content="36123bd46ae1cf8ae73322369ad44c06" />
   <meta name="description"
-    content="Plan Delhi Metro journeys with an interactive route map, station search, fare estimate, travel time, stop count, interchange details, line-color guidance, and English, Hindi, Marathi, and Bengali support." />
+    content="Plan Delhi Metro routes with station search, fare estimates, travel time, stop count, interchanges, and an interactive metro map." />
   <meta name="keywords"
     content="Delhi Metro route planner, Delhi Metro map, Delhi Metro fare calculator, Delhi Metro station search, Delhi Metro interchanges, metro route from station to station, Delhi metro travel time, Delhi metro stops" />
   <meta name="robots" content="index, follow" />
@@ -113,7 +113,50 @@
 </head>
 
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <main class="seo-prerender">
+      <h1>Delhi Metro Route Planner</h1>
+      <p>
+        Delhi Metro Route Planner helps commuters find practical metro routes across Delhi NCR before opening the
+        interactive map. Search by source and destination station to check the recommended route, estimated fare, travel
+        time, stop count, interchange stations, and line-color guidance. The planner is useful for daily office travel,
+        airport trips, college commutes, shopping journeys, and quick station-to-station route checks.
+      </p>
+      <img src="/images/showcase.png" alt="Delhi Metro route planner showing map and journey details" width="1200"
+        height="630" loading="eager" />
+      <p>
+        Popular route examples include
+        <a href="/routes/rajiv-chowk-to-kashmere-gate/">Rajiv Chowk to Kashmere Gate</a>,
+        <a href="/routes/new-delhi-to-airport-t-3/">New Delhi to Airport T-3</a>,
+        <a href="/routes/hauz-khas-to-botanical-garden/">Hauz Khas to Botanical Garden</a>, and
+        <a href="/routes/dwarka-sector-21-to-rithala/">Dwarka Sector 21 to Rithala</a>. You can also browse important
+        station pages such as <a href="/stations/rajiv-chowk/">Rajiv Chowk</a>,
+        <a href="/stations/kashmere-gate/">Kashmere Gate</a>, <a href="/stations/new-delhi/">New Delhi</a>, and
+        <a href="/stations/netaji-subhash-place/">Netaji Subhash Place</a>.
+      </p>
+      <p>
+        The app supports clean route pages for search engines and shareable planner URLs for users. Each route page opens
+        with the source and destination already selected, then loads the same interactive planner used on the homepage.
+        For official network notices and passenger information, visit the
+        <a href="https://www.delhimetrorail.com/" target="_blank" rel="noopener noreferrer">Delhi Metro Rail
+          Corporation</a>.
+      </p>
+      <p>
+        Use the planner when you want a quick answer before leaving home, changing lines, or comparing two possible
+        metro journeys. The route result focuses on the details commuters usually need first: where the journey starts,
+        where it ends, how many stations are involved, whether a line change is likely, and how long the trip may take.
+        Because every important route has its own page, you can bookmark a regular commute, share it with someone else,
+        or open the same journey again without manually selecting stations each time.
+      </p>
+      <p>
+        The planner is also built for discovery. Station pages explain connected stations and link to useful routes, while
+        route pages describe the complete journey between two metro stations. This structure helps commuters find answers
+        through search and then continue directly into the interactive experience. Whether you are checking a short
+        neighboring-station trip or a longer journey across multiple Delhi Metro lines, the page gives you a starting
+        estimate before you confirm details for the day of travel.
+      </p>
+    </main>
+  </div>
   <script type="module" src="/src/main.tsx"></script>
   <script>
     window.addEventListener('load', function () {

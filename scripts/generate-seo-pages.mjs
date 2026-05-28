@@ -35,6 +35,18 @@ const stationSlug = (stationId) => slugifyStationName(stationById.get(stationId)
 const stationPathname = (stationId) => `/stations/${stationSlug(stationId)}/`;
 const routePathname = (from, to) => `/routes/${stationSlug(from)}-to-${stationSlug(to)}/`;
 const stationName = (stationId) => stationById.get(stationId)?.text || stationId;
+const featuredStationIds = [
+  'RCK',
+  'KG',
+  'NDI',
+  'CTST',
+  'NSHP',
+  'HKS',
+  'BOTA',
+  'DW21',
+  'APOT',
+  'ITO',
+].filter((stationId) => stationById.has(stationId));
 
 const adjacency = new Map(stations.map((station) => [station.id, []]));
 for (const edge of edges) {
@@ -130,7 +142,7 @@ const renderHtml = ({ title, description, keywords, canonicalPath, body, schema,
     '</head>',
     `    ${hydrationData ? `<script>window.__DELHI_METRO_ROUTE__=${JSON.stringify(hydrationData)};</script>\n    ` : ''}<script type="application/ld+json">${JSON.stringify(schema)}</script>\n  </head>`
   );
-  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+  html = html.replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${body}</div>`);
 
   return html;
 };
@@ -143,16 +155,58 @@ const writePage = async (pathname, html) => {
 
 const stationPage = (station) => {
   const pathname = stationPathname(station.id);
-  const title = `${station.text} Metro Station | Delhi Metro Route Planner`;
-  const description = `Plan Delhi Metro routes from ${station.text} metro station. Check route options, estimated fare, travel time, stop count, and interchange details.`;
+  const title = `${station.text} Metro Station | Delhi Metro`;
+  const description = `Plan routes from ${station.text} metro station. Check Delhi Metro fare, travel time, stops, connected stations, and interchanges.`;
   const keywords = `${station.text} metro station, ${station.text} Delhi Metro route, metro from ${station.text}, Delhi Metro fare from ${station.text}`;
-  const connectedStations = [...new Set((adjacency.get(station.id) || []).map(stationName))];
+  const connectedStationIds = [...new Set(adjacency.get(station.id) || [])];
+  const connectedStations = connectedStationIds.map(stationName);
+  const routeLinkIds = [...new Set([
+    ...connectedStationIds,
+    ...featuredStationIds,
+  ])].filter((stationId) => stationId !== station.id).slice(0, 8);
+  const fromRouteLinks = routeLinkIds.slice(0, 5);
+  const toRouteLinks = routeLinkIds.slice(0, 3);
   const body = `
     <main class="seo-prerender">
       <h1>${escapeHtml(station.text)} Metro Station</h1>
+      <img src="/images/showcase.png" alt="Delhi Metro route planner map for ${escapeHtml(station.text)} station" width="1200" height="630" loading="lazy" />
       <p>${escapeHtml(description)}</p>
-      <p>Connected stations: ${escapeHtml(connectedStations.join(', ') || 'Use the route planner to explore nearby stations')}.</p>
-      <a href="/">Open Delhi Metro route planner</a>
+      <p>
+        ${escapeHtml(station.text)} Metro Station is part of the Delhi Metro network and can be used as a starting point
+        or destination in the route planner. Use this page to plan trips from ${escapeHtml(station.text)} to major Delhi
+        NCR metro stations, compare estimated travel time, check the approximate fare, and understand where an
+        interchange may be required. The interactive planner opens with station search, route details, stop count, and
+        line-color guidance so commuters can quickly prepare for daily travel.
+      </p>
+      <h2>Routes from ${escapeHtml(station.text)}</h2>
+      <p>
+        Popular route pages from this station:
+        ${fromRouteLinks.map((stationId) => `<a href="${routePathname(station.id, stationId)}">${escapeHtml(station.text)} to ${escapeHtml(stationName(stationId))}</a>`).join(', ')}.
+      </p>
+      <h2>Routes to ${escapeHtml(station.text)}</h2>
+      <p>
+        You can also check routes ending at this station:
+        ${toRouteLinks.map((stationId) => `<a href="${routePathname(stationId, station.id)}">${escapeHtml(stationName(stationId))} to ${escapeHtml(station.text)}</a>`).join(', ')}.
+      </p>
+      <h2>Connected stations</h2>
+      <p>
+        Nearby connected stations include ${escapeHtml(connectedStations.join(', ') || 'stations available in the route planner')}.
+        These links help you move through the Delhi Metro route network and discover shorter station-to-station journeys.
+        For a broader starting point, open the <a href="/">Delhi Metro Route Planner</a> homepage or browse key stations
+        like <a href="/stations/rajiv-chowk/">Rajiv Chowk</a>, <a href="/stations/kashmere-gate/">Kashmere Gate</a>, and
+        <a href="/stations/new-delhi/">New Delhi</a>.
+      </p>
+      <p>
+        When planning from ${escapeHtml(station.text)}, compare the listed route pages with your destination and then open
+        the full planner for a map view. The planner highlights the route on the network, shows the station sequence, and
+        keeps the selected source and destination ready for sharing. This makes the page useful for commuters who visit
+        the same station often and for visitors who are checking a Delhi Metro journey for the first time.
+      </p>
+      <p>
+        Route estimates on this site are designed for quick planning and may differ from official operating conditions,
+        service updates, or fare rules. For official passenger notices, network information, and metro service updates,
+        visit the <a href="https://www.delhimetrorail.com/" target="_blank" rel="noopener noreferrer">Delhi Metro Rail Corporation</a>.
+      </p>
     </main>`;
   const schema = {
     '@context': 'https://schema.org',
@@ -173,17 +227,43 @@ const routePage = (route) => {
     : ' No interchange is usually needed for this route.';
   const description = `Plan the Delhi Metro route from ${route.fromName} to ${route.toName}. Estimated fare Rs ${route.fare}, ${route.estimatedMinutes} minutes, ${route.stops} stops.${interchangeText}`;
   const keywords = `${route.fromName} to ${route.toName} metro route, ${route.fromName} to ${route.toName} metro fare, Delhi Metro ${route.fromName} ${route.toName}, ${route.fromName} to ${route.toName} travel time`;
+  const intermediateStations = route.pathIds.slice(1, -1).map(stationName);
   const body = `
     <main class="seo-prerender">
       <h1>${escapeHtml(route.fromName)} to ${escapeHtml(route.toName)} Metro Route</h1>
+      <img src="/images/showcase.png" alt="Delhi Metro route planner for ${escapeHtml(route.fromName)} to ${escapeHtml(route.toName)}" width="1200" height="630" loading="lazy" />
       <p>${escapeHtml(description)}</p>
       <dl>
         <dt>Fare</dt><dd>Rs ${route.fare}</dd>
         <dt>Travel time</dt><dd>${route.estimatedMinutes} minutes</dd>
         <dt>Stops</dt><dd>${route.stops}</dd>
       </dl>
-      <p>Stations on this route: ${escapeHtml(route.pathIds.map(stationName).join(' -> '))}.</p>
-      <a href="/?from=${encodeURIComponent(route.from)}&amp;to=${encodeURIComponent(route.to)}">Open this route in the planner</a>
+      <h2>Route details</h2>
+      <p>
+        This Delhi Metro route starts at <a href="${stationPathname(route.from)}">${escapeHtml(route.fromName)}</a> and
+        ends at <a href="${stationPathname(route.to)}">${escapeHtml(route.toName)}</a>. The route includes
+        ${route.stops} stops and an estimated journey time of ${route.estimatedMinutes} minutes. The estimated fare is
+        Rs ${route.fare}. ${route.interchanges.length
+          ? `You may need to change metro lines at ${escapeHtml(route.interchanges.map(stationName).join(', '))}.`
+          : 'A line change is usually not needed for this route.'}
+      </p>
+      <p>
+        Stations on this route: ${escapeHtml(route.pathIds.map(stationName).join(' -> '))}.
+        ${intermediateStations.length
+          ? `Important stations between ${escapeHtml(route.fromName)} and ${escapeHtml(route.toName)} include ${escapeHtml(intermediateStations.slice(0, 6).join(', '))}.`
+          : `This is a direct neighboring-station route between ${escapeHtml(route.fromName)} and ${escapeHtml(route.toName)}.`}
+      </p>
+      <h2>Plan this journey</h2>
+      <p>
+        Open the interactive planner for this journey:
+        <a href="/?from=${encodeURIComponent(route.from)}&amp;to=${encodeURIComponent(route.to)}">${escapeHtml(route.fromName)} to ${escapeHtml(route.toName)}</a>.
+        You can also check the reverse route:
+        <a href="${routePathname(route.to, route.from)}">${escapeHtml(route.toName)} to ${escapeHtml(route.fromName)}</a>.
+      </p>
+      <p>
+        Route estimates are intended for quick planning. For official service updates, timings, and passenger notices,
+        visit the <a href="https://www.delhimetrorail.com/" target="_blank" rel="noopener noreferrer">Delhi Metro Rail Corporation</a>.
+      </p>
     </main>`;
   const schema = {
     '@context': 'https://schema.org',
