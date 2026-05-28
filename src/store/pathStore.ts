@@ -2,11 +2,8 @@
 
 import { create } from 'zustand';
 
-import stations from '../data/labels.json';
 import type { RouteSummary } from '../types/route';
-
-const isStationId = (stationId: string | null) =>
-  Boolean(stationId && stations.some((station) => station.id === stationId));
+import { isStationId, parseRoutePathname, stations } from '../utils/routePlanner';
 
 export const getInitialRouteParams = () => {
   if (typeof window === 'undefined') {
@@ -20,6 +17,15 @@ export const getInitialRouteParams = () => {
   const params = new URLSearchParams(window.location.search);
   const from = params.get('from');
   const to = params.get('to');
+  const routePathParams = parseRoutePathname(window.location.pathname);
+
+  if (routePathParams) {
+    return {
+      from: routePathParams.from,
+      to: routePathParams.to,
+      hasRouteQuery: true,
+    };
+  }
 
   return {
     from: isStationId(from) ? from! : stations[0]?.id || '',
