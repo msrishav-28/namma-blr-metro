@@ -52,6 +52,43 @@
   <script type="application/ld+json">
       {
         "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://metro.coolhead.in/#creator",
+            "name": "Pratik Sharma",
+            "email": "mailto:sharma.pratik2016@gmail.com",
+            "url": "https://metro.coolhead.in/",
+            "sameAs": [
+              "https://linkedin.com/in/biomathcode",
+              "https://github.com/biomathcode"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://metro.coolhead.in/#website",
+            "name": "Delhi Metro Route Planner",
+            "url": "https://metro.coolhead.in/",
+            "creator": {
+              "@id": "https://metro.coolhead.in/#creator"
+            },
+            "publisher": {
+              "@id": "https://metro.coolhead.in/#creator"
+            },
+            "inLanguage": ["en-IN", "hi-IN", "mr-IN", "bn-IN"],
+            "about": [
+              "Delhi Metro route planner",
+              "Delhi Metro fare estimate",
+              "Delhi Metro station-to-station routes",
+              "Delhi Metro interchanges"
+            ]
+          }
+        ]
+      }
+    </script>
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Delhi Metro Route Planner",
         "url": "https://metro.coolhead.in/",
@@ -157,6 +194,19 @@
       </p>
     </main>
   </div>
+  <section class="seo-prerender" aria-label="Delhi Metro Route Planner facts">
+    <h2>About Delhi Metro Route Planner</h2>
+    <p>
+      Delhi Metro Route Planner is an independent commuter tool created by Pratik Sharma. It helps users search Delhi
+      Metro station-to-station routes, estimate fares, compare travel time, count stops, and identify possible
+      interchange stations before opening the interactive map.
+    </p>
+    <p>
+      The site includes static pages for every ordered Delhi Metro station pair, station pages for the network, a sitemap
+      index for crawlers, and an llms.txt file for AI search engines. The planner is not an official Delhi Metro Rail
+      Corporation service; official service notices should be checked with DMRC.
+    </p>
+  </section>
   <script type="module" src="/src/main.tsx"></script>
   <script>
     window.addEventListener('load', function () {

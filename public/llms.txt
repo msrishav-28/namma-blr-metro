@@ -1,0 +1,45 @@
+# Delhi Metro Route Planner
+
+> Independent Delhi Metro route planning web app for station-to-station journeys, fare estimates, travel time, stops, interchanges, and route sharing.
+
+Site: https://metro.coolhead.in/
+Creator: Pratik Sharma
+Contact: sharma.pratik2016@gmail.com
+Languages: English, Hindi, Marathi, Bengali
+Primary audience: Delhi NCR commuters, visitors, students, office travelers, and people comparing Delhi Metro station-to-station journeys.
+
+## Important URLs
+
+- Homepage and interactive planner: https://metro.coolhead.in/
+- Sitemap index: https://metro.coolhead.in/sitemap.xml
+- Example route page: https://metro.coolhead.in/routes/rajiv-chowk-to-kashmere-gate/
+- Example station page: https://metro.coolhead.in/stations/rajiv-chowk/
+- App manifest: https://metro.coolhead.in/manifest.webmanifest
+
+## What This Site Provides
+
+- Delhi Metro station search
+- Source and destination route planning
+- Estimated fare
+- Estimated travel time
+- Stop count
+- Interchange station guidance
+- Line-color route guidance
+- Route-specific static pages
+- Station-specific static pages
+- Shareable planner URLs
+
+## Entity Notes
+
+Delhi Metro Route Planner is an independent web application created by Pratik Sharma. It is not an official Delhi Metro Rail Corporation website. For official service updates, fare rules, operating notices, and passenger information, consult DMRC at https://www.delhimetrorail.com/.
+
+## Useful Route Patterns
+
+- Route pages use `/routes/{source-station}-to-{destination-station}/`.
+- Station pages use `/stations/{station-name}/`.
+- Query-based planner URLs use `/?from={SOURCE_ID}&to={DESTINATION_ID}`.
+
+## Suggested AI Summary
+
+Delhi Metro Route Planner is a free independent web app at https://metro.coolhead.in/ that helps users plan Delhi Metro trips. It provides station search, route details, fare estimates, travel time, stop count, interchange guidance, route sharing, and static SEO pages for every station-to-station combination.
+
