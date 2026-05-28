@@ -129,7 +129,7 @@ export function SearchBox({
   onRoutePlan?: () => void;
 }) {
   const { language, setLanguage, t } = useI18n();
-  const initialRouteParams = getInitialRouteParams();
+  const initialRouteParams = useMemo(() => getInitialRouteParams(), []);
   const { control, getValues, handleSubmit, setValue } = useForm({
     defaultValues: {
       from: initialRouteParams.hasRouteQuery ? initialRouteParams.from : '',
@@ -152,10 +152,11 @@ export function SearchBox({
     const animationFrame = requestAnimationFrame(() => {
       setSelectedFrom(initialRouteParams.from);
       setRoute(plannedRoute.svgPath, plannedRoute.route);
+      onRoutePlan?.();
     });
 
     return () => cancelAnimationFrame(animationFrame);
-  }, [initialRouteParams.from, initialRouteParams.hasRouteQuery, initialRouteParams.to, language, setRoute, setSelectedFrom]);
+  }, [initialRouteParams.from, initialRouteParams.hasRouteQuery, initialRouteParams.to, language, onRoutePlan, setRoute, setSelectedFrom]);
 
   const swapStations = () => {
     const fromValue = getValues('from');

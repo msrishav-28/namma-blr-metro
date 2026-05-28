@@ -7,7 +7,7 @@ const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const indexPath = path.join(distDir, 'index.html');
 const baseUrl = (process.env.SITE_URL || 'http://metro.coolhead.in').replace(/\/$/, '');
-const routeLimit = Number.parseInt(process.env.SEO_ROUTE_LIMIT || '1200', 10);
+const sitemapUrlLimit = 45000;
 const today = new Date().toISOString().slice(0, 10);
 
 const stations = JSON.parse(await readFile(path.join(rootDir, 'src/data/labels.json'), 'utf8'))
@@ -42,13 +42,12 @@ for (const edge of edges) {
   adjacency.get(edge.to)?.push(edge.from);
 }
 
-const findShortestPath = (from, to) => {
+const buildShortestPathTree = (from) => {
   const queue = [from];
   const previous = new Map([[from, null]]);
 
   for (let cursor = 0; cursor < queue.length; cursor += 1) {
     const current = queue[cursor];
-    if (current === to) break;
 
     for (const next of adjacency.get(current) || []) {
       if (previous.has(next)) continue;
@@ -57,6 +56,10 @@ const findShortestPath = (from, to) => {
     }
   }
 
+  return previous;
+};
+
+const pathFromTree = (previous, to) => {
   if (!previous.has(to)) return null;
 
   const path = [];
@@ -82,8 +85,8 @@ const edgeFor = (from, to) =>
   edges.find((edge) => edge.from === from && edge.to === to) ||
   edges.find((edge) => edge.from === to && edge.to === from);
 
-const routeSummary = (from, to) => {
-  const pathIds = findShortestPath(from, to);
+const routeSummary = (from, to, previous) => {
+  const pathIds = pathFromTree(previous, to);
   if (!pathIds) return null;
 
   const interchanges = pathIds.slice(1, -1).filter((stationId, index) => {
@@ -110,7 +113,7 @@ const routeSummary = (from, to) => {
 
 const setTag = (html, pattern, replacement) => html.replace(pattern, replacement);
 
-const renderHtml = ({ title, description, keywords, canonicalPath, body, schema }) => {
+const renderHtml = ({ title, description, keywords, canonicalPath, body, schema, hydrationData }) => {
   const canonicalUrl = `${baseUrl}${canonicalPath}`;
   let html = template;
 
@@ -125,7 +128,7 @@ const renderHtml = ({ title, description, keywords, canonicalPath, body, schema 
   html = setTag(html, /<meta\s+name="twitter:description"[\s\S]*?\/>/, `<meta name="twitter:description" content="${escapeHtml(description)}" />`);
   html = html.replace(
     '</head>',
-    `    <script type="application/ld+json">${JSON.stringify(schema)}</script>\n  </head>`
+    `    ${hydrationData ? `<script>window.__DELHI_METRO_ROUTE__=${JSON.stringify(hydrationData)};</script>\n    ` : ''}<script type="application/ld+json">${JSON.stringify(schema)}</script>\n  </head>`
   );
   html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
 
@@ -198,53 +201,32 @@ const routePage = (route) => {
     itinerary: route.pathIds.map((stationId) => stationName(stationId)),
   };
 
-  return { pathname, html: renderHtml({ title, description, keywords, canonicalPath: pathname, body, schema }) };
+  return {
+    pathname,
+    html: renderHtml({
+      title,
+      description,
+      keywords,
+      canonicalPath: pathname,
+      body,
+      schema,
+      hydrationData: {
+        from: route.from,
+        to: route.to,
+      },
+    }),
+  };
 };
 
-const priorityIds = [
-  'RCK',
-  'KG',
-  'NDI',
-  'CTST',
-  'MDHS',
-  'KJMD',
-  'HKS',
-  'LJPN',
-  'AZU',
-  'NSHP',
-  'ILOK',
-  'DW21',
-  'DW',
-  'JAMW',
-  'BOTA',
-  'ANVR',
-  'N18',
-  'APOT',
-  'DACY',
-  'ITO',
-].filter((stationId) => stationById.has(stationId));
-
-const highDegreeIds = stations
-  .map((station) => ({ id: station.id, degree: adjacency.get(station.id)?.length || 0 }))
-  .sort((a, b) => b.degree - a.degree)
-  .slice(0, 20)
-  .map((item) => item.id);
-const routeOrigins = [...new Set([...priorityIds, ...highDegreeIds])];
-
 const routes = [];
-const seenRoutes = new Set();
-for (const origin of routeOrigins) {
-  for (const destination of stations.map((station) => station.id)) {
-    if (origin === destination || routes.length >= routeLimit) continue;
+for (const origin of stations) {
+  const previous = buildShortestPathTree(origin.id);
 
-    for (const [from, to] of [[origin, destination], [destination, origin]]) {
-      const key = `${from}:${to}`;
-      if (from === to || seenRoutes.has(key) || routes.length >= routeLimit) continue;
-      seenRoutes.add(key);
+  for (const destination of stations) {
+    if (origin.id === destination.id) continue;
 
-      const route = routeSummary(from, to);
-      if (route) routes.push(route);
-    }
+    const route = routeSummary(origin.id, destination.id, previous);
+    if (route) routes.push(route);
   }
 }
 
@@ -271,9 +253,15 @@ const sitemapUrls = [
   })),
 ];
 
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+const sitemapChunks = [];
+for (let index = 0; index < sitemapUrls.length; index += sitemapUrlLimit) {
+  sitemapChunks.push(sitemapUrls.slice(index, index + sitemapUrlLimit));
+}
+
+for (const [index, urls] of sitemapChunks.entries()) {
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapUrls.map((url) => `  <url>
+${urls.map((url) => `  <url>
     <loc>${escapeHtml(url.loc)}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${url.changefreq}</changefreq>
@@ -282,6 +270,18 @@ ${sitemapUrls.map((url) => `  <url>
 </urlset>
 `;
 
-await writeFile(path.join(distDir, 'sitemap.xml'), sitemap);
+  await writeFile(path.join(distDir, `sitemap-${index + 1}.xml`), sitemap);
+}
 
-console.log(`Generated ${stations.length} station pages, ${routes.length} route pages, and sitemap.xml.`);
+const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapChunks.map((_, index) => `  <sitemap>
+    <loc>${baseUrl}/sitemap-${index + 1}.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>`).join('\n')}
+</sitemapindex>
+`;
+
+await writeFile(path.join(distDir, 'sitemap.xml'), sitemapIndex);
+
+console.log(`Generated ${stations.length} station pages, ${routes.length} route pages, ${sitemapChunks.length} sitemap files, and sitemap.xml index.`);
