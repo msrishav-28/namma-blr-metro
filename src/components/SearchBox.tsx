@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { PlayIcon } from '@radix-ui/react-icons';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Select, { type SingleValue, type StylesConfig } from 'react-select';
 
@@ -93,24 +93,7 @@ function StationOptionLabel({ option }: { option: StationOption }) {
   );
 }
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(max-width: 639px)').matches;
-  });
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 639px)');
-    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
-
-    updateIsMobile();
-    mediaQuery.addEventListener('change', updateIsMobile);
-
-    return () => mediaQuery.removeEventListener('change', updateIsMobile);
-  }, []);
-
-  return isMobile;
-}
 
 
 export function SearchBox({
@@ -139,7 +122,6 @@ export function SearchBox({
   const setRoute = usePath((state: any) => state.setRoute);
   const setSelectedFrom = usePath((state: any) => state.setSelectedFrom);
   const hydratedRouteRef = useRef(false);
-  const isMobile = useIsMobile();
   const stationOptions = useMemo(() => getStationOptions(language), [language]);
 
   useEffect(() => {
@@ -211,7 +193,7 @@ export function SearchBox({
                 }}
                 formatOptionLabel={(option) => <StationOptionLabel option={option} />}
                 styles={selectStyles}
-                isSearchable={!isMobile}
+                isSearchable={true}
               />
             </div>
           )}
@@ -236,7 +218,7 @@ export function SearchBox({
                 onChange={(option: SingleValue<StationOption>) => field.onChange(option?.value || '')}
                 formatOptionLabel={(option) => <StationOptionLabel option={option} />}
                 styles={selectStyles}
-                isSearchable={!isMobile}
+                isSearchable={true}
               />
             </div>
           )}
