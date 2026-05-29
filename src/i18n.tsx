@@ -47,6 +47,7 @@ type TranslationKey =
   | 'createdBy'
   | 'linkedin'
   | 'github'
+  | 'youtube'
   | 'copySupportEmail'
   | 'supportEmailCopied'
   | 'shareRoute'
@@ -108,6 +109,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     createdBy: 'Created by',
     linkedin: 'LinkedIn',
     github: 'GitHub',
+    youtube: 'YouTube',
     copySupportEmail: 'Copy support email',
     supportEmailCopied: 'Email copied',
     shareRoute: 'Share route',
@@ -166,6 +168,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     createdBy: 'बनाया गया',
     linkedin: 'लिंक्डइन',
     github: 'गिटहब',
+    youtube: 'यूट्यूब',
     copySupportEmail: 'सपोर्ट ईमेल कॉपी करें',
     supportEmailCopied: 'ईमेल कॉपी हो गया',
     shareRoute: 'रूट शेयर करें',
@@ -224,6 +227,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     createdBy: 'निर्मिती',
     linkedin: 'LinkedIn',
     github: 'GitHub',
+    youtube: 'YouTube',
     copySupportEmail: 'सपोर्ट ईमेल कॉपी करा',
     supportEmailCopied: 'ईमेल कॉपी झाला',
     shareRoute: 'मार्ग शेअर करा',
@@ -282,6 +286,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     createdBy: 'তৈরি করেছেন',
     linkedin: 'LinkedIn',
     github: 'GitHub',
+    youtube: 'YouTube',
     copySupportEmail: 'সাপোর্ট ইমেল কপি করুন',
     supportEmailCopied: 'ইমেল কপি হয়েছে',
     shareRoute: 'রুট শেয়ার করুন',

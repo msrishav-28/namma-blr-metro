@@ -1,4 +1,4 @@
-import { CheckIcon, ClipboardCopyIcon, GitHubLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
+import { CheckIcon, ClipboardCopyIcon, GitHubLogoIcon, LinkedInLogoIcon, PlayIcon } from '@radix-ui/react-icons';
 import { memo, useState } from 'react';
 
 import { useI18n } from '../i18n';
@@ -7,6 +7,7 @@ import { copyText } from '../utils/clipboard';
 const SUPPORT_EMAIL = 'sharma.pratik2016@gmail.com';
 const LINKEDIN_URL = 'https://linkedin.com/in/biomathcode';
 const GITHUB_URL = 'https://github.com/biomathcode';
+const YOUTUBE_URL = 'https://www.youtube.com/@delhi-metro-map';
 
 function CreatorLinks() {
     const { t } = useI18n();
@@ -39,6 +40,15 @@ function CreatorLinks() {
                 >
                     <GitHubLogoIcon />
                     {t('github')}
+                </a>
+                <a
+                    href={YOUTUBE_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex h-9 items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 text-xs font-semibold text-neutral-700 transition hover:border-neutral-300 hover:bg-neutral-50"
+                >
+                    <PlayIcon />
+                    {t('youtube')}
                 </a>
                 <button
                     type="button"
