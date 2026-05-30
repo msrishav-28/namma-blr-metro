@@ -157,7 +157,7 @@ function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
 
             <div
                 ref={scrollRef}
-                className="-mx-3 overflow-x-auto px-3 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                className="overflow-x-auto px-3 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
                 <div ref={captureRef} className="flex min-w-max snap-x snap-mandatory items-center bg-white px-3 py-2 dark:bg-zinc-900">
                     {timelineItems.map(({ station, previousColor, nextColor, isInterchange, showDirection, terminalName, isFirst, isLast }) => {

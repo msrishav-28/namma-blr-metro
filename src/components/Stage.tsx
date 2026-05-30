@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PlayIcon, } from '@radix-ui/react-icons';
-import { lazy, memo, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import { lazy, memo, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Drawer } from 'vaul';
 
 import { getLocalizedStationName, useI18n } from '../i18n';
@@ -271,6 +271,7 @@ function MetroMapStage() {
     const [routeFitRequest, setRouteFitRequest] = useState(0);
     const [routePreviewMode, setRoutePreviewMode] = useState(false);
     const [routeSortMode, setRouteSortMode] = useState<RouteSortMode>('interchanges');
+    const bottomSheetScrollRef = useRef<HTMLDivElement | null>(null);
     const isDesktop = useIsDesktop();
     const canLoadInteractiveMap = useDeferredInteractiveLoad();
 
@@ -296,6 +297,14 @@ function MetroMapStage() {
         if (isDesktop) return;
 
         setActiveSnapPoint(1);
+        const resetScroll = () => {
+            bottomSheetScrollRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+            document.scrollingElement?.scrollTo({ top: 0, behavior: 'instant' });
+        };
+
+        resetScroll();
+        requestAnimationFrame(resetScroll);
+        window.setTimeout(resetScroll, 180);
     }, [isDesktop]);
     const handleRoutePlan = useCallback((plannedRoute?: RoutePlan) => {
         setActiveSnapPoint('100px');
@@ -440,7 +449,7 @@ function MetroMapStage() {
                                         aria-label={t('routePlanner')}
                                     />
                                 </div>
-                                <div className="bottom-sheet-scroll scrollbar-thin scrollbar-gutter-stable min-h-0 min-w-0 overflow-y-auto">
+                                <div ref={bottomSheetScrollRef} className="bottom-sheet-scroll scrollbar-thin scrollbar-gutter-stable min-h-0 min-w-0 overflow-y-auto">
                                     <div className="grid min-w-0 gap-3 pe-2 sm:gap-5">
                                         {cockpitBody}
                                     </div>

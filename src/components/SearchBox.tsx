@@ -217,6 +217,8 @@ export function SearchBox({
                 styles={selectStyles}
                 isSearchable={true}
                 onFocus={onStationSearchFocus}
+                onMenuOpen={onStationSearchFocus}
+                menuShouldScrollIntoView={false}
               />
             </div>
           )}
@@ -243,6 +245,8 @@ export function SearchBox({
                 styles={selectStyles}
                 isSearchable={true}
                 onFocus={onStationSearchFocus}
+                onMenuOpen={onStationSearchFocus}
+                menuShouldScrollIntoView={false}
               />
             </div>
           )}
