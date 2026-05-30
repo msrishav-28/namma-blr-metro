@@ -15,6 +15,7 @@ const SvgComponent = lazy(() => import('./graphsvg'));
 const SearchBox = lazy(() => import('./SearchBox'));
 const RouteSharePanel = lazy(() => import('./RouteSharePanel'));
 const JourneyTimeline = lazy(() => import('./JourneyTimeline'));
+const SEARCH_SNAP_POINT = 0.86;
 
 type NavigatorWithVirtualKeyboard = Navigator & {
     virtualKeyboard?: {
@@ -296,7 +297,7 @@ function MetroMapStage() {
     const handleStationSearchFocus = useCallback(() => {
         if (isDesktop) return;
 
-        setActiveSnapPoint(1);
+        setActiveSnapPoint(SEARCH_SNAP_POINT);
         const resetScroll = () => {
             bottomSheetScrollRef.current?.scrollTo({ top: 0, behavior: 'instant' });
             document.scrollingElement?.scrollTo({ top: 0, behavior: 'instant' });
@@ -430,7 +431,7 @@ function MetroMapStage() {
                         defaultOpen
                         dismissible={false}
                         modal={false}
-                        snapPoints={['100px', '220px', 1]}
+                        snapPoints={['100px', '220px', SEARCH_SNAP_POINT]}
                         handleOnly
                     >
                         <Drawer.Portal>
@@ -443,9 +444,9 @@ function MetroMapStage() {
                                 }}
                             >
                                 <Drawer.Title className="sr-only">{t('routePlanner')}</Drawer.Title>
-                                <div className="-mx-3 -mt-3 flex shrink-0 justify-center px-3 pt-1 sm:-mx-5 sm:-mt-5 sm:px-5 sm:pt-2">
+                                <div className="-mx-3 -mt-3 flex shrink-0 justify-center px-3 pb-2 pt-3 sm:-mx-5 sm:-mt-5 sm:px-5 sm:pb-3 sm:pt-4">
                                     <Drawer.Handle
-                                        className="relative h-9 w-28 rounded-full before:absolute before:left-1/2 before:top-1/2 before:h-1 before:w-20 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-neutral-200 before:transition-colors active:before:bg-neutral-300 dark:before:bg-zinc-700 dark:active:before:bg-zinc-600 sm:w-32 sm:before:w-24"
+                                        className="relative h-12 w-40 rounded-full before:absolute before:left-1/2 before:top-1/2 before:h-1.5 before:w-28 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-neutral-200 before:transition-colors active:before:bg-neutral-300 dark:before:bg-zinc-700 dark:active:before:bg-zinc-600 sm:w-44 sm:before:w-32"
                                         aria-label={t('routePlanner')}
                                     />
                                 </div>
