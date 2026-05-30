@@ -13,7 +13,7 @@ export interface MapControls {
     isDragging: boolean;
     dragStart: (event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>) => void;
     dragMove: (event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>) => void;
-    dragEnd: () => void;
+    dragEnd: (event?: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>) => void;
     zoomAt: (scale: number, event: React.MouseEvent<SVGSVGElement>) => void;
     wheelZoom: (event: React.WheelEvent<SVGSVGElement>) => void;
 }

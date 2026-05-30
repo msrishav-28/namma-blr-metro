@@ -141,6 +141,7 @@ function MetroMapStage() {
                 <SearchBox
                     animationMode={animationMode}
                     cinematicZoom={cinematicZoom}
+                    disableSearch={!isDesktop}
                     onAnimationModeChange={setAnimationMode}
                     onCinematicZoomChange={setCinematicZoom}
                     onFromChange={handleFromChange}

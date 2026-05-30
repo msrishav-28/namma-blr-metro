@@ -135,8 +135,28 @@ const getEventPoint = (
   return { x: source.clientX, y: source.clientY };
 };
 
+const getTouchPoint = (touch: React.Touch) => ({
+  x: touch.clientX,
+  y: touch.clientY,
+});
+
+const getTouchDistance = (touches: React.TouchList) => {
+  const first = getTouchPoint(touches[0]);
+  const second = getTouchPoint(touches[1]);
+  return Math.hypot(second.x - first.x, second.y - first.y);
+};
+
+const getTouchMidpoint = (touches: React.TouchList) => {
+  const first = getTouchPoint(touches[0]);
+  const second = getTouchPoint(touches[1]);
+  return {
+    x: (first.x + second.x) / 2,
+    y: (first.y + second.y) / 2,
+  };
+};
+
 const toSvgPoint = (
-  event: React.MouseEvent<SVGSVGElement> | React.WheelEvent<SVGSVGElement>,
+  event: Pick<React.MouseEvent<SVGSVGElement> | React.WheelEvent<SVGSVGElement>, 'clientX' | 'clientY'>,
   svg: SVGSVGElement
 ) => {
   const rect = svg.getBoundingClientRect();
@@ -603,6 +623,12 @@ function SvgComponent({
     translateX: 0,
     translateY: 0,
   });
+  const pinchRef = useRef({
+    distance: 0,
+    scale: 1,
+    translateX: 0,
+    translateY: 0,
+  });
   const tweenRef = useRef<gsap.core.Timeline | null>(null);
   const playRef = useRef(play);
   const routeCameraScale = ROUTE_CAMERA_SCALE * (cinematicZoom / 3);
@@ -846,6 +872,19 @@ function SvgComponent({
     transform: fitTransform,
     isDragging,
     dragStart: (event) => {
+      if ('touches' in event && event.touches.length >= 2) {
+        event.preventDefault();
+        const current = transformRef.current;
+        pinchRef.current = {
+          distance: getTouchDistance(event.touches),
+          scale: current.scaleX,
+          translateX: current.translateX,
+          translateY: current.translateY,
+        };
+        setIsDragging(false);
+        return;
+      }
+
       const point = getEventPoint(event);
       dragRef.current = {
         x: point.x,
@@ -856,7 +895,31 @@ function SvgComponent({
       setIsDragging(true);
     },
     dragMove: (event) => {
+      if ('touches' in event && event.touches.length >= 2) {
+        event.preventDefault();
+        if (!svgRef.current || !pinchRef.current.distance) return;
+
+        const currentPinch = pinchRef.current;
+        const midpoint = getTouchMidpoint(event.touches);
+        const point = toSvgPoint({ clientX: midpoint.x, clientY: midpoint.y }, svgRef.current);
+        const nextScale = clamp(
+          currentPinch.scale * (getTouchDistance(event.touches) / currentPinch.distance),
+          MIN_MAP_SCALE,
+          MAX_MAP_SCALE
+        );
+        const factor = nextScale / currentPinch.scale;
+
+        applyTransform({
+          scaleX: nextScale,
+          scaleY: nextScale,
+          translateX: point.x - (point.x - currentPinch.translateX) * factor,
+          translateY: point.y - (point.y - currentPinch.translateY) * factor,
+        });
+        return;
+      }
+
       if (!isDragging) return;
+      if ('touches' in event) event.preventDefault();
       const point = getEventPoint(event);
       const rect = svgRef.current?.getBoundingClientRect();
       const scaleX = rect ? VIEWBOX_WIDTH / rect.width : 1;
@@ -868,7 +931,19 @@ function SvgComponent({
         translateY: dragRef.current.translateY + (point.y - dragRef.current.y) * scaleY,
       });
     },
-    dragEnd: () => {
+    dragEnd: (event) => {
+      if (event && 'touches' in event && event.touches.length === 1) {
+        const point = getEventPoint(event);
+        dragRef.current = {
+          x: point.x,
+          y: point.y,
+          translateX: transformRef.current.translateX,
+          translateY: transformRef.current.translateY,
+        };
+        setIsDragging(true);
+        return;
+      }
+
       setIsDragging(false);
       applyTransform(transformRef.current, true);
     },

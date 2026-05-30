@@ -99,6 +99,7 @@ function StationOptionLabel({ option }: { option: StationOption }) {
 export function SearchBox({
   animationMode = 'smooth',
   cinematicZoom = 1,
+  disableSearch = false,
   onAnimationModeChange,
   onCinematicZoomChange,
   onFromChange,
@@ -106,6 +107,7 @@ export function SearchBox({
 }: {
   animationMode?: RouteAnimationMode;
   cinematicZoom?: CinematicZoomLevel;
+  disableSearch?: boolean;
   onAnimationModeChange?: (mode: RouteAnimationMode) => void;
   onCinematicZoomChange?: (zoom: CinematicZoomLevel) => void;
   onFromChange?: () => void;
@@ -193,7 +195,7 @@ export function SearchBox({
                 }}
                 formatOptionLabel={(option) => <StationOptionLabel option={option} />}
                 styles={selectStyles}
-                isSearchable={true}
+                isSearchable={!disableSearch}
               />
             </div>
           )}
@@ -218,7 +220,7 @@ export function SearchBox({
                 onChange={(option: SingleValue<StationOption>) => field.onChange(option?.value || '')}
                 formatOptionLabel={(option) => <StationOptionLabel option={option} />}
                 styles={selectStyles}
-                isSearchable={true}
+                isSearchable={!disableSearch}
               />
             </div>
           )}
