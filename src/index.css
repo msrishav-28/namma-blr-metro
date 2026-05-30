@@ -111,6 +111,29 @@ body {
   stroke: #fafafa;
 }
 
+.train-headlight {
+  opacity: 0;
+  transform-origin: 16px 0;
+  transition: opacity 180ms ease;
+}
+
+.dark .train-headlight {
+  opacity: 1;
+  animation: train-headlight-pulse 2.8s ease-in-out infinite;
+  filter: blur(0.2px);
+}
+
+@keyframes train-headlight-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}
+
 .route-mode-switch {
   display: inline-flex;
   align-items: center;
@@ -265,6 +288,7 @@ body {
   .route-mode-switch,
   .route-mode-switch-thumb,
   .cinematic-zoom-control button,
+  .train-headlight,
   .route-option-card {
     animation: none;
     transition: none;

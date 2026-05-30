@@ -688,8 +688,8 @@ function SvgComponent({
       const station = stationId
         ? stationLabels.find((item) => item.id === stationId)
         : svgLabelStationId ? stationLabels.find((item) => item.id === svgLabelStationId)
-        : svgClassStationId ? stationLabels.find((item) => item.id === svgClassStationId)
-        : stationByEnglishName.get(fallbackName);
+          : svgClassStationId ? stationLabels.find((item) => item.id === svgClassStationId)
+            : stationByEnglishName.get(fallbackName);
 
       if (!station) return;
 
@@ -1605,6 +1605,23 @@ function SvgComponent({
                   style={{ willChange: 'auto' }}
                   className={animationMode === 'step' ? 'route-train-step' : 'route-train-smooth'}
                 >
+                  <defs>
+                    <linearGradient id="metro-train-headlight-beam" x1="12" x2="46" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+                      <stop offset="0" stopColor="#fde68a" stopOpacity="0.42" />
+                      <stop offset="0.55" stopColor="#fef3c7" stopOpacity="0.14" />
+                      <stop offset="1" stopColor="#fefce8" stopOpacity="0" />
+                    </linearGradient>
+                    <radialGradient id="metro-train-headlight-glow" cx="0" cy="0" r="1" gradientTransform="matrix(4 0 0 2.8 14 0)" gradientUnits="userSpaceOnUse">
+                      <stop offset="0" stopColor="#fef9c3" stopOpacity="0.72" />
+                      <stop offset="1" stopColor="#facc15" stopOpacity="0" />
+                    </radialGradient>
+                  </defs>
+                  <g className="train-headlight" pointerEvents="none" aria-hidden="true">
+                    <path
+                      d="M13 -4 C24 -9 36 -8 48 -3 L48 3 C36 8 24 9 13 4 Z"
+                      fill="url(#metro-train-headlight-beam)"
+                    />
+                  </g>
                   <MetroTrain
                     width={34}
                     height={30}
