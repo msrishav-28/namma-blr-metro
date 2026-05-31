@@ -159,7 +159,7 @@ function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
                 ref={scrollRef}
                 className="overflow-x-auto px-3 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-                <div ref={captureRef} className="flex min-w-max snap-x snap-mandatory items-center bg-white px-3 py-2 dark:bg-zinc-900">
+                <div ref={captureRef} className="flex min-w-max items-center bg-white px-3 py-2 md:snap-x md:snap-mandatory dark:bg-zinc-900">
                     {timelineItems.map(({ station, previousColor, nextColor, isInterchange, showDirection, terminalName, isFirst, isLast }) => {
                         const isActive = station.id === activeStationId;
                         const dotColor = isLast ? previousColor || nextColor : nextColor;
@@ -186,7 +186,7 @@ function JourneyTimeline({ route, activeStationId }: JourneyTimelineProps) {
                                 ref={(element) => {
                                     stationRefs.current[station.id] = element;
                                 }}
-                                className="grid w-36 shrink-0 snap-center grid-rows-[72px_34px_72px] justify-items-center"
+                                className="grid w-36 shrink-0 grid-rows-[72px_34px_72px] justify-items-center md:snap-center"
                             >
                                 <div className="flex h-full w-full items-end justify-center px-1 pb-2">
                                     {placeAbove ? label : null}

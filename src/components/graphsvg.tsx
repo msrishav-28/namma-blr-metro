@@ -1063,6 +1063,17 @@ function SvgComponent({
     },
   }), [applyTransform, isDragging]);
 
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    svg.addEventListener('wheel', mapControls.wheelZoom, { passive: false });
+
+    return () => {
+      svg.removeEventListener('wheel', mapControls.wheelZoom);
+    };
+  }, [mapControls]);
+
   const zoomBy = (scale: number) => {
     const current = transformRef.current;
     const nextScale = clamp(current.scaleX * scale, MIN_MAP_SCALE, MAX_MAP_SCALE);

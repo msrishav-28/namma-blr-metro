@@ -15,7 +15,7 @@ export interface MapControls {
     dragMove: (event: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>) => void;
     dragEnd: (event?: React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>) => void;
     zoomAt: (scale: number, event: React.MouseEvent<SVGSVGElement>) => void;
-    wheelZoom: (event: React.WheelEvent<SVGSVGElement>) => void;
+    wheelZoom: (event: WheelEvent) => void;
 }
 
 interface MapProps {
@@ -48,7 +48,6 @@ const SvgComponent = forwardRef<SVGSVGElement, MapProps>(
             onMouseMove={zoomFunction.dragMove}
             onMouseUp={zoomFunction.dragEnd}
             onMouseLeave={zoomFunction.dragEnd}
-            onWheel={zoomFunction.wheelZoom}
             onDoubleClick={(event) => zoomFunction.zoomAt(1.18, event)}
         >
             <g ref={mapGroupRef} transform={transformToString(zoomFunction.transform)}>
