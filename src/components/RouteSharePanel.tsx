@@ -93,14 +93,17 @@ function RouteSharePanel({ route, fromName, toName }: RouteSharePanelProps) {
                     <div className="rounded-lg bg-neutral-100 p-2 dark:bg-zinc-800">
                         <p className="text-xs font-medium text-neutral-500 dark:text-zinc-400">{t('fare')}</p>
                         <p className="mt-1 text-base font-semibold">₹{route.fare}</p>
+                        <p className="mt-0.5 text-xs font-medium text-neutral-500 dark:text-zinc-400">{t(route.fareType === 'airport-express' ? 'specialFare' : 'holidayFare', { fare: route.holidayFare })}</p>
                     </div>
                     <div className="rounded-lg bg-neutral-100 p-2 dark:bg-zinc-800">
                         <p className="text-xs font-medium text-neutral-500 dark:text-zinc-400">{t('stops')}</p>
                         <p className="mt-1 text-base font-semibold">{route.distance}</p>
+                        <p className="mt-0.5 text-xs font-medium text-neutral-500 dark:text-zinc-400">{t('distanceKm', { count: route.distanceKm })}</p>
                     </div>
                     <div className="rounded-lg bg-neutral-100 p-2 dark:bg-zinc-800">
                         <p className="text-xs font-medium text-neutral-500 dark:text-zinc-400">{t('time')}</p>
                         <p className="mt-1 text-base font-semibold">{t('minutesShort', { count: route.estimatedMinutes })}</p>
+                        <p className="mt-0.5 text-xs font-medium text-neutral-500 dark:text-zinc-400">{t('timeLimit', { count: route.timeLimitMinutes })}</p>
                     </div>
                 </div>
                 <p className="text-xs font-medium text-neutral-500 dark:text-zinc-400">metro.coolhead.in</p>

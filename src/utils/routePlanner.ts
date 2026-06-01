@@ -8,6 +8,13 @@ import rawStations from '../data/labels.json';
 type Station = {
   id: string;
   text: string;
+  Latitude?: number | '';
+  Longitude?: number | '';
+};
+
+type StationWithCoordinates = Station & {
+  Latitude: number;
+  Longitude: number;
 };
 
 type MetroEdge = {
@@ -19,6 +26,32 @@ type MetroEdge = {
 
 export const stations = (rawStations as Station[]).filter((station) => station.id && station.text);
 export const edges = rawEdges as MetroEdge[];
+const AIRPORT_LINE_COLOR = '#eb8923';
+const AIRPORT_LINE_STATIONS = ['NDI', 'SJSU', 'DKV', 'DACY', 'APOT', 'DSTO', 'IICC'] as const;
+const AIRPORT_LINE_STATION_SET = new Set<string>(AIRPORT_LINE_STATIONS);
+const AIRPORT_LINE_FARES: Record<string, number> = {
+  'NDI>SJSU': 21,
+  'NDI>DKV': 43,
+  'NDI>DACY': 54,
+  'NDI>APOT': 64,
+  'NDI>DSTO': 64,
+  'NDI>IICC': 75,
+  'SJSU>DKV': 21,
+  'SJSU>DACY': 32,
+  'SJSU>APOT': 54,
+  'SJSU>DSTO': 64,
+  'SJSU>IICC': 75,
+  'DKV>DACY': 21,
+  'DKV>APOT': 32,
+  'DKV>DSTO': 54,
+  'DKV>IICC': 64,
+  'DACY>APOT': 21,
+  'DACY>DSTO': 32,
+  'DACY>IICC': 43,
+  'APOT>DSTO': 21,
+  'APOT>IICC': 32,
+  'DSTO>IICC': 21,
+};
 
 class GraphNode {
   value: string;
@@ -170,13 +203,51 @@ class WeightedGraph {
 }
 
 const graph = new WeightedGraph();
+const stationById = new Map(stations.map((station) => [station.id, station]));
+
+const toRadians = (degrees: number) => degrees * (Math.PI / 180);
+
+const isValidCoordinatePair = (station: Station | undefined): station is StationWithCoordinates =>
+  typeof station?.Latitude === 'number' &&
+  typeof station?.Longitude === 'number' &&
+  station.Latitude >= 27.5 &&
+  station.Latitude <= 29.5 &&
+  station.Longitude >= 76 &&
+  station.Longitude <= 78.5;
+
+const distanceBetweenStationsKm = (from: string, to: string) => {
+  const fromStation = stationById.get(from);
+  const toStation = stationById.get(to);
+
+  if (!isValidCoordinatePair(fromStation) || !isValidCoordinatePair(toStation)) return 1;
+
+  const earthRadiusKm = 6371;
+  const latitudeDelta = toRadians(toStation.Latitude - fromStation.Latitude);
+  const longitudeDelta = toRadians(toStation.Longitude - fromStation.Longitude);
+  const fromLatitude = toRadians(fromStation.Latitude);
+  const toLatitude = toRadians(toStation.Latitude);
+  const haversine =
+    Math.sin(latitudeDelta / 2) ** 2 +
+    Math.cos(fromLatitude) * Math.cos(toLatitude) * Math.sin(longitudeDelta / 2) ** 2;
+
+  return 2 * earthRadiusKm * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
+};
+
+const edgeDistanceKey = (from: string, to: string) => [from, to].sort().join('>');
+const edgeDistanceKm = new Map<string, number>();
 
 for (const station of stations) {
   graph.addNode(station.id);
 }
 
 for (const edge of edges) {
-  graph.addEdge(edge.from, edge.to, 1);
+  const distanceKm = distanceBetweenStationsKm(edge.from, edge.to);
+  const routeWeight = edge.stroke.toLowerCase() === AIRPORT_LINE_COLOR
+    ? Math.max(0.5, distanceKm * 0.28)
+    : distanceKm;
+
+  edgeDistanceKm.set(edgeDistanceKey(edge.from, edge.to), distanceKm);
+  graph.addEdge(edge.from, edge.to, routeWeight);
 }
 
 const uniqueColors = (colors: string[]) => [...new Set(colors.filter(Boolean))];
@@ -197,7 +268,7 @@ export const getStationBySlug = (slug: string) =>
   stations.find((station) => getStationSlug(station.id) === slug);
 
 export const getStationById = (stationId: string | null | undefined) =>
-  stationId ? stations.find((station) => station.id === stationId) : undefined;
+  stationId ? stationById.get(stationId) : undefined;
 
 export const isStationId = (stationId: string | null | undefined) =>
   Boolean(getStationById(stationId));
@@ -219,17 +290,92 @@ export const parseRoutePathname = (pathname: string) => {
   return { from: from.id, to: to.id };
 };
 
-const INTERCHANGE_FARE_STOP_ALLOWANCE = 2;
+export const estimateFare = (distanceKm: number, holiday = false) => {
+  if (distanceKm <= 2) return 11;
+  if (distanceKm <= 5) return holiday ? 11 : 21;
+  if (distanceKm <= 12) return holiday ? 21 : 32;
+  if (distanceKm <= 21) return holiday ? 32 : 43;
+  if (distanceKm <= 32) return holiday ? 43 : 54;
+  return holiday ? 54 : 64;
+};
 
-export const estimateFare = (stops: number, interchangeCount = 0) => {
-  const fareStops = stops + (interchangeCount * INTERCHANGE_FARE_STOP_ALLOWANCE);
+export const getFareTimeLimitMinutes = (distanceKm: number) => {
+  if (distanceKm <= 12) return 65;
+  if (distanceKm <= 21) return 100;
+  return 180;
+};
 
-  if (fareStops <= 2) return 11;
-  if (fareStops <= 5) return 21;
-  if (fareStops <= 12) return 32;
-  if (fareStops <= 21) return 43;
-  if (fareStops <= 32) return 54;
-  return 64;
+const getAirportFareKey = (from: string, to: string) => {
+  const fromIndex = AIRPORT_LINE_STATIONS.indexOf(from as typeof AIRPORT_LINE_STATIONS[number]);
+  const toIndex = AIRPORT_LINE_STATIONS.indexOf(to as typeof AIRPORT_LINE_STATIONS[number]);
+
+  if (fromIndex < 0 || toIndex < 0 || fromIndex === toIndex) return '';
+
+  return fromIndex < toIndex ? `${from}>${to}` : `${to}>${from}`;
+};
+
+const calculateRouteFare = (routePath: string[]) => {
+  let airportFare = 0;
+  let regularDistanceKm = 0;
+  let airportStart = '';
+  let airportEnd = '';
+
+  routePath.slice(0, -1).forEach((stationId, index) => {
+    const nextStationId = routePath[index + 1];
+    const edge = getRouteEdge(stationId, nextStationId);
+    const segmentDistanceKm = edgeDistanceKm.get(edgeDistanceKey(stationId, nextStationId)) || 1;
+    const isAirportSegment = edge?.stroke.toLowerCase() === AIRPORT_LINE_COLOR;
+
+    if (isAirportSegment && AIRPORT_LINE_STATION_SET.has(stationId) && AIRPORT_LINE_STATION_SET.has(nextStationId)) {
+      airportStart ||= stationId;
+      airportEnd = nextStationId;
+      return;
+    }
+
+    regularDistanceKm += segmentDistanceKm;
+  });
+
+  if (airportStart && airportEnd) {
+    airportFare = AIRPORT_LINE_FARES[getAirportFareKey(airportStart, airportEnd)] || 0;
+  }
+
+  if (!airportFare) {
+    const distanceKm = roundDistanceKm(getRouteDistanceKm(routePath));
+    return {
+      fare: estimateFare(distanceKm),
+      holidayFare: estimateFare(distanceKm, true),
+      fareType: 'regular' as const,
+    };
+  }
+
+  const regularDistance = roundDistanceKm(regularDistanceKm);
+  return {
+    fare: airportFare + (regularDistance > 0 ? estimateFare(regularDistance) : 0),
+    holidayFare: airportFare + (regularDistance > 0 ? estimateFare(regularDistance, true) : 0),
+    fareType: 'airport-express' as const,
+  };
+};
+
+const calculateEstimatedMinutes = (routePath: string[], interchangeCount: number) => {
+  const hasAirportExpress = routePath.slice(0, -1).some((stationId, index) => {
+    const nextStationId = routePath[index + 1];
+    return getRouteEdge(stationId, nextStationId)?.stroke.toLowerCase() === AIRPORT_LINE_COLOR;
+  });
+
+  if (!hasAirportExpress) return Math.max(2, (routePath.length - 1) * 2);
+
+  const totalMinutes = routePath.slice(0, -1).reduce((minutes, stationId, index) => {
+    const nextStationId = routePath[index + 1];
+    const isAirportSegment = getRouteEdge(stationId, nextStationId)?.stroke.toLowerCase() === AIRPORT_LINE_COLOR;
+    return minutes + (isAirportSegment ? 3.9 : 2.2);
+  }, interchangeCount * 5);
+
+  return Math.max(2, Math.round(totalMinutes));
+};
+
+const getRouteTimeLimitMinutes = (distanceKm: number, fareType: 'regular' | 'airport-express') => {
+  if (fareType === 'airport-express') return 180;
+  return getFareTimeLimitMinutes(distanceKm);
 };
 
 export const getStationLineColors = (stationId: string) =>
@@ -245,6 +391,14 @@ const stationName = (id: string, language: Language) => {
 const getRouteEdge = (from: string, to: string) =>
   edges.find((edge) => edge.from === from && edge.to === to) ||
   edges.find((edge) => edge.from === to && edge.to === from);
+
+const getRouteDistanceKm = (routePath: string[]) =>
+  routePath.slice(0, -1).reduce((totalDistance, stationId, index) => {
+    const nextStationId = routePath[index + 1];
+    return totalDistance + (edgeDistanceKm.get(edgeDistanceKey(stationId, nextStationId)) || 1);
+  }, 0);
+
+const roundDistanceKm = (distanceKm: number) => Math.round(distanceKm * 10) / 10;
 
 const getRouteStationDetails = (routePath: string[], language: Language): RouteStationDetail[] =>
   routePath.map((stationId, index) => {
@@ -279,7 +433,6 @@ const buildRoutePlan = (
   to: string,
   language: Language,
   routePath: string[],
-  distance: number,
   optionIndex: number
 ): RoutePlan => {
   const newPath = routePath
@@ -304,6 +457,9 @@ const buildRoutePlan = (
   const combinedPath = newPath.reverse().join('');
   const svgPath = SVGPathUtils.inversePath(combinedPath);
   const interchanges = getRouteInterchanges(routePath, language);
+  const stopCount = Math.max(0, routePath.length - 1);
+  const distanceKm = roundDistanceKm(getRouteDistanceKm(routePath));
+  const routeFare = calculateRouteFare(routePath);
 
   return {
     svgPath,
@@ -316,9 +472,13 @@ const buildRoutePlan = (
       stops: routePath.map((stationId) => stationName(stationId, language)),
       stationDetails: getRouteStationDetails(routePath, language),
       interchanges,
-      distance,
-      fare: estimateFare(distance, interchanges.length),
-      estimatedMinutes: Math.max(2, distance * 2),
+      distance: stopCount,
+      distanceKm,
+      fare: routeFare.fare,
+      holidayFare: routeFare.holidayFare,
+      fareType: routeFare.fareType,
+      timeLimitMinutes: getRouteTimeLimitMinutes(distanceKm, routeFare.fareType),
+      estimatedMinutes: calculateEstimatedMinutes(routePath, interchanges.length),
     },
   };
 };
@@ -329,7 +489,7 @@ export const buildRoutes = (from: string, to: string, language: Language, limit 
     : graph.findShortestPaths(from, to, limit);
 
   return routePaths.map((routePath, index) =>
-    buildRoutePlan(from, to, language, routePath.path, routePath.distance, index)
+    buildRoutePlan(from, to, language, routePath.path, index)
   );
 };
 
@@ -344,10 +504,11 @@ export const sortRoutePlans = (routePlans: RoutePlan[], sortMode: RouteSortMode 
     if (sortMode === 'stops') {
       return left.route.distance - right.route.distance
         || left.route.interchanges.length - right.route.interchanges.length
-        || left.route.estimatedMinutes - right.route.estimatedMinutes;
+        || left.route.distanceKm - right.route.distanceKm;
     }
 
     return left.route.interchanges.length - right.route.interchanges.length
+      || left.route.distanceKm - right.route.distanceKm
       || left.route.distance - right.route.distance
       || left.route.estimatedMinutes - right.route.estimatedMinutes;
   });

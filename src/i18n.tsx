@@ -38,11 +38,16 @@ type TranslationKey =
   | 'sortByInterchanges'
   | 'sortByStops'
   | 'playRoute'
+  | 'pauseRoute'
   | 'routePlanner'
   | 'delhiMetro'
   | 'fare'
+  | 'holidayFare'
+  | 'specialFare'
   | 'stops'
+  | 'distanceKm'
   | 'time'
+  | 'timeLimit'
   | 'minutesShort'
   | 'minutes'
   | 'change'
@@ -115,11 +120,16 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     sortByInterchanges: 'Fewest changes',
     sortByStops: 'Fewest stops',
     playRoute: 'Play route',
+    pauseRoute: 'Pause route',
     routePlanner: 'Route planner',
     delhiMetro: 'Delhi Metro',
     fare: 'Fare',
+    holidayFare: 'Sun/Holiday ₹{{fare}}',
+    specialFare: 'Special Fare ₹{{fare}}',
     stops: 'Stops',
+    distanceKm: '{{count}} km',
     time: 'Time',
+    timeLimit: 'Limit {{count}}m',
     minutesShort: '{{count}}m',
     minutes: '{{count}} mins',
     change: 'Change',
@@ -189,11 +199,16 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     sortByInterchanges: 'सबसे कम बदलाव',
     sortByStops: 'सबसे कम स्टॉप',
     playRoute: 'रूट चलाएं',
+    pauseRoute: 'रूट रोकें',
     routePlanner: 'रूट प्लानर',
     delhiMetro: 'दिल्ली मेट्रो',
     fare: 'किराया',
+    holidayFare: 'रवि/छुट्टी ₹{{fare}}',
+    specialFare: 'विशेष किराया ₹{{fare}}',
     stops: 'स्टॉप',
+    distanceKm: '{{count}} किमी',
     time: 'समय',
+    timeLimit: 'सीमा {{count}}मि',
     minutesShort: '{{count}}मि',
     minutes: '{{count}} मिनट',
     change: 'बदलें',
@@ -263,11 +278,16 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     sortByInterchanges: 'कमी बदल',
     sortByStops: 'कमी थांबे',
     playRoute: 'मार्ग प्ले करा',
+    pauseRoute: 'मार्ग थांबवा',
     routePlanner: 'मार्ग नियोजक',
     delhiMetro: 'दिल्ली मेट्रो',
     fare: 'भाडे',
+    holidayFare: 'रवि/सुट्टी ₹{{fare}}',
+    specialFare: 'विशेष भाडे ₹{{fare}}',
     stops: 'थांबे',
+    distanceKm: '{{count}} किमी',
     time: 'वेळ',
+    timeLimit: 'मर्यादा {{count}}मि',
     minutesShort: '{{count}}मि',
     minutes: '{{count}} मिनिटे',
     change: 'बदला',
@@ -337,11 +357,16 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     sortByInterchanges: 'সবচেয়ে কম পরিবর্তন',
     sortByStops: 'সবচেয়ে কম স্টপ',
     playRoute: 'রুট চালান',
+    pauseRoute: 'রুট থামান',
     routePlanner: 'রুট প্ল্যানার',
     delhiMetro: 'দিল্লি মেট্রো',
     fare: 'ভাড়া',
+    holidayFare: 'রবি/ছুটি ₹{{fare}}',
+    specialFare: 'বিশেষ ভাড়া ₹{{fare}}',
     stops: 'স্টপ',
+    distanceKm: '{{count}} কিমি',
     time: 'সময়',
+    timeLimit: 'সীমা {{count}}মি',
     minutesShort: '{{count}}মি',
     minutes: '{{count}} মিনিট',
     change: 'পরিবর্তন',

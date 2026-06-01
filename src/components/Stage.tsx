@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PlayIcon, } from '@radix-ui/react-icons';
+import { PauseIcon, PlayIcon } from '@radix-ui/react-icons';
 import { lazy, memo, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Drawer } from 'vaul';
 
@@ -105,14 +105,17 @@ const RouteSummaryCards = memo(function RouteSummaryCards({ route }: RouteSummar
             <div className="rounded-lg bg-neutral-100 p-2 dark:bg-zinc-800">
                 <p className="text-xs font-medium text-neutral-500 dark:text-zinc-400">{t('fare')}</p>
                 <p className="mt-0.5 text-base font-semibold">{route ? `₹${route.fare}` : '—'}</p>
+                {route ? <p className="mt-0.5 text-xs font-medium text-neutral-500 dark:text-zinc-400">{t(route.fareType === 'airport-express' ? 'specialFare' : 'holidayFare', { fare: route.holidayFare })}</p> : null}
             </div>
             <div className="rounded-lg bg-neutral-100 p-2 dark:bg-zinc-800">
                 <p className="text-xs font-medium text-neutral-500 dark:text-zinc-400">{t('stops')}</p>
                 <p className="mt-0.5 text-base font-semibold">{route ? route.distance : '—'}</p>
+                {route ? <p className="mt-0.5 text-xs font-medium text-neutral-500 dark:text-zinc-400">{t('distanceKm', { count: route.distanceKm })}</p> : null}
             </div>
             <div className="rounded-lg bg-neutral-100 p-2 dark:bg-zinc-800">
                 <p className="text-xs font-medium text-neutral-500 dark:text-zinc-400">{t('time')}</p>
                 <p className="mt-0.5 text-base font-semibold">{route ? t('minutesShort', { count: route.estimatedMinutes }) : '—'}</p>
+                {route ? <p className="mt-0.5 text-xs font-medium text-neutral-500 dark:text-zinc-400">{t('timeLimit', { count: route.timeLimitMinutes })}</p> : null}
             </div>
         </div>
     );
@@ -120,6 +123,7 @@ const RouteSummaryCards = memo(function RouteSummaryCards({ route }: RouteSummar
 
 function RouteOptions({
     activeRouteId,
+    isRoutePlaying,
     routeOptions,
     sortMode,
     onSortModeChange,
@@ -127,6 +131,7 @@ function RouteOptions({
     onPlayRoute,
 }: {
     activeRouteId?: string;
+    isRoutePlaying: boolean;
     routeOptions: RoutePlan[];
     sortMode: RouteSortMode;
     onSortModeChange: (sortMode: RouteSortMode) => void;
@@ -167,6 +172,7 @@ function RouteOptions({
             <div className="route-options-scroll -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
                 {routeOptions.map((routeOption, index) => {
                     const isActive = routeOption.route.optionId === activeRouteId;
+                    const isPlaying = isActive && isRoutePlaying;
                     const firstInterchanges = routeOption.route.interchanges.slice(0, 2);
                     const remainingInterchanges = Math.max(0, routeOption.route.interchanges.length - firstInterchanges.length);
 
@@ -201,10 +207,10 @@ function RouteOptions({
                                         type="button"
                                         onClick={() => onPlayRoute(routeOption)}
                                         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition ${isActive ? 'bg-neutral-800 text-white hover:bg-neutral-700 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'}`}
-                                        title={t('playRoute')}
-                                        aria-label={t('playRoute')}
+                                        title={t(isPlaying ? 'pauseRoute' : 'playRoute')}
+                                        aria-label={t(isPlaying ? 'pauseRoute' : 'playRoute')}
                                     >
-                                        <PlayIcon className="h-3.5 w-3.5" />
+                                        {isPlaying ? <PauseIcon className="h-3.5 w-3.5" /> : <PlayIcon className="h-3.5 w-3.5" />}
                                     </button>
                                 </div>
 
@@ -369,6 +375,7 @@ function MetroMapStage() {
                 </div>
                 <RouteOptions
                     activeRouteId={route?.optionId}
+                    isRoutePlaying={play && !routePreviewMode}
                     routeOptions={sortedRouteOptions}
                     sortMode={routeSortMode}
                     onSortModeChange={setRouteSortMode}

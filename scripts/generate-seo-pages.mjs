@@ -35,6 +35,41 @@ const stationSlug = (stationId) => slugifyStationName(stationById.get(stationId)
 const stationPathname = (stationId) => `/stations/${stationSlug(stationId)}/`;
 const routePathname = (from, to) => `/routes/${stationSlug(from)}-to-${stationSlug(to)}/`;
 const stationName = (stationId) => stationById.get(stationId)?.text || stationId;
+const toRadians = (degrees) => degrees * (Math.PI / 180);
+const isValidCoordinatePair = (station) =>
+  typeof station?.Latitude === 'number' &&
+  typeof station?.Longitude === 'number' &&
+  station.Latitude >= 27.5 &&
+  station.Latitude <= 29.5 &&
+  station.Longitude >= 76 &&
+  station.Longitude <= 78.5;
+const stationDistanceKm = (from, to) => {
+  const fromStation = stationById.get(from);
+  const toStation = stationById.get(to);
+
+  if (!isValidCoordinatePair(fromStation) || !isValidCoordinatePair(toStation)) return 1;
+
+  const earthRadiusKm = 6371;
+  const latitudeDelta = toRadians(toStation.Latitude - fromStation.Latitude);
+  const longitudeDelta = toRadians(toStation.Longitude - fromStation.Longitude);
+  const fromLatitude = toRadians(fromStation.Latitude);
+  const toLatitude = toRadians(toStation.Latitude);
+  const haversine =
+    Math.sin(latitudeDelta / 2) ** 2 +
+    Math.cos(fromLatitude) * Math.cos(toLatitude) * Math.sin(longitudeDelta / 2) ** 2;
+
+  return 2 * earthRadiusKm * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
+};
+const edgeDistanceKey = (from, to) => [from, to].sort().join('>');
+const edgeDistanceKm = new Map(edges.map((edge) => [
+  edgeDistanceKey(edge.from, edge.to),
+  stationDistanceKm(edge.from, edge.to),
+]));
+const routeDistanceKm = (pathIds) =>
+  Math.round(pathIds.slice(0, -1).reduce((totalDistance, stationId, index) => {
+    const nextStationId = pathIds[index + 1];
+    return totalDistance + (edgeDistanceKm.get(edgeDistanceKey(stationId, nextStationId)) || 1);
+  }, 0) * 10) / 10;
 const featuredStationIds = [
   'RCK',
   'KG',
@@ -84,17 +119,19 @@ const pathFromTree = (previous, to) => {
   return path;
 };
 
-const interchangeFareStopAllowance = 2;
+const estimateFare = (distanceKm, holiday = false) => {
+  if (distanceKm <= 2) return 11;
+  if (distanceKm <= 5) return holiday ? 11 : 21;
+  if (distanceKm <= 12) return holiday ? 21 : 32;
+  if (distanceKm <= 21) return holiday ? 32 : 43;
+  if (distanceKm <= 32) return holiday ? 43 : 54;
+  return holiday ? 54 : 64;
+};
 
-const estimateFare = (stops, interchangeCount = 0) => {
-  const fareStops = stops + (interchangeCount * interchangeFareStopAllowance);
-
-  if (fareStops <= 2) return 11;
-  if (fareStops <= 5) return 21;
-  if (fareStops <= 12) return 32;
-  if (fareStops <= 21) return 43;
-  if (fareStops <= 32) return 54;
-  return 64;
+const getFareTimeLimitMinutes = (distanceKm) => {
+  if (distanceKm <= 12) return 65;
+  if (distanceKm <= 21) return 100;
+  return 180;
 };
 
 const edgeFor = (from, to) =>
@@ -113,6 +150,7 @@ const routeSummary = (from, to, previous) => {
   });
 
   const distance = Math.max(0, pathIds.length - 1);
+  const distanceKm = routeDistanceKm(pathIds);
 
   return {
     from,
@@ -121,7 +159,10 @@ const routeSummary = (from, to, previous) => {
     toName: stationName(to),
     pathIds,
     stops: distance,
-    fare: estimateFare(distance, interchanges.length),
+    distanceKm,
+    fare: estimateFare(distanceKm),
+    holidayFare: estimateFare(distanceKm, true),
+    timeLimitMinutes: getFareTimeLimitMinutes(distanceKm),
     estimatedMinutes: Math.max(2, distance * 2),
     interchanges,
   };
@@ -229,7 +270,7 @@ const routePage = (route) => {
   const interchangeText = route.interchanges.length
     ? ` Interchange at ${route.interchanges.map(stationName).join(', ')}.`
     : ' No interchange is usually needed for this route.';
-  const description = `Plan the Delhi Metro route from ${route.fromName} to ${route.toName}. Estimated fare Rs ${route.fare}, ${route.estimatedMinutes} minutes, ${route.stops} stops.${interchangeText}`;
+  const description = `Plan the Delhi Metro route from ${route.fromName} to ${route.toName}. Estimated fare Rs ${route.fare}, ${route.estimatedMinutes} minutes, ${route.stops} stops, about ${route.distanceKm} km.${interchangeText}`;
   const keywords = `${route.fromName} to ${route.toName} metro route, ${route.fromName} to ${route.toName} metro fare, Delhi Metro ${route.fromName} ${route.toName}, ${route.fromName} to ${route.toName} travel time`;
   const intermediateStations = route.pathIds.slice(1, -1).map(stationName);
   const body = `
@@ -239,15 +280,18 @@ const routePage = (route) => {
       <p>${escapeHtml(description)}</p>
       <dl>
         <dt>Fare</dt><dd>Rs ${route.fare}</dd>
+        <dt>Sunday fare</dt><dd>Rs ${route.holidayFare}</dd>
         <dt>Travel time</dt><dd>${route.estimatedMinutes} minutes</dd>
         <dt>Stops</dt><dd>${route.stops}</dd>
+        <dt>Distance</dt><dd>${route.distanceKm} km</dd>
       </dl>
       <h2>Route details</h2>
       <p>
         This Delhi Metro route starts at <a href="${stationPathname(route.from)}">${escapeHtml(route.fromName)}</a> and
         ends at <a href="${stationPathname(route.to)}">${escapeHtml(route.toName)}</a>. The route includes
-        ${route.stops} stops and an estimated journey time of ${route.estimatedMinutes} minutes. The estimated fare is
-        Rs ${route.fare}. ${route.interchanges.length
+        ${route.stops} stops, covers about ${route.distanceKm} km, and has an estimated journey time of ${route.estimatedMinutes} minutes.
+        The estimated fare is Rs ${route.fare} from Monday to Saturday and Rs ${route.holidayFare} on Sundays and national holidays.
+        ${route.interchanges.length
           ? `You may need to change metro lines at ${escapeHtml(route.interchanges.map(stationName).join(', '))}.`
           : 'A line change is usually not needed for this route.'}
       </p>

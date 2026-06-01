@@ -2,6 +2,8 @@
 import {
   DiscIcon,
   EnterFullScreenIcon,
+  PauseIcon,
+  PlayIcon,
   ResetIcon,
   UpdateIcon,
   VideoIcon,
@@ -1660,7 +1662,7 @@ function SvgComponent({
             disabled={!path}
             title={play ? 'Pause route' : 'Play route'}
           >
-            {play ? 'II' : '▶'}
+            {play ? <PauseIcon className="h-4 w-4" /> : <PlayIcon className="h-4 w-4" />}
           </button>
           <button onClick={() => zoomBy(1.2)} className="h-10 w-10 rounded-lg bg-white text-lg font-semibold text-neutral-950 dark:bg-zinc-900 dark:text-zinc-100" title="Zoom in">
             +

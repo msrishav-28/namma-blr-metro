@@ -8,7 +8,11 @@ export interface RouteSummary {
   stationDetails: RouteStationDetail[];
   interchanges: RouteInterchange[];
   distance: number;
+  distanceKm: number;
   fare: number;
+  holidayFare: number;
+  fareType: 'regular' | 'airport-express';
+  timeLimitMinutes: number;
   estimatedMinutes: number;
 }
 
