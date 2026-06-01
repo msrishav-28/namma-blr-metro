@@ -29,6 +29,16 @@ export const edges = rawEdges as MetroEdge[];
 const AIRPORT_LINE_COLOR = '#eb8923';
 const AIRPORT_LINE_STATIONS = ['NDI', 'SJSU', 'DKV', 'DACY', 'APOT', 'DSTO', 'IICC'] as const;
 const AIRPORT_LINE_STATION_SET = new Set<string>(AIRPORT_LINE_STATIONS);
+const RAPID_METRO_LINE_COLOR = '#015b97';
+const RAPID_METRO_DIRECTED_EDGES = new Set([
+  'SKRP>DL2',
+  'DL2>SKRP',
+  'DL2>BEL',
+  'BEL>GAT',
+  'GAT>MAL',
+  'MAL>DL3',
+  'DL3>DL2',
+]);
 const AIRPORT_LINE_FARES: Record<string, number> = {
   'NDI>SJSU': 21,
   'NDI>DKV': 43,
@@ -92,6 +102,14 @@ class WeightedGraph {
     if (sourceNode && destinationNode) {
       sourceNode.addEdge(destinationNode, weight);
       destinationNode.addEdge(sourceNode, weight);
+    }
+  }
+
+  addDirectedEdge(source: string, destination: string, weight: number) {
+    const sourceNode = this.getNode(source);
+    const destinationNode = this.getNode(destination);
+    if (sourceNode && destinationNode) {
+      sourceNode.addEdge(destinationNode, weight);
     }
   }
 
@@ -236,6 +254,17 @@ const distanceBetweenStationsKm = (from: string, to: string) => {
 const edgeDistanceKey = (from: string, to: string) => [from, to].sort().join('>');
 const edgeDistanceKm = new Map<string, number>();
 
+const rapidMetroDirectedKey = (from: string, to: string) => `${from}>${to}`;
+const getRapidMetroDirectedEndpoints = (edge: MetroEdge) => {
+  const forwardKey = rapidMetroDirectedKey(edge.from, edge.to);
+  const reverseKey = rapidMetroDirectedKey(edge.to, edge.from);
+
+  if (RAPID_METRO_DIRECTED_EDGES.has(forwardKey)) return [edge.from, edge.to] as const;
+  if (RAPID_METRO_DIRECTED_EDGES.has(reverseKey)) return [edge.to, edge.from] as const;
+
+  return null;
+};
+
 for (const station of stations) {
   graph.addNode(station.id);
 }
@@ -247,6 +276,15 @@ for (const edge of edges) {
     : distanceKm;
 
   edgeDistanceKm.set(edgeDistanceKey(edge.from, edge.to), distanceKm);
+
+  if (edge.stroke.toLowerCase() === RAPID_METRO_LINE_COLOR) {
+    const directedEndpoints = getRapidMetroDirectedEndpoints(edge);
+    if (directedEndpoints) {
+      graph.addDirectedEdge(directedEndpoints[0], directedEndpoints[1], routeWeight);
+      continue;
+    }
+  }
+
   graph.addEdge(edge.from, edge.to, routeWeight);
 }
 
