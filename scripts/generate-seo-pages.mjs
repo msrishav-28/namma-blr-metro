@@ -427,6 +427,76 @@ const routePage = (route) => {
   };
 };
 
+const legalPages = [
+  {
+    pathname: '/privacy-policy/',
+    title: 'Privacy Policy | Delhi Metro Route Planner',
+    description: 'Read the Privacy Policy for Delhi Metro Route Planner, including how usage data may be collected, used, retained, and protected.',
+    keywords: 'Delhi Metro Route Planner privacy policy, metro.coolhead.in privacy, Delhi Metro app privacy',
+    heading: 'Privacy Policy',
+    body: `
+      <p>Last updated: June 02, 2026</p>
+      <p>This Privacy Policy describes the collection, use, and disclosure of information when you use Delhi Metro Route Planner.</p>
+      <h2>Information we collect</h2>
+      <p>Usage Data may be collected automatically, including browser type, device information, pages visited, visit time, and diagnostic data.</p>
+      <h2>How information is used</h2>
+      <p>Information may be used to provide and maintain the service, improve reliability, manage requests, address technical issues, and comply with legal obligations.</p>
+      <h2>Contact</h2>
+      <p>For questions about this Privacy Policy, contact <a href="mailto:pratik@coolhead.in">pratik@coolhead.in</a>.</p>
+    `,
+  },
+  {
+    pathname: '/terms-and-conditions/',
+    title: 'Terms and Conditions | Delhi Metro Route Planner',
+    description: 'Read the Terms and Conditions for Delhi Metro Route Planner, including acceptable use, accuracy, limitations, and contact information.',
+    keywords: 'Delhi Metro Route Planner terms, metro.coolhead.in terms and conditions, Delhi Metro route planner disclaimer',
+    heading: 'Terms and Conditions',
+    body: `
+      <p>Last updated: June 02, 2026</p>
+      <p>By accessing or using Delhi Metro Route Planner, you agree to these Terms and Conditions.</p>
+      <h2>Service</h2>
+      <p>Delhi Metro Route Planner is an independent route planning tool for general guidance and is not affiliated with, endorsed by, or operated by Delhi Metro Rail Corporation.</p>
+      <h2>Accuracy</h2>
+      <p>Routes, fares, timings, station access, and interchange details may change. Verify critical travel information with official sources before relying on it.</p>
+      <h2>Contact</h2>
+      <p>For questions about these Terms and Conditions, contact <a href="mailto:pratik@coolhead.in">pratik@coolhead.in</a>.</p>
+    `,
+  },
+];
+
+const legalPage = (page) => {
+  const body = `
+    <main class="seo-prerender">
+      <h1>${escapeHtml(page.heading)}</h1>
+      ${page.body}
+      <p><a href="/">Open Delhi Metro Route Planner</a></p>
+    </main>`;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: page.heading,
+    url: `${baseUrl}${page.pathname}`,
+    description: page.description,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Delhi Metro Route Planner',
+      url: `${baseUrl}/`,
+    },
+  };
+
+  return {
+    pathname: page.pathname,
+    html: renderHtml({
+      title: page.title,
+      description: page.description,
+      keywords: page.keywords,
+      canonicalPath: page.pathname,
+      body,
+      schema,
+    }),
+  };
+};
+
 const routes = [];
 for (const origin of stations) {
   const previous = buildShortestPathTree(origin.id);
@@ -440,6 +510,7 @@ for (const origin of stations) {
 }
 
 const pages = [
+  ...legalPages.map(legalPage),
   ...stations.map(stationPage),
   ...routes.map(routePage),
 ];
@@ -450,6 +521,11 @@ for (const page of pages) {
 
 const sitemapUrls = [
   { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'weekly' },
+  ...legalPages.map((page) => ({
+    loc: `${baseUrl}${page.pathname}`,
+    priority: '0.3',
+    changefreq: 'yearly',
+  })),
   ...stations.map((station) => ({
     loc: `${baseUrl}${stationPathname(station.id)}`,
     priority: '0.8',

@@ -9,4 +9,16 @@
     <xhtml:link rel="alternate" hreflang="hi" href="https://metro.coolhead.in/?lang=hi" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://metro.coolhead.in/" />
   </url>
+  <url>
+    <loc>https://metro.coolhead.in/privacy-policy</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://metro.coolhead.in/terms-and-conditions</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>

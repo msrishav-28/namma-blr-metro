@@ -8,6 +8,7 @@ import { ThemeProvider } from './theme'
 import { createLazyComponent } from './utils/lazyComponent'
 
 const StationPage = createLazyComponent(() => import('./components/StationPage'));
+const LegalPage = createLazyComponent(() => import('./components/LegalPage'));
 
 const stationSlugFromPathname = (pathname: string) => {
   const match = pathname.match(/^\/stations\/([^/]+)\/?$/);
@@ -17,11 +18,32 @@ const stationSlugFromPathname = (pathname: string) => {
 function AppContent() {
   const pathname = usePathname();
   const stationSlug = stationSlugFromPathname(pathname);
+  const normalizedPathname = pathname.replace(/\/$/, '') || '/';
 
   if (stationSlug) {
     return (
       <LazyBoundary fallback={<div className="min-h-svh bg-[#f4f0e8] dark:bg-zinc-950" />}>
         <StationPage slug={stationSlug} />
+      </LazyBoundary>
+    );
+  }
+
+  if (normalizedPathname === '/privacy-policy' || normalizedPathname === '/privacy_policy') {
+    return (
+      <LazyBoundary fallback={<div className="min-h-svh bg-[#f4f0e8] dark:bg-zinc-950" />}>
+        <LegalPage kind="privacy" />
+      </LazyBoundary>
+    );
+  }
+
+  if (
+    normalizedPathname === '/terms-and-conditions' ||
+    normalizedPathname === '/termsn-and-condition' ||
+    normalizedPathname === '/terms'
+  ) {
+    return (
+      <LazyBoundary fallback={<div className="min-h-svh bg-[#f4f0e8] dark:bg-zinc-950" />}>
+        <LegalPage kind="terms" />
       </LazyBoundary>
     );
   }
