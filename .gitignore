@@ -29,3 +29,20 @@ music
 public/music
 
 api
+app
+android.keystore
+
+gradlew
+.gradle
+
+app-release-bundle.aab
+app-release-signed.apk
+app-release-signed.apk.idsig
+app-release-unsigned-aligned.apk
+build.gradle
+gradle.properties
+gradlew.bat
+manifest-checksum.txt
+settings.gradle
+gradle-wrapper.properties
+gradle-wrapper.jar

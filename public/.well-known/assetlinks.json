@@ -1,0 +1,15 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls",
+            "delegate_permission/common.get_login_creds"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "in.coolhead.metroroute",
+            "sha256_cert_fingerprints": [
+                "00:C2:38:69:0F:E9:E8:3A:16:22:E2:BD:2E:87:A9:15:8C:35:17:80:B6:63:C8:FE:F2:FC:1C:FE:5F:AD:8F:FE"
+            ]
+        }
+    }
+]
