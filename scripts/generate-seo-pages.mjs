@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -8,13 +8,23 @@ const distDir = path.join(rootDir, 'dist');
 const indexPath = path.join(distDir, 'index.html');
 const baseUrl = (process.env.SITE_URL || 'https://metro.coolhead.in').replace(/\/$/, '');
 const showcaseImagePath = '/images/showcase-1200x630.png';
-const sitemapUrlLimit = 45000;
-const today = new Date().toISOString().slice(0, 10);
+const sitemapUrlLimit = 10000;
+const toLastmodDate = (date) => date.toISOString().slice(0, 10);
+const latestMtime = async (paths) => {
+  const stats = await Promise.all(paths.map((filePath) => stat(filePath)));
+  return new Date(Math.max(...stats.map((fileStat) => fileStat.mtimeMs)));
+};
 
 const stations = JSON.parse(await readFile(path.join(rootDir, 'src/data/labels.json'), 'utf8'))
   .filter((station) => station.id && station.text);
 const edges = JSON.parse(await readFile(path.join(rootDir, 'src/data/edge.json'), 'utf8'));
 const template = await readFile(indexPath, 'utf8');
+const contentLastmod = toLastmodDate(await latestMtime([
+  path.join(rootDir, 'index.html'),
+  path.join(rootDir, 'scripts/generate-seo-pages.mjs'),
+  path.join(rootDir, 'src/data/labels.json'),
+  path.join(rootDir, 'src/data/edge.json'),
+]));
 
 const escapeHtml = (value) =>
   String(value)
@@ -36,6 +46,8 @@ const stationSlug = (stationId) => slugifyStationName(stationById.get(stationId)
 const stationPathname = (stationId) => `/stations/${stationSlug(stationId)}/`;
 const routePathname = (from, to) => `/routes/${stationSlug(from)}-to-${stationSlug(to)}/`;
 const stationName = (stationId) => stationById.get(stationId)?.text || stationId;
+const routeAnchor = (from, to) =>
+  `<a href="${routePathname(from, to)}">${escapeHtml(stationName(from))} to ${escapeHtml(stationName(to))} Metro route</a>`;
 const toRadians = (degrees) => degrees * (Math.PI / 180);
 const isValidCoordinatePair = (station) =>
   typeof station?.Latitude === 'number' &&
@@ -83,6 +95,18 @@ const featuredStationIds = [
   'APOT',
   'ITO',
 ].filter((stationId) => stationById.has(stationId));
+const featuredRoutePairs = [
+  ['RCK', 'KG'],
+  ['NDI', 'APOT'],
+  ['HKS', 'BOTA'],
+  ['DW21', 'RITH'],
+  ['CTST', 'KG'],
+  ['NDI', 'RCK'],
+  ['KG', 'BOTA'],
+  ['NSHP', 'RCK'],
+  ['ITO', 'KG'],
+  ['BOTA', 'APOT'],
+].filter(([from, to]) => stationById.has(from) && stationById.has(to));
 
 const adjacency = new Map(stations.map((station) => [station.id, []]));
 for (const edge of edges) {
@@ -347,16 +371,16 @@ const stationPage = (station) => {
 
 const routePage = (route) => {
   const pathname = routePathname(route.from, route.to);
-  const title = `${route.fromName} to ${route.toName} Metro Route | Fare, Time & Stops`;
+  const title = `${route.fromName} to ${route.toName} Metro Route Map | Fare, Time & Stops`;
   const interchangeText = route.interchanges.length
     ? ` Interchange at ${route.interchanges.map(stationName).join(', ')}.`
     : ' No interchange is usually needed for this route.';
-  const description = `Plan the Delhi Metro route from ${route.fromName} to ${route.toName}. Estimated fare Rs ${route.fare}, ${route.estimatedMinutes} minutes, ${route.stops} stops, about ${route.distanceKm} km.${interchangeText}`;
-  const keywords = `${route.fromName} to ${route.toName} metro route, ${route.fromName} to ${route.toName} metro fare, Delhi Metro ${route.fromName} ${route.toName}, ${route.fromName} to ${route.toName} travel time`;
+  const description = `Check the ${route.fromName} to ${route.toName} Delhi Metro route map with estimated fare Rs ${route.fare}, travel time ${route.estimatedMinutes} minutes, ${route.stops} stops, distance about ${route.distanceKm} km, and interchange guidance.${interchangeText}`;
+  const keywords = `${route.fromName} to ${route.toName} metro route, ${route.fromName} to ${route.toName} metro route map, ${route.fromName} to ${route.toName} metro fare, ${route.fromName} to ${route.toName} metro time, Delhi Metro ${route.fromName} ${route.toName}, ${route.fromName} to ${route.toName} stops`;
   const intermediateStations = route.pathIds.slice(1, -1).map(stationName);
   const body = `
     <main class="seo-prerender">
-      <h1>${escapeHtml(route.fromName)} to ${escapeHtml(route.toName)} Metro Route</h1>
+      <h1>${escapeHtml(route.fromName)} to ${escapeHtml(route.toName)} Metro Route Map</h1>
       <img src="${showcaseImagePath}" alt="Delhi Metro route planner for ${escapeHtml(route.fromName)} to ${escapeHtml(route.toName)}" width="1200" height="630" loading="lazy" />
       <p>${escapeHtml(description)}</p>
       <dl>
@@ -366,7 +390,7 @@ const routePage = (route) => {
         <dt>Stops</dt><dd>${route.stops}</dd>
         <dt>Distance</dt><dd>${route.distanceKm} km</dd>
       </dl>
-      <h2>Route details</h2>
+      <h2>${escapeHtml(route.fromName)} to ${escapeHtml(route.toName)} route details</h2>
       <p>
         This Delhi Metro route starts at <a href="${stationPathname(route.from)}">${escapeHtml(route.fromName)}</a> and
         ends at <a href="${stationPathname(route.to)}">${escapeHtml(route.toName)}</a>. The route includes
@@ -375,6 +399,14 @@ const routePage = (route) => {
         ${route.interchanges.length
           ? `You may need to change metro lines at ${escapeHtml(route.interchanges.map(stationName).join(', '))}.`
           : 'A line change is usually not needed for this route.'}
+      </p>
+      <h2>Fare, time and stops</h2>
+      <p>
+        For searches like ${escapeHtml(route.fromName)} to ${escapeHtml(route.toName)} metro fare,
+        ${escapeHtml(route.fromName)} to ${escapeHtml(route.toName)} metro time, and
+        ${escapeHtml(route.fromName)} to ${escapeHtml(route.toName)} metro stops, this page gives a quick planning
+        estimate before you open the interactive map. First metro and last metro timings can change by day, direction,
+        line, and operational notices, so verify time-critical trips with official Delhi Metro sources.
       </p>
       <p>
         Stations on this route: ${escapeHtml(route.pathIds.map(stationName).join(' -> '))}.
@@ -423,6 +455,66 @@ const routePage = (route) => {
         from: route.from,
         to: route.to,
       },
+    }),
+  };
+};
+
+const routeIndexPage = () => {
+  const pathname = '/routes/';
+  const title = 'Delhi Metro Routes | Route Map, Fare, Time & Stops';
+  const description = 'Browse Delhi Metro station-to-station route pages with route map links, estimated fare, travel time, stop count, distance, and interchange guidance.';
+  const keywords = 'Delhi Metro routes, Delhi Metro route map, Delhi Metro fare, Delhi Metro travel time, Delhi Metro station to station routes, Delhi Metro stops';
+  const stationGroups = featuredStationIds.map((from) => {
+    const links = featuredStationIds
+      .filter((to) => to !== from)
+      .slice(0, 6)
+      .map((to) => `<li>${routeAnchor(from, to)}</li>`)
+      .join('');
+
+    return `
+      <section>
+        <h2>Routes from ${escapeHtml(stationName(from))}</h2>
+        <ul>${links}</ul>
+      </section>`;
+  }).join('');
+  const body = `
+    <main class="seo-prerender">
+      <h1>Delhi Metro Routes</h1>
+      <img src="${showcaseImagePath}" alt="Delhi Metro route map and station-to-station planner" width="1200" height="630" loading="lazy" />
+      <p>${escapeHtml(description)}</p>
+      <h2>Popular Delhi Metro route pages</h2>
+      <ul>
+        ${featuredRoutePairs.map(([from, to]) => `<li>${routeAnchor(from, to)}</li>`).join('')}
+      </ul>
+      ${stationGroups}
+      <p>
+        Each route page is built around common commuter searches such as metro route map, metro fare, travel time,
+        number of stops, distance, and interchange stations. Open the <a href="/">Delhi Metro Route Planner</a> to search
+        any source and destination interactively.
+      </p>
+    </main>`;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Delhi Metro Routes',
+    url: `${baseUrl}${pathname}`,
+    description,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Delhi Metro Route Planner',
+      url: `${baseUrl}/`,
+    },
+  };
+
+  return {
+    pathname,
+    html: renderHtml({
+      title,
+      description,
+      keywords,
+      canonicalPath: pathname,
+      body,
+      schema,
     }),
   };
 };
@@ -510,6 +602,7 @@ for (const origin of stations) {
 }
 
 const pages = [
+  routeIndexPage(),
   ...legalPages.map(legalPage),
   ...stations.map(stationPage),
   ...routes.map(routePage),
@@ -519,50 +612,61 @@ for (const page of pages) {
   await writePage(page.pathname, page.html);
 }
 
-const sitemapUrls = [
-  { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'weekly' },
+const coreSitemapUrls = [
+  { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'weekly', lastmod: contentLastmod },
+  { loc: `${baseUrl}/routes/`, priority: '0.9', changefreq: 'weekly', lastmod: contentLastmod },
   ...legalPages.map((page) => ({
     loc: `${baseUrl}${page.pathname}`,
     priority: '0.3',
     changefreq: 'yearly',
+    lastmod: contentLastmod,
   })),
-  ...stations.map((station) => ({
+];
+const stationSitemapUrls = stations.map((station) => ({
     loc: `${baseUrl}${stationPathname(station.id)}`,
     priority: '0.8',
     changefreq: 'monthly',
-  })),
-  ...routes.map((route) => ({
+    lastmod: contentLastmod,
+  }));
+const routeSitemapUrls = routes.map((route) => ({
     loc: `${baseUrl}${routePathname(route.from, route.to)}`,
     priority: '0.7',
     changefreq: 'monthly',
-  })),
-];
+    lastmod: contentLastmod,
+  }));
 
-const sitemapChunks = [];
-for (let index = 0; index < sitemapUrls.length; index += sitemapUrlLimit) {
-  sitemapChunks.push(sitemapUrls.slice(index, index + sitemapUrlLimit));
+const sitemapFiles = [
+  { filename: 'sitemap-core.xml', urls: coreSitemapUrls },
+  { filename: 'sitemap-stations.xml', urls: stationSitemapUrls },
+];
+for (let index = 0; index < routeSitemapUrls.length; index += sitemapUrlLimit) {
+  const chunkNumber = String(Math.floor(index / sitemapUrlLimit) + 1).padStart(3, '0');
+  sitemapFiles.push({
+    filename: `sitemap-routes-${chunkNumber}.xml`,
+    urls: routeSitemapUrls.slice(index, index + sitemapUrlLimit),
+  });
 }
 
-for (const [index, urls] of sitemapChunks.entries()) {
+for (const sitemapFile of sitemapFiles) {
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((url) => `  <url>
+${sitemapFile.urls.map((url) => `  <url>
     <loc>${escapeHtml(url.loc)}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${url.lastmod}</lastmod>
     <changefreq>${url.changefreq}</changefreq>
     <priority>${url.priority}</priority>
   </url>`).join('\n')}
 </urlset>
 `;
 
-  await writeFile(path.join(distDir, `sitemap-${index + 1}.xml`), sitemap);
+  await writeFile(path.join(distDir, sitemapFile.filename), sitemap);
 }
 
 const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapChunks.map((_, index) => `  <sitemap>
-    <loc>${baseUrl}/sitemap-${index + 1}.xml</loc>
-    <lastmod>${today}</lastmod>
+${sitemapFiles.map((sitemapFile) => `  <sitemap>
+    <loc>${baseUrl}/${sitemapFile.filename}</loc>
+    <lastmod>${contentLastmod}</lastmod>
   </sitemap>`).join('\n')}
 </sitemapindex>
 `;
@@ -574,4 +678,4 @@ Allow: /
 Sitemap: ${baseUrl}/sitemap.xml
 `);
 
-console.log(`Generated ${stations.length} station pages, ${routes.length} route pages, ${sitemapChunks.length} sitemap files, and sitemap.xml index.`);
+console.log(`Generated ${stations.length} station pages, ${routes.length} route pages, ${sitemapFiles.length} sitemap files, and sitemap.xml index.`);
