@@ -149,7 +149,7 @@ function RouteOptions({
     return (
         <section className="grid gap-2">
             <div className="flex items-center justify-between gap-2">
-                <h3 className="text-sm font-semibold text-neutral-700 dark:text-zinc-300">{t('routeOptions')}</h3>
+                <h3 className="text-md font-semibold text-neutral-700 dark:text-zinc-300">{t('routeOptions')}</h3>
                 <div className="inline-flex rounded-lg border border-neutral-200 bg-white p-0.5 dark:border-zinc-700 dark:bg-zinc-900" role="radiogroup" aria-label={t('sortRoutes')}>
                     <button
                         type="button"
@@ -173,7 +173,7 @@ function RouteOptions({
                     </button>
                 </div>
             </div>
-            <div className="route-options-scroll -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+            <div className="route-options-scroll -mx-1 flex gap-3 overflow-x-auto px-1 pb-1">
                 {routeOptions.map((routeOption, index) => {
                     const isActive = routeOption.route.optionId === activeRouteId;
                     const isPlaying = isActive && isRoutePlaying;
@@ -184,7 +184,7 @@ function RouteOptions({
                         <div
                             key={routeOption.route.optionId}
                             style={{ animationDelay: `${Math.min(index, 5) * 35}ms` }}
-                            className={` shrink-0 rounded-lg border p-3 transition w-[240px] ${isActive
+                            className={` shrink-0 rounded-lg border p-3 transition w-60  ${isActive
                                 ? 'border-neutral-300 bg-neutral-100 text-neutral-950 shadow-sm dark:border-zinc-600 dark:bg-zinc-800 dark:text-white'
                                 : 'border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50 dark:border-zinc-700 dark:bg-zinc-900 dark:hover:border-zinc-600 dark:hover:bg-zinc-800'
                                 } route-option-card`}
@@ -426,7 +426,7 @@ function MetroMapStage() {
     return (
         <div className="min-h-svh overflow-hidden bg-[#f4f0e8] p-2 text-neutral-950 dark:bg-zinc-950 dark:text-zinc-50 sm:p-4 lg:overflow-visible lg:p-6">
             <div className="grid min-h-[calc(100svh-1.5rem)] gap-4 sm:min-h-[calc(100svh-2rem)] lg:min-h-[calc(100svh-3rem)] lg:grid-cols-2">
-                <main className="relative min-h-[calc(100svh-1.5rem)] overflow-hidden rounded-lg border border-neutral-200 bg-[#f4f0e8] shadow-sm dark:border-zinc-800 dark:bg-zinc-950 sm:min-h-[calc(100svh-2rem)] lg:min-h-0">
+                <main className="relative min-h-[calc(100svh-1.5rem)] h-screen overflow-hidden rounded-lg border border-neutral-200 bg-[#f4f0e8] shadow-sm dark:border-zinc-800 dark:bg-zinc-950 sm:min-h-[calc(100svh-2rem)] lg:min-h-0">
                     {canLoadInteractiveMap ? (
                         <LazyBoundary fallback={<MapFallback />}>
                             <SvgComponent

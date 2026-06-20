@@ -17,7 +17,7 @@
   "maskableIconUrl": "https://metro.coolhead.in/icons/icon-512.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
-    "path": "/Users/coolhead/Documents/work/web development/side-projects/delhi-metro-react/android.keystore",
+    "path": "android.keystore",
     "alias": "android"
   },
   "appVersionName": "5",
