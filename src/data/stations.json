@@ -74131,5 +74131,176 @@
         "estimatedPublicTransportMinutes": 0
       }
     ]
+  },
+  {
+    "id": "KPEX",
+    "text": "Krishna Park Extension",
+    "layout": "Underground",
+    "Latitude": 28.6412,
+    "Longitude": 77.0739,
+    "dmrcName": "KRISHNA PARK EXTENSION",
+    "description": "Krishna Park Extension is an operational Delhi Metro Phase 4 station on the Magenta Line.",
+    "interchange": false,
+    "stationFacilities": [
+      "Divyang Friendly Station"
+    ],
+    "gates": [],
+    "facilities": [],
+    "platforms": [],
+    "parking": [],
+    "lifts": [],
+    "nearbyPlaces": []
+  },
+  {
+    "id": "YMVR",
+    "text": "Yamuna Vihar",
+    "layout": "Elevated",
+    "Latitude": 28.7006,
+    "Longitude": 77.2798,
+    "dmrcName": "YAMUNA VIHAR",
+    "description": "Yamuna Vihar is an operational Delhi Metro Phase 4 station on the Pink Line.",
+    "interchange": false,
+    "stationFacilities": [
+      "Divyang Friendly Station"
+    ],
+    "gates": [],
+    "facilities": [],
+    "platforms": [],
+    "parking": [],
+    "lifts": [],
+    "nearbyPlaces": []
+  },
+  {
+    "id": "BJNP",
+    "text": "Bhajanpura",
+    "layout": "Elevated",
+    "Latitude": 28.7021,
+    "Longitude": 77.2692,
+    "dmrcName": "BHAJANPURA",
+    "description": "Bhajanpura is an operational Delhi Metro Phase 4 station on the Pink Line.",
+    "interchange": false,
+    "stationFacilities": [
+      "Divyang Friendly Station"
+    ],
+    "gates": [],
+    "facilities": [],
+    "platforms": [],
+    "parking": [],
+    "lifts": [],
+    "nearbyPlaces": []
+  },
+  {
+    "id": "KJKH",
+    "text": "Khajuri Khas",
+    "layout": "Elevated",
+    "Latitude": 28.7044,
+    "Longitude": 77.2583,
+    "dmrcName": "KHAJURI KHAS",
+    "description": "Khajuri Khas is an operational Delhi Metro Phase 4 station on the Pink Line.",
+    "interchange": false,
+    "stationFacilities": [
+      "Divyang Friendly Station"
+    ],
+    "gates": [],
+    "facilities": [],
+    "platforms": [],
+    "parking": [],
+    "lifts": [],
+    "nearbyPlaces": []
+  },
+  {
+    "id": "SGHT",
+    "text": "Soorghat",
+    "layout": "Elevated",
+    "Latitude": 28.7162,
+    "Longitude": 77.2491,
+    "dmrcName": "SOORGHAT",
+    "description": "Soorghat is an operational Delhi Metro Phase 4 station on the Pink Line.",
+    "interchange": false,
+    "stationFacilities": [
+      "Divyang Friendly Station"
+    ],
+    "gates": [],
+    "facilities": [],
+    "platforms": [],
+    "parking": [],
+    "lifts": [],
+    "nearbyPlaces": []
+  },
+  {
+    "id": "SNVR",
+    "text": "Sonia Vihar",
+    "layout": "Elevated",
+    "Latitude": 28.7245,
+    "Longitude": 77.2404,
+    "dmrcName": "SONIA VIHAR",
+    "description": "Sonia Vihar is an operational Delhi Metro Phase 4 station on the Pink Line.",
+    "interchange": false,
+    "stationFacilities": [
+      "Divyang Friendly Station"
+    ],
+    "gates": [],
+    "facilities": [],
+    "platforms": [],
+    "parking": [],
+    "lifts": [],
+    "nearbyPlaces": []
+  },
+  {
+    "id": "JGTV",
+    "text": "Jagatpur Village",
+    "layout": "Elevated",
+    "Latitude": 28.7352,
+    "Longitude": 77.2277,
+    "dmrcName": "JAGATPUR VILLAGE",
+    "description": "Jagatpur Village is an operational Delhi Metro Phase 4 station on the Pink Line.",
+    "interchange": false,
+    "stationFacilities": [
+      "Divyang Friendly Station"
+    ],
+    "gates": [],
+    "facilities": [],
+    "platforms": [],
+    "parking": [],
+    "lifts": [],
+    "nearbyPlaces": []
+  },
+  {
+    "id": "JRMA",
+    "text": "Jharoda Majra",
+    "layout": "Elevated",
+    "Latitude": 28.7366,
+    "Longitude": 77.2132,
+    "dmrcName": "JHARODA MAJRA",
+    "description": "Jharoda Majra is an operational Delhi Metro Phase 4 station on the Pink Line.",
+    "interchange": false,
+    "stationFacilities": [
+      "Divyang Friendly Station"
+    ],
+    "gates": [],
+    "facilities": [],
+    "platforms": [],
+    "parking": [],
+    "lifts": [],
+    "nearbyPlaces": []
+  },
+  {
+    "id": "BURI",
+    "text": "Burari",
+    "layout": "Elevated",
+    "Latitude": 28.7333,
+    "Longitude": 77.2011,
+    "dmrcName": "BURARI",
+    "description": "Burari is an operational Delhi Metro Phase 4 station on the Pink Line.",
+    "interchange": false,
+    "stationFacilities": [
+      "Divyang Friendly Station"
+    ],
+    "gates": [],
+    "facilities": [],
+    "platforms": [],
+    "parking": [],
+    "lifts": [],
+    "nearbyPlaces": []
   }
 ]

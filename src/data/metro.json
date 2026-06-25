@@ -1366,5 +1366,59 @@
     "Line": "Blue Line",
     "Latitude": 28.6232784,
     "Longitude": 77.26792404925054
+  },
+  {
+    "Station": "Krishna Park Extension",
+    "Line": "Magenta Line",
+    "Latitude": 28.6412,
+    "Longitude": 77.0739
+  },
+  {
+    "Station": "Yamuna Vihar",
+    "Line": "Pink Line",
+    "Latitude": 28.7006,
+    "Longitude": 77.2798
+  },
+  {
+    "Station": "Bhajanpura",
+    "Line": "Pink Line",
+    "Latitude": 28.7021,
+    "Longitude": 77.2692
+  },
+  {
+    "Station": "Khajuri Khas",
+    "Line": "Pink Line",
+    "Latitude": 28.7044,
+    "Longitude": 77.2583
+  },
+  {
+    "Station": "Soorghat",
+    "Line": "Pink Line",
+    "Latitude": 28.7162,
+    "Longitude": 77.2491
+  },
+  {
+    "Station": "Sonia Vihar",
+    "Line": "Pink Line",
+    "Latitude": 28.7245,
+    "Longitude": 77.2404
+  },
+  {
+    "Station": "Jagatpur Village",
+    "Line": "Pink Line",
+    "Latitude": 28.7352,
+    "Longitude": 77.2277
+  },
+  {
+    "Station": "Jharoda Majra",
+    "Line": "Pink Line",
+    "Latitude": 28.7366,
+    "Longitude": 77.2132
+  },
+  {
+    "Station": "Burari",
+    "Line": "Pink Line",
+    "Latitude": 28.7333,
+    "Longitude": 77.2011
   }
 ]

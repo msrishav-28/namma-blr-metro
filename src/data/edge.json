@@ -1546,5 +1546,65 @@
     "to": "S55",
     "stroke": "#015b97",
     "path": "M884.3450340608323 1362.433288497418 L884.3450340608323 1312.79559161713"
+  },
+  {
+    "from": "KPEX",
+    "to": "JPW",
+    "stroke": "#FF00FF",
+    "path": "M413.7197899943594 571.4952054497329 L433.9393413459453 571.4952054497329"
+  },
+  {
+    "from": "MUPR",
+    "to": "YMVR",
+    "stroke": "#e692be",
+    "path": "M1095.522193777932 246.8759491473943 L1062 252"
+  },
+  {
+    "from": "YMVR",
+    "to": "BJNP",
+    "stroke": "#e692be",
+    "path": "M1062 252 L1028 257"
+  },
+  {
+    "from": "BJNP",
+    "to": "KJKH",
+    "stroke": "#e692be",
+    "path": "M1028 257 L994 262"
+  },
+  {
+    "from": "KJKH",
+    "to": "SGHT",
+    "stroke": "#e692be",
+    "path": "M994 262 L960 267"
+  },
+  {
+    "from": "SGHT",
+    "to": "SNVR",
+    "stroke": "#e692be",
+    "path": "M960 267 L926 272"
+  },
+  {
+    "from": "SNVR",
+    "to": "JGTV",
+    "stroke": "#e692be",
+    "path": "M926 272 L892 277"
+  },
+  {
+    "from": "JGTV",
+    "to": "JRMA",
+    "stroke": "#e692be",
+    "path": "M892 277 L858 282"
+  },
+  {
+    "from": "JRMA",
+    "to": "BURI",
+    "stroke": "#e692be",
+    "path": "M858 282 L826 288"
+  },
+  {
+    "from": "BURI",
+    "to": "MKPR",
+    "stroke": "#e692be",
+    "path": "M826 288 L794.9516206013798 294.05128650149686"
   }
 ]

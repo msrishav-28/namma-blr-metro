@@ -1,7 +1,7 @@
 import type { StationInfo } from '../types/station';
 import { slugifyStationName } from './routePlanner';
 
-const STATION_METADATA_URL = '/data/stations.json';
+import rawStationMetadata from '../data/stations.json';
 
 let stationMetadataPromise: Promise<StationInfo[]> | null = null;
 const stationInfoById = new Map<string, StationInfo>();
@@ -14,14 +14,7 @@ const normalizeStations = (stations: StationInfo[]) =>
 
 export const loadStationMetadata = async () => {
   if (!stationMetadataPromise) {
-    stationMetadataPromise = fetch(STATION_METADATA_URL)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Could not load station metadata: ${response.status}`);
-        }
-
-        return response.json() as Promise<StationInfo[]>;
-      })
+    stationMetadataPromise = Promise.resolve(rawStationMetadata as StationInfo[])
       .then((stations) => {
         const normalizedStations = normalizeStations(stations);
         stationInfoById.clear();

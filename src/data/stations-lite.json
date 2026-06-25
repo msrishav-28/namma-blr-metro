@@ -1444,5 +1444,59 @@
     "text": "Sector 55-56",
     "Latitude": 28.4234,
     "Longitude": 77.1052
+  },
+  {
+    "id": "KPEX",
+    "text": "Krishna Park Extension",
+    "Latitude": 28.6412,
+    "Longitude": 77.0739
+  },
+  {
+    "id": "YMVR",
+    "text": "Yamuna Vihar",
+    "Latitude": 28.7006,
+    "Longitude": 77.2798
+  },
+  {
+    "id": "BJNP",
+    "text": "Bhajanpura",
+    "Latitude": 28.7021,
+    "Longitude": 77.2692
+  },
+  {
+    "id": "KJKH",
+    "text": "Khajuri Khas",
+    "Latitude": 28.7044,
+    "Longitude": 77.2583
+  },
+  {
+    "id": "SGHT",
+    "text": "Soorghat",
+    "Latitude": 28.7162,
+    "Longitude": 77.2491
+  },
+  {
+    "id": "SNVR",
+    "text": "Sonia Vihar",
+    "Latitude": 28.7245,
+    "Longitude": 77.2404
+  },
+  {
+    "id": "JGTV",
+    "text": "Jagatpur Village",
+    "Latitude": 28.7352,
+    "Longitude": 77.2277
+  },
+  {
+    "id": "JRMA",
+    "text": "Jharoda Majra",
+    "Latitude": 28.7366,
+    "Longitude": 77.2132
+  },
+  {
+    "id": "BURI",
+    "text": "Burari",
+    "Latitude": 28.7333,
+    "Longitude": 77.2011
   }
 ]

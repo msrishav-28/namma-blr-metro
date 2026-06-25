@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { MoonIcon, PlayIcon, SunIcon } from '@radix-ui/react-icons';
-import { useEffect, useMemo, useRef } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { MoonIcon, PlayIcon, StarFilledIcon, StarIcon, SunIcon } from '@radix-ui/react-icons';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import Select, { type SingleValue, type StylesConfig } from 'react-select';
 
 import { availableLanguages, getLocalizedStationName, useI18n, type Language } from '../i18n';
@@ -16,6 +16,39 @@ interface StationOption {
   value: string;
   lineColors: string[];
 }
+
+interface FavouriteRoute {
+  from: string;
+  to: string;
+  createdAt: number;
+}
+
+const favouriteRoutesStorageKey = 'delhi-metro-favourite-routes';
+
+const getRouteKey = (from: string, to: string) => `${from}>${to}`;
+
+const readFavouriteRoutes = (): FavouriteRoute[] => {
+  if (typeof window === 'undefined') return [];
+
+  try {
+    const storedRoutes = JSON.parse(window.localStorage.getItem(favouriteRoutesStorageKey) || '[]');
+    if (!Array.isArray(storedRoutes)) return [];
+
+    return storedRoutes.filter((route): route is FavouriteRoute => (
+      typeof route?.from === 'string' &&
+      typeof route?.to === 'string' &&
+      typeof route?.createdAt === 'number'
+    ));
+  } catch {
+    return [];
+  }
+};
+
+const writeFavouriteRoutes = (routes: FavouriteRoute[]) => {
+  if (typeof window === 'undefined') return;
+
+  window.localStorage.setItem(favouriteRoutesStorageKey, JSON.stringify(routes));
+};
 
 const updateRouteUrl = (from: string, to: string) => {
   if (typeof window === 'undefined') return;
@@ -138,11 +171,18 @@ export function SearchBox({
       to: initialRouteParams.hasRouteQuery ? initialRouteParams.to : '',
     },
   });
+  const [favouriteRoutes, setFavouriteRoutes] = useState(readFavouriteRoutes);
   const setRoute = usePath((state: any) => state.setRoute);
   const setSelectedFrom = usePath((state: any) => state.setSelectedFrom);
   const hydratedRouteRef = useRef(false);
   const stationOptions = useMemo(() => getStationOptions(language), [language]);
   const selectStyles = useMemo(() => createSelectStyles(theme), [theme]);
+  const selectedFromValue = useWatch({ control, name: 'from' });
+  const selectedToValue = useWatch({ control, name: 'to' });
+  const canSaveFavouriteRoute = Boolean(selectedFromValue && selectedToValue && selectedFromValue !== selectedToValue);
+  const currentRouteKey = canSaveFavouriteRoute ? getRouteKey(selectedFromValue, selectedToValue) : '';
+  const isCurrentRouteFavourite = favouriteRoutes.some((route) => getRouteKey(route.from, route.to) === currentRouteKey);
+  const showFavouriteRoutes = !selectedFromValue && !selectedToValue;
 
   useEffect(() => {
     if (hydratedRouteRef.current || !initialRouteParams.hasRouteQuery) return;
@@ -175,18 +215,48 @@ export function SearchBox({
     onAnimationModeChange?.(animationMode === 'smooth' ? 'step' : 'smooth');
   };
 
+  const planRoute = (from: string, to: string) => {
+    const plannedRoutes = sortRoutePlans(buildRoutes(from, to, language), 'interchanges');
+    const plannedRoute = plannedRoutes[0];
+    if (!plannedRoute) return;
+
+    setSelectedFrom(from);
+    setRoute(plannedRoute.svgPath, plannedRoute.route, plannedRoutes);
+    updateRouteUrl(from, to);
+    onRoutePlan?.(plannedRoute);
+  };
+
+  const toggleFavouriteRoute = () => {
+    const from = getValues('from');
+    const to = getValues('to');
+    if (!from || !to || from === to) return;
+
+    const routeKey = getRouteKey(from, to);
+    const nextRoutes = favouriteRoutes.some((route) => getRouteKey(route.from, route.to) === routeKey)
+      ? favouriteRoutes.filter((route) => getRouteKey(route.from, route.to) !== routeKey)
+      : [{ from, to, createdAt: Date.now() }, ...favouriteRoutes].slice(0, 12);
+
+    setFavouriteRoutes(nextRoutes);
+    writeFavouriteRoutes(nextRoutes);
+  };
+
+  const removeFavouriteRoute = (routeToRemove: FavouriteRoute) => {
+    const nextRoutes = favouriteRoutes.filter((route) => getRouteKey(route.from, route.to) !== getRouteKey(routeToRemove.from, routeToRemove.to));
+    setFavouriteRoutes(nextRoutes);
+    writeFavouriteRoutes(nextRoutes);
+  };
+
+  const selectFavouriteRoute = (route: FavouriteRoute) => {
+    setValue('from', route.from);
+    setValue('to', route.to);
+    planRoute(route.from, route.to);
+  };
+
   return (
     <form
       onSubmit={handleSubmit((e) => {
         if (!e.from || !e.to) return;
-
-        const plannedRoutes = sortRoutePlans(buildRoutes(e.from, e.to, language), 'interchanges');
-        const plannedRoute = plannedRoutes[0];
-        if (!plannedRoute) return;
-
-        setRoute(plannedRoute.svgPath, plannedRoute.route, plannedRoutes);
-        updateRouteUrl(e.from, e.to);
-        onRoutePlan?.(plannedRoute);
+        planRoute(e.from, e.to);
       })}
       className='grid gap-3 [--station-select-height:48px] [--station-select-x-padding:12px] sm:gap-4 sm:[--station-select-height:58px] sm:[--station-select-x-padding:14px]'
     >
@@ -331,7 +401,61 @@ export function SearchBox({
         >
           {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
         </button>
+        <button
+          type="button"
+          aria-pressed={isCurrentRouteFavourite}
+          aria-label={isCurrentRouteFavourite ? t('removeFavouriteRoute') : t('saveFavouriteRoute')}
+          title={isCurrentRouteFavourite ? t('removeFavouriteRoute') : t('saveFavouriteRoute')}
+          onClick={toggleFavouriteRoute}
+          disabled={!canSaveFavouriteRoute}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-800 transition hover:border-neutral-300 hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 sm:h-12 sm:w-12"
+        >
+          {isCurrentRouteFavourite ? <StarFilledIcon /> : <StarIcon />}
+        </button>
       </div>
+      {showFavouriteRoutes ? (
+        <section className="grid gap-2 rounded-lg border border-neutral-200 bg-white p-3 dark:border-zinc-700 dark:bg-zinc-900">
+          <div className="flex items-center justify-between gap-2">
+            <h2 className="text-sm font-semibold text-neutral-800 dark:text-zinc-100">{t('favouriteRoutes')}</h2>
+            <StarFilledIcon className="text-amber-500" />
+          </div>
+          {favouriteRoutes.length ? (
+            <div className="grid gap-2">
+              {favouriteRoutes.map((route) => {
+                const fromStation = stations.find((station) => station.id === route.from);
+                const toStation = stations.find((station) => station.id === route.to);
+                const fromName = getLocalizedStationName(route.from, fromStation?.text || route.from, language);
+                const toName = getLocalizedStationName(route.to, toStation?.text || route.to, language);
+
+                return (
+                  <div key={getRouteKey(route.from, route.to)} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 rounded-lg bg-neutral-100 p-2 dark:bg-zinc-800">
+                    <button
+                      type="button"
+                      onClick={() => selectFavouriteRoute(route)}
+                      className="min-w-0 text-left"
+                    >
+                      <span className="block truncate text-sm font-semibold text-neutral-900 dark:text-zinc-50">
+                        {t('routeTitle', { from: fromName, to: toName })}
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => removeFavouriteRoute(route)}
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full text-amber-600 transition hover:bg-white dark:text-amber-400 dark:hover:bg-zinc-700"
+                      aria-label={t('removeFavouriteRoute')}
+                      title={t('removeFavouriteRoute')}
+                    >
+                      <StarFilledIcon />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="text-sm font-medium text-neutral-500 dark:text-zinc-400">{t('noFavouriteRoutes')}</p>
+          )}
+        </section>
+      ) : null}
     </form>
   );
 }

@@ -15,6 +15,11 @@ type TranslationKey =
   | 'switchToDarkTheme'
   | 'lightTheme'
   | 'darkTheme'
+  | 'saveFavouriteRoute'
+  | 'removeFavouriteRoute'
+  | 'favouriteRouteSaved'
+  | 'favouriteRoutes'
+  | 'noFavouriteRoutes'
   | 'fromStation'
   | 'toStation'
   | 'planJourney'
@@ -97,6 +102,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     switchToDarkTheme: 'Switch to dark theme',
     lightTheme: 'Light theme',
     darkTheme: 'Dark theme',
+    saveFavouriteRoute: 'Save favourite route',
+    removeFavouriteRoute: 'Remove favourite route',
+    favouriteRouteSaved: 'Favourite route saved',
+    favouriteRoutes: 'Favourite routes',
+    noFavouriteRoutes: 'Save a route with the star button to see it here.',
     fromStation: 'From station',
     toStation: 'To station',
     planJourney: 'Plan journey',
@@ -176,6 +186,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     switchToDarkTheme: 'डार्क थीम पर जाएं',
     lightTheme: 'लाइट थीम',
     darkTheme: 'डार्क थीम',
+    saveFavouriteRoute: 'पसंदीदा रूट सेव करें',
+    removeFavouriteRoute: 'पसंदीदा रूट हटाएं',
+    favouriteRouteSaved: 'पसंदीदा रूट सेव हो गया',
+    favouriteRoutes: 'पसंदीदा रूट',
+    noFavouriteRoutes: 'स्टार बटन से रूट सेव करें, फिर वह यहां दिखेगा।',
     fromStation: 'प्रस्थान स्टेशन',
     toStation: 'गंतव्य स्टेशन',
     planJourney: 'यात्रा योजना',
@@ -255,6 +270,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     switchToDarkTheme: 'डार्क थीमवर जा',
     lightTheme: 'लाइट थीम',
     darkTheme: 'डार्क थीम',
+    saveFavouriteRoute: 'आवडता मार्ग सेव्ह करा',
+    removeFavouriteRoute: 'आवडता मार्ग काढा',
+    favouriteRouteSaved: 'आवडता मार्ग सेव्ह झाला',
+    favouriteRoutes: 'आवडते मार्ग',
+    noFavouriteRoutes: 'स्टार बटणाने मार्ग सेव्ह करा, मग तो इथे दिसेल.',
     fromStation: 'प्रस्थान स्थानक',
     toStation: 'गंतव्य स्थानक',
     planJourney: 'प्रवास नियोजित करा',
@@ -334,6 +354,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     switchToDarkTheme: 'ডার্ক থিমে যান',
     lightTheme: 'লাইট থিম',
     darkTheme: 'ডার্ক থিম',
+    saveFavouriteRoute: 'প্রিয় রুট সেভ করুন',
+    removeFavouriteRoute: 'প্রিয় রুট সরান',
+    favouriteRouteSaved: 'প্রিয় রুট সেভ হয়েছে',
+    favouriteRoutes: 'প্রিয় রুট',
+    noFavouriteRoutes: 'স্টার বোতাম দিয়ে রুট সেভ করলে এখানে দেখা যাবে।',
     fromStation: 'যাত্রার স্টেশন',
     toStation: 'গন্তব্য স্টেশন',
     planJourney: 'যাত্রা পরিকল্পনা করুন',
