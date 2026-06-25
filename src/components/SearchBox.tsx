@@ -1,15 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { MoonIcon, PlayIcon, StarFilledIcon, StarIcon, SunIcon } from '@radix-ui/react-icons';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Controller, useForm, useWatch } from 'react-hook-form';
-import Select, { type SingleValue, type StylesConfig } from 'react-select';
+import {
+  MoonIcon,
+  PlayIcon,
+  ResetIcon,
+  StarFilledIcon,
+  StarIcon,
+  SunIcon,
+} from "@radix-ui/react-icons";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import Select, { type SingleValue, type StylesConfig } from "react-select";
 
-import { availableLanguages, getLocalizedStationName, useI18n, type Language } from '../i18n';
-import { getInitialRouteParams, usePath } from '../store/pathStore';
-import { useTheme, type Theme } from '../theme';
-import type { CinematicZoomLevel, RouteAnimationMode } from '../types/route';
-import { buildRoutes, getStationLineColors, sortRoutePlans, stations } from '../utils/routePlanner';
+import {
+  availableLanguages,
+  getLocalizedStationName,
+  useI18n,
+  type Language,
+} from "../i18n";
+import { getInitialRouteParams, usePath } from "../store/pathStore";
+import { useTheme, type Theme } from "../theme";
+import type { CinematicZoomLevel, RouteAnimationMode } from "../types/route";
+import {
+  buildRoutes,
+  getStationLineColors,
+  sortRoutePlans,
+  stations,
+} from "../utils/routePlanner";
 
 interface StationOption {
   label: string;
@@ -23,72 +40,93 @@ interface FavouriteRoute {
   createdAt: number;
 }
 
-const favouriteRoutesStorageKey = 'delhi-metro-favourite-routes';
+const favouriteRoutesStorageKey = "delhi-metro-favourite-routes";
 
 const getRouteKey = (from: string, to: string) => `${from}>${to}`;
 
 const readFavouriteRoutes = (): FavouriteRoute[] => {
-  if (typeof window === 'undefined') return [];
+  if (typeof window === "undefined") return [];
 
   try {
-    const storedRoutes = JSON.parse(window.localStorage.getItem(favouriteRoutesStorageKey) || '[]');
+    const storedRoutes = JSON.parse(
+      window.localStorage.getItem(favouriteRoutesStorageKey) || "[]",
+    );
     if (!Array.isArray(storedRoutes)) return [];
 
-    return storedRoutes.filter((route): route is FavouriteRoute => (
-      typeof route?.from === 'string' &&
-      typeof route?.to === 'string' &&
-      typeof route?.createdAt === 'number'
-    ));
+    return storedRoutes.filter(
+      (route): route is FavouriteRoute =>
+        typeof route?.from === "string" &&
+        typeof route?.to === "string" &&
+        typeof route?.createdAt === "number",
+    );
   } catch {
     return [];
   }
 };
 
 const writeFavouriteRoutes = (routes: FavouriteRoute[]) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
-  window.localStorage.setItem(favouriteRoutesStorageKey, JSON.stringify(routes));
+  window.localStorage.setItem(
+    favouriteRoutesStorageKey,
+    JSON.stringify(routes),
+  );
 };
 
 const updateRouteUrl = (from: string, to: string) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   const url = new URL(window.location.href);
-  url.pathname = '/';
-  url.searchParams.set('from', from);
-  url.searchParams.set('to', to);
-  window.history.pushState({ from, to }, '', `${url.pathname}?${url.searchParams.toString()}${url.hash}`);
+  url.pathname = "/";
+  url.searchParams.set("from", from);
+  url.searchParams.set("to", to);
+  window.history.pushState(
+    { from, to },
+    "",
+    `${url.pathname}?${url.searchParams.toString()}${url.hash}`,
+  );
 };
 
-const getStationOptions = (language: Language): StationOption[] => stations.map((station) => ({
-  label: getLocalizedStationName(station.id, station.text, language),
-  value: station.id,
-  lineColors: getStationLineColors(station.id),
-}));
+const getStationOptions = (language: Language): StationOption[] =>
+  stations.map((station) => ({
+    label: getLocalizedStationName(station.id, station.text, language),
+    value: station.id,
+    lineColors: getStationLineColors(station.id),
+  }));
 
-const createSelectStyles = (theme: Theme): StylesConfig<StationOption, false> => {
-  const isDark = theme === 'dark';
+const createSelectStyles = (
+  theme: Theme,
+): StylesConfig<StationOption, false> => {
+  const isDark = theme === "dark";
 
   return {
     control: (base, state) => ({
       ...base,
-      minHeight: 'var(--station-select-height)',
+      minHeight: "var(--station-select-height)",
       borderRadius: 999,
-      backgroundColor: isDark ? '#18181b' : 'white',
-      boxShadow: state.isFocused ? `0 0 0 4px ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)'}` : 'none',
-      paddingLeft: 'var(--station-select-x-padding)',
+      backgroundColor: isDark ? "#18181b" : "white",
+      boxShadow: state.isFocused
+        ? `0 0 0 4px ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)"}`
+        : "none",
+      paddingLeft: "var(--station-select-x-padding)",
       paddingRight: 6,
-      border: '1px solid',
-      borderColor: state.isFocused ? (isDark ? '#f4f4f5' : '#111827') : (isDark ? '#3f3f46' : '#e5e7eb'),
-      cursor: 'pointer',
+      border: "1px solid",
+      borderColor: state.isFocused
+        ? isDark
+          ? "#f4f4f5"
+          : "#111827"
+        : isDark
+          ? "#3f3f46"
+          : "#e5e7eb",
+      cursor: "pointer",
     }),
     singleValue: (base) => ({
       ...base,
-      color: isDark ? '#fafafa' : '#111827',
+      color: isDark ? "#fafafa" : "#111827",
     }),
     input: (base) => ({
       ...base,
-      color: isDark ? '#fafafa' : '#111827',
+      color: isDark ? "#fafafa" : "#111827",
     }),
     valueContainer: (base) => ({
       ...base,
@@ -96,42 +134,69 @@ const createSelectStyles = (theme: Theme): StylesConfig<StationOption, false> =>
     }),
     placeholder: (base) => ({
       ...base,
-      color: isDark ? '#a1a1aa' : '#737373',
+      color: isDark ? "#a1a1aa" : "#737373",
       fontWeight: 500,
     }),
     indicatorsContainer: (base) => ({
       ...base,
-      display: 'none',
+      display: "none",
     }),
     menu: (base) => ({
       ...base,
       borderRadius: 8,
-      overflow: 'hidden',
+      overflow: "hidden",
       zIndex: 30,
-      backgroundColor: isDark ? '#18181b' : 'white',
-      border: `1px solid ${isDark ? '#3f3f46' : '#e5e7eb'}`,
+      backgroundColor: isDark ? "#18181b" : "white",
+      border: `1px solid ${isDark ? "#3f3f46" : "#e5e7eb"}`,
     }),
     option: (base, state) => ({
       ...base,
-      backgroundColor: state.isFocused ? (isDark ? '#27272a' : '#f5f5f5') : (isDark ? '#18181b' : 'white'),
-      color: isDark ? '#fafafa' : '#111',
+      backgroundColor: state.isFocused
+        ? isDark
+          ? "#27272a"
+          : "#f5f5f5"
+        : isDark
+          ? "#18181b"
+          : "white",
+      color: isDark ? "#fafafa" : "#111",
     }),
   };
 };
 
 function ToggleIcon() {
   return (
-    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg
+      width="30"
+      height="30"
+      viewBox="0 0 30 30"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <circle cx="15" cy="15" r="15" fill="white" />
-      <path d="M10.022 12.3254L11.9038 9.23479L13.8412 12.3254" stroke="black" strokeLinecap="round" />
-      <path d="M11.9343 19.7286L11.9391 9.69627" stroke="black" strokeLinecap="round" />
-      <path d="M15.7609 16.6381L17.8596 19.7286L19.9221 16.7408" stroke="black" strokeLinecap="round" />
-      <path d="M17.8901 9.23479L17.8949 19.2671" stroke="black" strokeLinecap="round" />
+      <path
+        d="M10.022 12.3254L11.9038 9.23479L13.8412 12.3254"
+        stroke="black"
+        strokeLinecap="round"
+      />
+      <path
+        d="M11.9343 19.7286L11.9391 9.69627"
+        stroke="black"
+        strokeLinecap="round"
+      />
+      <path
+        d="M15.7609 16.6381L17.8596 19.7286L19.9221 16.7408"
+        stroke="black"
+        strokeLinecap="round"
+      />
+      <path
+        d="M17.8901 9.23479L17.8949 19.2671"
+        stroke="black"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
-
-
 
 function StationOptionLabel({ option }: { option: StationOption }) {
   return (
@@ -141,11 +206,8 @@ function StationOptionLabel({ option }: { option: StationOption }) {
   );
 }
 
-
-
-
 export function SearchBox({
-  animationMode = 'smooth',
+  animationMode = "smooth",
   cinematicZoom = 1,
   onAnimationModeChange,
   onCinematicZoomChange,
@@ -165,30 +227,42 @@ export function SearchBox({
   const { language, setLanguage, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const initialRouteParams = useMemo(() => getInitialRouteParams(), []);
-  const { control, getValues, handleSubmit, setValue } = useForm({
+  const { control, getValues, handleSubmit, setValue, reset } = useForm({
     defaultValues: {
-      from: initialRouteParams.hasRouteQuery ? initialRouteParams.from : '',
-      to: initialRouteParams.hasRouteQuery ? initialRouteParams.to : '',
+      from: initialRouteParams.hasRouteQuery ? initialRouteParams.from : "",
+      to: initialRouteParams.hasRouteQuery ? initialRouteParams.to : "",
     },
   });
   const [favouriteRoutes, setFavouriteRoutes] = useState(readFavouriteRoutes);
+  const resetRoute = usePath((state: any) => state.resetRoute);
   const setRoute = usePath((state: any) => state.setRoute);
   const setSelectedFrom = usePath((state: any) => state.setSelectedFrom);
   const hydratedRouteRef = useRef(false);
   const stationOptions = useMemo(() => getStationOptions(language), [language]);
   const selectStyles = useMemo(() => createSelectStyles(theme), [theme]);
-  const selectedFromValue = useWatch({ control, name: 'from' });
-  const selectedToValue = useWatch({ control, name: 'to' });
-  const canSaveFavouriteRoute = Boolean(selectedFromValue && selectedToValue && selectedFromValue !== selectedToValue);
-  const currentRouteKey = canSaveFavouriteRoute ? getRouteKey(selectedFromValue, selectedToValue) : '';
-  const isCurrentRouteFavourite = favouriteRoutes.some((route) => getRouteKey(route.from, route.to) === currentRouteKey);
+  const selectedFromValue = useWatch({ control, name: "from" });
+  const selectedToValue = useWatch({ control, name: "to" });
+  const canSaveFavouriteRoute = Boolean(
+    selectedFromValue &&
+    selectedToValue &&
+    selectedFromValue !== selectedToValue,
+  );
+  const currentRouteKey = canSaveFavouriteRoute
+    ? getRouteKey(selectedFromValue, selectedToValue)
+    : "";
+  const isCurrentRouteFavourite = favouriteRoutes.some(
+    (route) => getRouteKey(route.from, route.to) === currentRouteKey,
+  );
   const showFavouriteRoutes = !selectedFromValue && !selectedToValue;
 
   useEffect(() => {
     if (hydratedRouteRef.current || !initialRouteParams.hasRouteQuery) return;
     hydratedRouteRef.current = true;
 
-    const plannedRoutes = sortRoutePlans(buildRoutes(initialRouteParams.from, initialRouteParams.to, language), 'interchanges');
+    const plannedRoutes = sortRoutePlans(
+      buildRoutes(initialRouteParams.from, initialRouteParams.to, language),
+      "interchanges",
+    );
     const plannedRoute = plannedRoutes[0];
     if (!plannedRoute) return;
 
@@ -199,24 +273,55 @@ export function SearchBox({
     });
 
     return () => cancelAnimationFrame(animationFrame);
-  }, [initialRouteParams.from, initialRouteParams.hasRouteQuery, initialRouteParams.to, language, onRoutePlan, setRoute, setSelectedFrom]);
+  }, [
+    initialRouteParams.from,
+    initialRouteParams.hasRouteQuery,
+    initialRouteParams.to,
+    language,
+    onRoutePlan,
+    setRoute,
+    setSelectedFrom,
+  ]);
 
   const swapStations = () => {
-    const fromValue = getValues('from');
-    const toValue = getValues('to');
+    const fromValue = getValues("from");
+    const toValue = getValues("to");
 
-    setValue('from', toValue);
-    setValue('to', fromValue);
+    setValue("from", toValue);
+    setValue("to", fromValue);
     setSelectedFrom(toValue);
     onFromChange?.();
   };
 
+  const resetSearch = () => {
+    reset({ from: "", to: "" });
+    resetRoute();
+    onFromChange?.();
+    onRoutePlan?.(undefined);
+
+    if (typeof window === "undefined") return;
+
+    const url = new URL(window.location.href);
+    url.pathname = "/";
+    url.searchParams.delete("from");
+    url.searchParams.delete("to");
+    const search = url.searchParams.toString();
+    window.history.pushState(
+      {},
+      "",
+      `${url.pathname}${search ? `?${search}` : ""}${url.hash}`,
+    );
+  };
+
   const toggleAnimationMode = () => {
-    onAnimationModeChange?.(animationMode === 'smooth' ? 'step' : 'smooth');
+    onAnimationModeChange?.(animationMode === "smooth" ? "step" : "smooth");
   };
 
   const planRoute = (from: string, to: string) => {
-    const plannedRoutes = sortRoutePlans(buildRoutes(from, to, language), 'interchanges');
+    const plannedRoutes = sortRoutePlans(
+      buildRoutes(from, to, language),
+      "interchanges",
+    );
     const plannedRoute = plannedRoutes[0];
     if (!plannedRoute) return;
 
@@ -227,13 +332,17 @@ export function SearchBox({
   };
 
   const toggleFavouriteRoute = () => {
-    const from = getValues('from');
-    const to = getValues('to');
+    const from = getValues("from");
+    const to = getValues("to");
     if (!from || !to || from === to) return;
 
     const routeKey = getRouteKey(from, to);
-    const nextRoutes = favouriteRoutes.some((route) => getRouteKey(route.from, route.to) === routeKey)
-      ? favouriteRoutes.filter((route) => getRouteKey(route.from, route.to) !== routeKey)
+    const nextRoutes = favouriteRoutes.some(
+      (route) => getRouteKey(route.from, route.to) === routeKey,
+    )
+      ? favouriteRoutes.filter(
+        (route) => getRouteKey(route.from, route.to) !== routeKey,
+      )
       : [{ from, to, createdAt: Date.now() }, ...favouriteRoutes].slice(0, 12);
 
     setFavouriteRoutes(nextRoutes);
@@ -241,14 +350,18 @@ export function SearchBox({
   };
 
   const removeFavouriteRoute = (routeToRemove: FavouriteRoute) => {
-    const nextRoutes = favouriteRoutes.filter((route) => getRouteKey(route.from, route.to) !== getRouteKey(routeToRemove.from, routeToRemove.to));
+    const nextRoutes = favouriteRoutes.filter(
+      (route) =>
+        getRouteKey(route.from, route.to) !==
+        getRouteKey(routeToRemove.from, routeToRemove.to),
+    );
     setFavouriteRoutes(nextRoutes);
     writeFavouriteRoutes(nextRoutes);
   };
 
   const selectFavouriteRoute = (route: FavouriteRoute) => {
-    setValue('from', route.from);
-    setValue('to', route.to);
+    setValue("from", route.from);
+    setValue("to", route.to);
     planRoute(route.from, route.to);
   };
 
@@ -258,16 +371,20 @@ export function SearchBox({
         if (!e.from || !e.to) return;
         planRoute(e.from, e.to);
       })}
-      className='grid gap-3 [--station-select-height:48px] [--station-select-x-padding:12px] sm:gap-4 sm:[--station-select-height:58px] sm:[--station-select-x-padding:14px]'
+      className="grid gap-3 [--station-select-height:48px] [--station-select-x-padding:12px] sm:gap-4 sm:[--station-select-height:58px] sm:[--station-select-x-padding:14px]"
     >
-      <div className='grid grid-cols-1 items-center gap-2 sm:grid-cols-2 sm:gap-3'>
+      <div className="grid grid-cols-1 items-center gap-2 sm:grid-cols-2 sm:gap-3">
         <Controller
           control={control}
           name="from"
           render={({ field }) => (
             <div>
-              <label id="from-station-label" htmlFor="from-station-input" className="sr-only">
-                {t('fromStation')}
+              <label
+                id="from-station-label"
+                htmlFor="from-station-input"
+                className="sr-only"
+              >
+                {t("fromStation")}
               </label>
               <Select
                 inputId="from-station-input"
@@ -275,15 +392,21 @@ export function SearchBox({
                 name="from"
                 aria-labelledby="from-station-label"
                 options={stationOptions}
-                placeholder={t('fromStation')}
-                value={stationOptions.find((option) => option.value === field.value) || null}
+                placeholder={t("fromStation")}
+                value={
+                  stationOptions.find(
+                    (option) => option.value === field.value,
+                  ) || null
+                }
                 onChange={(option: SingleValue<StationOption>) => {
-                  const nextValue = option?.value || '';
+                  const nextValue = option?.value || "";
                   field.onChange(nextValue);
                   setSelectedFrom(nextValue);
                   onFromChange?.();
                 }}
-                formatOptionLabel={(option) => <StationOptionLabel option={option} />}
+                formatOptionLabel={(option) => (
+                  <StationOptionLabel option={option} />
+                )}
                 styles={selectStyles}
                 isSearchable={true}
                 onFocus={onStationSearchFocus}
@@ -299,8 +422,12 @@ export function SearchBox({
           name="to"
           render={({ field }) => (
             <div>
-              <label id="to-station-label" htmlFor="to-station-input" className="sr-only">
-                {t('toStation')}
+              <label
+                id="to-station-label"
+                htmlFor="to-station-input"
+                className="sr-only"
+              >
+                {t("toStation")}
               </label>
               <Select
                 inputId="to-station-input"
@@ -308,10 +435,18 @@ export function SearchBox({
                 name="to"
                 aria-labelledby="to-station-label"
                 options={stationOptions}
-                placeholder={t('toStation')}
-                value={stationOptions.find((option) => option.value === field.value) || null}
-                onChange={(option: SingleValue<StationOption>) => field.onChange(option?.value || '')}
-                formatOptionLabel={(option) => <StationOptionLabel option={option} />}
+                placeholder={t("toStation")}
+                value={
+                  stationOptions.find(
+                    (option) => option.value === field.value,
+                  ) || null
+                }
+                onChange={(option: SingleValue<StationOption>) =>
+                  field.onChange(option?.value || "")
+                }
+                formatOptionLabel={(option) => (
+                  <StationOptionLabel option={option} />
+                )}
                 styles={selectStyles}
                 isSearchable={true}
                 onFocus={onStationSearchFocus}
@@ -322,30 +457,38 @@ export function SearchBox({
           )}
         />
       </div>
-      <div className='flex flex-wrap items-center gap-3'>
-        <button className='inline-flex h-11 items-center gap-2 rounded-full bg-[#009b50] px-4 text-sm font-semibold text-white transition hover:bg-[#007f42]'>
-          <PlayIcon />
-          {t('planJourney')}
+      <div className="flex flex-wrap items-center gap-3">
+        <button className="inline-flex h-11 items-center gap-2 rounded-full bg-[#009b50] px-4 text-sm font-semibold text-white transition hover:bg-[#007f42]">
+          <PlayIcon
+            className="h-4 w-4"
+            stroke="currentColor"
+            strokeWidth={1.1}
+          />
+          {/* {t("planJourney")} */}
         </button>
         <button
           type="button"
           role="switch"
-          aria-checked={animationMode === 'smooth'}
-          aria-label={t('useSmoothRouteAnimation')}
+          aria-checked={animationMode === "smooth"}
+          aria-label={t("useSmoothRouteAnimation")}
           onClick={toggleAnimationMode}
-          className={`route-mode-switch ${animationMode === 'smooth' ? 'route-mode-switch-on' : 'route-mode-switch-off'}`}
-          title={animationMode === 'smooth' ? t('smoothRouteAnimation') : t('stepRouteAnimation')}
+          className={`route-mode-switch ${animationMode === "smooth" ? "route-mode-switch-on" : "route-mode-switch-off"}`}
+          title={
+            animationMode === "smooth"
+              ? t("smoothRouteAnimation")
+              : t("stepRouteAnimation")
+          }
         >
           <span className="route-mode-switch-label">
-            {animationMode === 'smooth' ? t('smooth') : t('step')}
+            {animationMode === "smooth" ? t("smooth") : t("step")}
           </span>
           <span className="route-mode-switch-thumb" />
         </button>
         <div
           className="cinematic-zoom-control"
           role="radiogroup"
-          aria-label={t('cinematicExportZoom')}
-          title={t('cinematicExportZoom')}
+          aria-label={t("cinematicExportZoom")}
+          title={t("cinematicExportZoom")}
         >
           {([1, 2, 3] as const).map((zoom) => (
             <button
@@ -354,7 +497,9 @@ export function SearchBox({
               role="radio"
               aria-checked={cinematicZoom === zoom}
               onClick={() => onCinematicZoomChange?.(zoom)}
-              className={cinematicZoom === zoom ? 'cinematic-zoom-option-active' : ''}
+              className={
+                cinematicZoom === zoom ? "cinematic-zoom-option-active" : ""
+              }
             >
               {zoom}x
             </button>
@@ -362,30 +507,30 @@ export function SearchBox({
         </div>
         <button
           type="button"
-          aria-label={t('swapFromAndToStations')}
+          aria-label={t("swapFromAndToStations")}
           onClick={swapStations}
-          title={t('swapStations')}
+          title={t("swapStations")}
           className="flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white transition hover:border-neutral-300 hover:bg-neutral-50 dark:border-zinc-700 dark:bg-zinc-900 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 sm:h-12 sm:w-12"
         >
           <ToggleIcon />
         </button>
         <label className="inline-flex h-11 items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 text-sm font-semibold text-neutral-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 sm:h-12">
-          <span className="sr-only">{t('language')}</span>
+          <span className="sr-only">{t("language")}</span>
           <select
             value={language}
             onChange={(event) => setLanguage(event.target.value as Language)}
             className="bg-transparent text-sm font-semibold outline-none"
-            aria-label={t('language')}
+            aria-label={t("language")}
           >
             {availableLanguages.map((option) => (
               <option key={option} value={option}>
-                {option === 'en'
-                  ? t('english')
-                  : option === 'hi'
-                    ? t('hindi')
-                    : option === 'mr'
-                      ? t('marathi')
-                      : t('bengali')}
+                {option === "en"
+                  ? t("english")
+                  : option === "hi"
+                    ? t("hindi")
+                    : option === "mr"
+                      ? t("marathi")
+                      : t("bengali")}
               </option>
             ))}
           </select>
@@ -393,57 +538,95 @@ export function SearchBox({
         <button
           type="button"
           role="switch"
-          aria-checked={theme === 'dark'}
-          aria-label={theme === 'dark' ? t('switchToLightTheme') : t('switchToDarkTheme')}
-          title={theme === 'dark' ? t('darkTheme') : t('lightTheme')}
+          aria-checked={theme === "dark"}
+          aria-label={
+            theme === "dark" ? t("switchToLightTheme") : t("switchToDarkTheme")
+          }
+          title={theme === "dark" ? t("darkTheme") : t("lightTheme")}
           onClick={toggleTheme}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-800 transition hover:border-neutral-300 hover:bg-neutral-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 sm:h-12 sm:w-12"
         >
-          {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+          {theme === "dark" ? <MoonIcon /> : <SunIcon />}
+        </button>
+        <button
+          type="button"
+          onClick={resetSearch}
+          className="inline-flex h-11 items-center rounded-full border border-neutral-200 bg-white px-4 text-sm font-semibold text-neutral-700 transition hover:border-neutral-300 hover:bg-neutral-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 sm:h-12"
+        >
+          <ResetIcon />
         </button>
         <button
           type="button"
           aria-pressed={isCurrentRouteFavourite}
-          aria-label={isCurrentRouteFavourite ? t('removeFavouriteRoute') : t('saveFavouriteRoute')}
-          title={isCurrentRouteFavourite ? t('removeFavouriteRoute') : t('saveFavouriteRoute')}
+          aria-label={
+            isCurrentRouteFavourite
+              ? t("removeFavouriteRoute")
+              : t("saveFavouriteRoute")
+          }
+          title={
+            isCurrentRouteFavourite
+              ? t("removeFavouriteRoute")
+              : t("saveFavouriteRoute")
+          }
           onClick={toggleFavouriteRoute}
           disabled={!canSaveFavouriteRoute}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-800 transition hover:border-neutral-300 hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600 dark:hover:bg-zinc-800 sm:h-12 sm:w-12"
         >
-          {isCurrentRouteFavourite ? <StarFilledIcon /> : <StarIcon />}
+          {isCurrentRouteFavourite ? (
+            <StarFilledIcon className="text-amber-500" />
+          ) : (
+            <StarIcon />
+          )}
         </button>
       </div>
       {showFavouriteRoutes ? (
         <section className="grid gap-2 rounded-lg border border-neutral-200 bg-white p-3 dark:border-zinc-700 dark:bg-zinc-900">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="text-sm font-semibold text-neutral-800 dark:text-zinc-100">{t('favouriteRoutes')}</h2>
+            <h2 className="text-sm font-semibold text-neutral-800 dark:text-zinc-100">
+              {t("favouriteRoutes")}
+            </h2>
             <StarFilledIcon className="text-amber-500" />
           </div>
           {favouriteRoutes.length ? (
             <div className="grid gap-2">
               {favouriteRoutes.map((route) => {
-                const fromStation = stations.find((station) => station.id === route.from);
-                const toStation = stations.find((station) => station.id === route.to);
-                const fromName = getLocalizedStationName(route.from, fromStation?.text || route.from, language);
-                const toName = getLocalizedStationName(route.to, toStation?.text || route.to, language);
+                const fromStation = stations.find(
+                  (station) => station.id === route.from,
+                );
+                const toStation = stations.find(
+                  (station) => station.id === route.to,
+                );
+                const fromName = getLocalizedStationName(
+                  route.from,
+                  fromStation?.text || route.from,
+                  language,
+                );
+                const toName = getLocalizedStationName(
+                  route.to,
+                  toStation?.text || route.to,
+                  language,
+                );
 
                 return (
-                  <div key={getRouteKey(route.from, route.to)} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 rounded-lg bg-neutral-100 p-2 dark:bg-zinc-800">
+                  <div
+                    key={getRouteKey(route.from, route.to)}
+                    className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2 rounded-lg bg-neutral-100 p-2 dark:bg-zinc-800"
+                  >
                     <button
                       type="button"
                       onClick={() => selectFavouriteRoute(route)}
                       className="min-w-0 text-left"
                     >
                       <span className="block truncate text-sm font-semibold text-neutral-900 dark:text-zinc-50">
-                        {t('routeTitle', { from: fromName, to: toName })}
+                        {t("routeTitle", { from: fromName, to: toName })}
                       </span>
                     </button>
                     <button
                       type="button"
                       onClick={() => removeFavouriteRoute(route)}
                       className="inline-flex h-9 w-9 items-center justify-center rounded-full text-amber-600 transition hover:bg-white dark:text-amber-400 dark:hover:bg-zinc-700"
-                      aria-label={t('removeFavouriteRoute')}
-                      title={t('removeFavouriteRoute')}
+                      aria-label={t("removeFavouriteRoute")}
+                      title={t("removeFavouriteRoute")}
                     >
                       <StarFilledIcon />
                     </button>
@@ -452,7 +635,9 @@ export function SearchBox({
               })}
             </div>
           ) : (
-            <p className="text-sm font-medium text-neutral-500 dark:text-zinc-400">{t('noFavouriteRoutes')}</p>
+            <p className="text-sm font-medium text-neutral-500 dark:text-zinc-400">
+              {t("noFavouriteRoutes")}
+            </p>
           )}
         </section>
       ) : null}

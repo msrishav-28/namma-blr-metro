@@ -63,6 +63,7 @@ export const usePath = create((set: any) => {
     routeOptions: [],
     selectedFrom: initialRouteParams.from,
     setSelectedFrom: (stationId: string) => set(() => ({ selectedFrom: stationId })),
+    resetRoute: () => set(() => ({ path: '', route: null, routeOptions: [], selectedFrom: '' })),
     setRoute: (newPath: string, route: RouteSummary, routeOptions?: RoutePlan[]) =>
       set(() => ({
         path: newPath,

@@ -1,5 +1,4 @@
 /* eslint-disable prefer-spread */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Define the shape of a point. 
 // y is optional because commands like 'H' (horizontal) only use x.
 export interface PathPoint {
@@ -19,7 +18,9 @@ export interface ParsedPathData {
     points: PathPoint[];
 }
 
-const SVGPathUtils = {
+type PathCommand = (...args: number[]) => string;
+
+const pathCommands = {
     // uppercase (M) - absolute coordinates, lowercase (m) - relative coordinates
     M: (x: number, y: number): string => `M${x},${y}`,
     m: (x: number, y: number): string => `m${x},${y}`,
@@ -39,7 +40,17 @@ const SVGPathUtils = {
     t: (x: number, y: number): string => `t${x},${y}`,
     Z: (): string => 'Z',
     z: (): string => 'z',
+} satisfies Record<string, PathCommand>;
 
+type PathOperator = keyof typeof pathCommands;
+
+const getPathCommand = (key: string): PathCommand | undefined =>
+    Object.prototype.hasOwnProperty.call(pathCommands, key)
+        ? pathCommands[key as PathOperator]
+        : undefined;
+
+const SVGPathUtils = {
+    ...pathCommands,
     angle: (p1: Point2D, p2: Point2D): number => {
         return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
     },
@@ -52,8 +63,7 @@ const SVGPathUtils = {
         let i = -1;
 
         operators.forEach((key) => {
-            // We cast to any here to access the function dynamically by string key
-            const f = (SVGPathUtils as any)[key];
+            const f = getPathCommand(key);
 
             if (typeof f === 'function') {
                 if (f.length === 1) {
@@ -77,7 +87,7 @@ const SVGPathUtils = {
         const str: string[] = [];
 
         data.operators.forEach((key) => {
-            const f = (SVGPathUtils as any)[key];
+            const f = getPathCommand(key);
 
             if (typeof f === 'function') {
                 const args: number[] = [];
@@ -100,24 +110,20 @@ const SVGPathUtils = {
 
     inversePath: (d: string): string => {
         const data = SVGPathUtils.parse(d);
-        const ro = data.operators.reverse();
-        const rp = data.points.reverse();
+        const reversedOperators = [...data.operators].reverse();
+        const reversedPoints = [...data.points].reverse();
+        const firstOperator = reversedOperators.pop();
+        const closePathOperator = reversedOperators[0]?.toLowerCase() === 'z'
+            ? reversedOperators.shift()
+            : undefined;
 
-        // define first and last operators (M, Z)
-        const first = ro.pop();
+        const ro = [
+            ...(firstOperator ? [firstOperator] : []),
+            ...reversedOperators,
+            ...(closePathOperator ? [closePathOperator] : []),
+        ];
 
-        // Check for 'z' or 'Z'
-        if (ro[0] && ro[0].toLowerCase() === 'z') {
-            const last = ro[0];
-            ro.push(last);
-            ro.shift();
-        }
-
-        if (first) {
-            ro.unshift(first);
-        }
-
-        return SVGPathUtils.generate({ operators: ro, points: rp });
+        return SVGPathUtils.generate({ operators: ro, points: reversedPoints });
     },
 
     join: (...args: string[]): string | undefined => {

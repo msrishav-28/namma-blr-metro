@@ -23,6 +23,7 @@ type TranslationKey =
   | 'fromStation'
   | 'toStation'
   | 'planJourney'
+  | 'resetSearch'
   | 'useSmoothRouteAnimation'
   | 'smoothRouteAnimation'
   | 'stepRouteAnimation'
@@ -110,6 +111,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     fromStation: 'From station',
     toStation: 'To station',
     planJourney: 'Plan journey',
+    resetSearch: 'Reset',
     useSmoothRouteAnimation: 'Use smooth route animation',
     smoothRouteAnimation: 'Smooth route animation',
     stepRouteAnimation: 'Step route animation',
@@ -194,6 +196,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     fromStation: 'प्रस्थान स्टेशन',
     toStation: 'गंतव्य स्टेशन',
     planJourney: 'यात्रा योजना',
+    resetSearch: 'रीसेट',
     useSmoothRouteAnimation: 'स्मूथ रूट एनीमेशन इस्तेमाल करें',
     smoothRouteAnimation: 'स्मूथ रूट एनीमेशन',
     stepRouteAnimation: 'स्टेप रूट एनीमेशन',
@@ -278,6 +281,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     fromStation: 'प्रस्थान स्थानक',
     toStation: 'गंतव्य स्थानक',
     planJourney: 'प्रवास नियोजित करा',
+    resetSearch: 'रीसेट',
     useSmoothRouteAnimation: 'स्मूथ मार्ग अॅनिमेशन वापरा',
     smoothRouteAnimation: 'स्मूथ मार्ग अॅनिमेशन',
     stepRouteAnimation: 'स्टेप मार्ग अॅनिमेशन',
@@ -362,6 +366,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     fromStation: 'যাত্রার স্টেশন',
     toStation: 'গন্তব্য স্টেশন',
     planJourney: 'যাত্রা পরিকল্পনা করুন',
+    resetSearch: 'রিসেট',
     useSmoothRouteAnimation: 'স্মুথ রুট অ্যানিমেশন ব্যবহার করুন',
     smoothRouteAnimation: 'স্মুথ রুট অ্যানিমেশন',
     stepRouteAnimation: 'ধাপে ধাপে রুট অ্যানিমেশন',
