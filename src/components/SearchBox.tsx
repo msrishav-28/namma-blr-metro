@@ -530,7 +530,9 @@ export function SearchBox({
                     ? t("hindi")
                     : option === "mr"
                       ? t("marathi")
-                      : t("bengali")}
+                      : option === "bn"
+                        ? t("bengali")
+                        : t("punjabi")}
               </option>
             ))}
           </select>

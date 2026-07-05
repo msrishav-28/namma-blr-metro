@@ -1,6 +1,7 @@
 'use client';
 import {
   DiscIcon,
+  DownloadIcon,
   EnterFullScreenIcon,
   PauseIcon,
   PlayIcon,
@@ -294,6 +295,7 @@ const shortsLanguageCode = {
   hi: 'hi-IN',
   mr: 'mr-IN',
   bn: 'bn-IN',
+  pa: 'pa-IN',
 } as const;
 
 const getRouteEdge = (from: string, to: string) =>
@@ -301,16 +303,16 @@ const getRouteEdge = (from: string, to: string) =>
   edges.find((edge) => edge.from === to && edge.to === from);
 
 const lineNames: Record<string, Record<keyof typeof shortsLanguageCode, string>> = {
-  '#c1282b': { en: 'Red Line', hi: 'रेड लाइन', mr: 'रेड लाइन', bn: 'রেড লাইন' },
-  '#f5d618': { en: 'Yellow Line', hi: 'येलो लाइन', mr: 'येलो लाइन', bn: 'ইয়েলো লাইন' },
-  '#3e77bc': { en: 'Blue Line', hi: 'ब्लू लाइन', mr: 'ब्लू लाइन', bn: 'ব্লু লাইন' },
-  '#52aa55': { en: 'Green Line', hi: 'ग्रीन लाइन', mr: 'ग्रीन लाइन', bn: 'গ্রিন লাইন' },
-  '#8115ff': { en: 'Violet Line', hi: 'वायलेट लाइन', mr: 'वायलेट लाइन', bn: 'ভায়োলেট লাইন' },
-  '#e692be': { en: 'Pink Line', hi: 'पिंक लाइन', mr: 'पिंक लाइन', bn: 'পিঙ্ক লাইন' },
-  '#FF00FF': { en: 'Magenta Line', hi: 'मजेंटा लाइन', mr: 'मजेंटा लाइन', bn: 'ম্যাজেন্টা লাইন' },
-  '#d4d4d6': { en: 'Grey Line', hi: 'ग्रे लाइन', mr: 'ग्रे लाइन', bn: 'গ্রে লাইন' },
-  '#eb8923': { en: 'Orange Line', hi: 'ऑरेंज लाइन', mr: 'ऑरेंज लाइन', bn: 'অরেঞ্জ লাইন' },
-  '#015b97': { en: 'Airport Express Line', hi: 'एयरपोर्ट एक्सप्रेस लाइन', mr: 'एअरपोर्ट एक्सप्रेस लाइन', bn: 'এয়ারপোর্ট এক্সপ্রেস লাইন' },
+  '#c1282b': { en: 'Red Line', hi: 'रेड लाइन', mr: 'रेड लाइन', bn: 'রেড লাইন', pa: 'ਰੈੱਡ ਲਾਈਨ' },
+  '#f5d618': { en: 'Yellow Line', hi: 'येलो लाइन', mr: 'येलो लाइन', bn: 'ইয়েলো লাইন', pa: 'ਯੈਲੋ ਲਾਈਨ' },
+  '#3e77bc': { en: 'Blue Line', hi: 'ब्लू लाइन', mr: 'ब्लू लाइन', bn: 'ব্লু লাইন', pa: 'ਬਲੂ ਲਾਈਨ' },
+  '#52aa55': { en: 'Green Line', hi: 'ग्रीन लाइन', mr: 'ग्रीन लाइन', bn: 'গ্রিন লাইন', pa: 'ਗ੍ਰੀਨ ਲਾਈਨ' },
+  '#8115ff': { en: 'Violet Line', hi: 'वायलेट लाइन', mr: 'वायलेट लाइन', bn: 'ভায়োলেট লাইন', pa: 'ਵਾਇਲਟ ਲਾਈਨ' },
+  '#e692be': { en: 'Pink Line', hi: 'पिंक लाइन', mr: 'पिंक लाइन', bn: 'পিঙ্ক লাইন', pa: 'ਪਿੰਕ ਲਾਈਨ' },
+  '#FF00FF': { en: 'Magenta Line', hi: 'मजेंटा लाइन', mr: 'मजेंटा लाइन', bn: 'ম্যাজেন্টা লাইন', pa: 'ਮੈਜੈਂਟਾ ਲਾਈਨ' },
+  '#d4d4d6': { en: 'Grey Line', hi: 'ग्रे लाइन', mr: 'ग्रे लाइन', bn: 'গ্রে লাইন', pa: 'ਗ੍ਰੇ ਲਾਈਨ' },
+  '#eb8923': { en: 'Orange Line', hi: 'ऑरेंज लाइन', mr: 'ऑरेंज लाइन', bn: 'অরেঞ্জ লাইন', pa: 'ਆਰੇਂਜ ਲਾਈਨ' },
+  '#015b97': { en: 'Airport Express Line', hi: 'एयरपोर्ट एक्सप्रेस लाइन', mr: 'एअरपोर्ट एक्सप्रेस लाइन', bn: 'এয়ারপোর্ট এক্সপ্রেস লাইন', pa: 'ਏਅਰਪੋਰਟ ਐਕਸਪ੍ਰੈੱਸ ਲਾਈਨ' },
 };
 
 const getLineName = (color: string, language: keyof typeof shortsLanguageCode) =>
@@ -381,6 +383,7 @@ const makeShortsScriptSegments = (
     hi: `हम दिल्ली मेट्रो से ${fromName} से ${toName} तक यात्रा कर रहे हैं.`,
     mr: `आपण दिल्ली मेट्रोने ${fromName} ते ${toName} प्रवास करत आहोत.`,
     bn: `আমরা দিল্লি মেট্রোতে ${fromName} থেকে ${toName} যাচ্ছি.`,
+    pa: `ਅਸੀਂ ਦਿੱਲੀ ਮੈਟਰੋ ਰਾਹੀਂ ${fromName} ਤੋਂ ${toName} ਜਾ ਰਹੇ ਹਾਂ.`,
   }[language];
   const directionSentence = firstDirection
     ? {
@@ -388,12 +391,14 @@ const makeShortsScriptSegments = (
       hi: `${fromName} से ${firstDirection.lineName} लें, ${firstDirection.terminalName} की ओर.`,
       mr: `${fromName} पासून ${firstDirection.lineName} घ्या, ${firstDirection.terminalName} च्या दिशेने.`,
       bn: `${fromName} থেকে ${firstDirection.lineName} ধরুন, ${firstDirection.terminalName} এর দিকে.`,
+      pa: `${fromName} ਤੋਂ ${firstDirection.lineName} ਲਵੋ, ${firstDirection.terminalName} ਵੱਲ.`,
     }[language]
     : {
       en: `Start at ${fromName} and follow this route step by step.`,
       hi: `${fromName} से शुरू करें और इस रूट को स्टेप बाय स्टेप फॉलो करें.`,
       mr: `${fromName} पासून सुरू करा आणि हा मार्ग स्टेप बाय स्टेप फॉलो करा.`,
       bn: `${fromName} থেকে শুরু করুন এবং এই রুটটি ধাপে ধাপে ফলো করুন.`,
+      pa: `${fromName} ਤੋਂ ਸ਼ੁਰੂ ਕਰੋ ਅਤੇ ਇਸ ਰੂਟ ਨੂੰ ਸਟੈਪ ਬਾਈ ਸਟੈਪ ਫਾਲੋ ਕਰੋ.`,
     }[language];
   const interchangeSegments = interchangeDirections.map((step) => ({
     text: {
@@ -401,6 +406,7 @@ const makeShortsScriptSegments = (
       hi: `${step.stationName} पर ${step.lineName} बदलें, ${step.terminalName} की ओर.`,
       mr: `${step.stationName} येथे ${step.lineName} बदला, ${step.terminalName} च्या दिशेने.`,
       bn: `${step.stationName} এ ${step.lineName} বদলান, ${step.terminalName} এর দিকে.`,
+      pa: `${step.stationName} ਤੇ ${step.lineName} ਬਦਲੋ, ${step.terminalName} ਵੱਲ.`,
     }[language],
     stationId: step.stationId,
   }));
@@ -410,6 +416,7 @@ const makeShortsScriptSegments = (
       hi: 'इस रूट में लाइन बदलने की जरूरत नहीं है.',
       mr: 'या मार्गावर लाइन बदलण्याची गरज नाही.',
       bn: 'এই রুটে লাইন বদলানোর দরকার নেই.',
+      pa: 'ਇਸ ਰੂਟ ਤੇ ਲਾਈਨ ਬਦਲਣ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ.',
     }[language],
   };
 
@@ -450,6 +457,15 @@ const makeShortsScriptSegments = (
       { text: `আপনার শেষ স্টেশন ${toName}.`, stationId: route.to },
       { text: 'আপনার দিল্লি মেট্রো যাত্রা metro dot coolhead dot in এ প্ল্যান করুন.', stationId: route.to },
     ],
+    pa: [
+      { text: routeIntro, stationId: route.from },
+      { text: directionSentence, stationId: firstDirection?.stationId || route.from },
+      { text: `ਇਸ ਯਾਤਰਾ ਵਿੱਚ ${route.distance} ਸਟੇਸ਼ਨ ਹਨ ਅਤੇ ਲਗਭਗ ${route.estimatedMinutes} ਮਿੰਟ ਲੱਗਣਗੇ.` },
+      { text: `ਕਿਰਾਇਆ ਲਗਭਗ ${route.fare} ਰੁਪਏ ਹੈ.` },
+      ...(interchangeSegments.length ? interchangeSegments : [noInterchangeSegment]),
+      { text: `ਤੁਹਾਡਾ ਆਖਰੀ ਸਟੇਸ਼ਨ ${toName} ਹੈ.`, stationId: route.to },
+      { text: 'ਆਪਣੀ ਦਿੱਲੀ ਮੈਟਰੋ ਯਾਤਰਾ metro dot coolhead dot in ਤੇ ਪਲਾਨ ਕਰੋ.', stationId: route.to },
+    ],
   };
 
   return scripts[language];
@@ -485,6 +501,7 @@ const makeShortsStats = (route: RouteSummary, language: keyof typeof shortsLangu
     hi: `${route.distance} स्टेशन • ${route.estimatedMinutes} मिनट • ${route.fare} रुपये`,
     mr: `${route.distance} स्थानके • ${route.estimatedMinutes} मिनिटे • ${route.fare} रुपये`,
     bn: `${route.distance} স্টেশন • ${route.estimatedMinutes} মিনিট • ${route.fare} টাকা`,
+    pa: `${route.distance} ਸਟੇਸ਼ਨ • ${route.estimatedMinutes} ਮਿੰਟ • ${route.fare} ਰੁਪਏ`,
   };
 
   return stats[language];
@@ -651,6 +668,7 @@ function SvgComponent({
 }) {
   const { language } = useI18n();
   const [isDragging, setIsDragging] = useState(false);
+  const [isExportingMap, setIsExportingMap] = useState(false);
   const [isExportingVideo, setIsExportingVideo] = useState(false);
   const [isExportingShortsVideo, setIsExportingShortsVideo] = useState(false);
   const [canExportVideo, setCanExportVideo] = useState(false);
@@ -1175,6 +1193,58 @@ function SvgComponent({
     }
   }, []);
 
+  const downloadFullMapSvg = React.useCallback(async () => {
+    const svg = svgRef.current;
+    if (!svg || isExportingMap) return;
+
+    setIsExportingMap(true);
+    tweenRef.current?.pause();
+    setPlay(false);
+
+    try {
+      await document.fonts?.ready;
+      const svgClone = svg.cloneNode(true) as SVGSVGElement;
+      const rootMapGroup = Array.from(svgClone.children).find(
+        (child): child is SVGGElement => child.tagName.toLowerCase() === 'g'
+      );
+
+      svgClone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      svgClone.setAttribute('width', String(VIEWBOX_WIDTH));
+      svgClone.setAttribute('height', String(VIEWBOX_HEIGHT));
+      svgClone.setAttribute('viewBox', `0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`);
+      svgClone.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      rootMapGroup?.setAttribute('transform', transformToString(fitTransform));
+
+      const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+      style.textContent = `
+        svg {
+          background: #f4f0e8;
+        }
+
+        text,
+        tspan {
+          font-family: ${EXPORT_FONT_STACK};
+        }
+      `;
+      svgClone.insertBefore(style, svgClone.firstChild);
+
+      const svgText = new XMLSerializer().serializeToString(svgClone);
+      const blob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'delhi-metro-full-map.svg';
+      link.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 0);
+    } catch (error) {
+      console.error(error);
+      window.alert(error instanceof Error ? error.message : 'Could not export the full map SVG.');
+    } finally {
+      setIsExportingMap(false);
+    }
+  }, [isExportingMap, setPlay]);
+
   const downloadRouteVideo = React.useCallback(async () => {
     const svg = svgRef.current;
     const measure = pathMeasureRef.current;
@@ -1685,6 +1755,33 @@ function SvgComponent({
               </>
             ) : null}
 
+            <g
+              aria-label="metro.coolhead.in"
+              className="website-map-marker"
+              pointerEvents="none"
+              transform="translate(1214 1408)"
+            >
+              <path
+                d="M0-23c-12.7 0-23 9.9-23 22.1 0 15.7 23 38.9 23 38.9S23 14.8 23-.9C23-13.1 12.7-23 0-23Z"
+                fill="#009b50"
+                stroke="#ffffff"
+                strokeWidth={4}
+              />
+              <circle cx={0} cy={-1} r={8} fill="#ffffff" />
+              <path d="M-4-1h8M0-5v8" stroke="#009b50" strokeLinecap="round" strokeWidth={2.2} />
+              <rect x={30} y={-22} width={171} height={36} rx={8} fill="#ffffff" stroke="#009b50" strokeWidth={2} />
+              <text
+                x={44}
+                y={1}
+                fill="#111827"
+                fontSize={16}
+                fontWeight={800}
+                dominantBaseline="middle"
+              >
+                metro.coolhead.in
+              </text>
+            </g>
+
 
           </>
         }
@@ -1736,6 +1833,21 @@ function SvgComponent({
             }}
           >
             <EnterFullScreenIcon />
+          </button>
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-neutral-950 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-zinc-900 dark:text-zinc-100"
+            title="Download full map SVG"
+            aria-label="Download full map SVG"
+            aria-busy={isExportingMap}
+            disabled={isExportingMap}
+            onClick={downloadFullMapSvg}
+          >
+            {isExportingMap ? (
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-950 dark:border-zinc-700 dark:border-t-zinc-100" />
+            ) : (
+              <DownloadIcon />
+            )}
           </button>
           <button
             type="button"

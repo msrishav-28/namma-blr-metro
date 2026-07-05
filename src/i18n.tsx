@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
-export type Language = 'en' | 'hi' | 'mr' | 'bn';
+export type Language = 'en' | 'hi' | 'mr' | 'bn' | 'pa';
 
 type TranslationKey =
   | 'language'
@@ -10,6 +10,7 @@ type TranslationKey =
   | 'hindi'
   | 'marathi'
   | 'bengali'
+  | 'punjabi'
   | 'theme'
   | 'switchToLightTheme'
   | 'switchToDarkTheme'
@@ -98,6 +99,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     hindi: 'Hindi',
     marathi: 'Marathi',
     bengali: 'Bengali',
+    punjabi: 'Punjabi',
     theme: 'Theme',
     switchToLightTheme: 'Switch to light theme',
     switchToDarkTheme: 'Switch to dark theme',
@@ -183,6 +185,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     hindi: 'हिंदी',
     marathi: 'मराठी',
     bengali: 'बंगाली',
+    punjabi: 'पंजाबी',
     theme: 'थीम',
     switchToLightTheme: 'लाइट थीम पर जाएं',
     switchToDarkTheme: 'डार्क थीम पर जाएं',
@@ -268,6 +271,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     hindi: 'हिंदी',
     marathi: 'मराठी',
     bengali: 'बंगाली',
+    punjabi: 'पंजाबी',
     theme: 'थीम',
     switchToLightTheme: 'लाइट थीमवर जा',
     switchToDarkTheme: 'डार्क थीमवर जा',
@@ -353,6 +357,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     hindi: 'হিন্দি',
     marathi: 'মারাঠি',
     bengali: 'বাংলা',
+    punjabi: 'পাঞ্জাবি',
     theme: 'থিম',
     switchToLightTheme: 'লাইট থিমে যান',
     switchToDarkTheme: 'ডার্ক থিমে যান',
@@ -431,6 +436,92 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     routePngDownloading: 'PNG প্রস্তুত হচ্ছে',
     routePng: 'রুট PNG',
     shareRouteText: '{{from}} থেকে {{to}} দিল্লি মেট্রো রুট: {{stops}} স্টপ, {{time}} যাত্রার সময়, এবং ₹{{fare}} ভাড়া।',
+  },
+  pa: {
+    language: 'ਭਾਸ਼ਾ',
+    english: 'ਅੰਗਰੇਜ਼ੀ',
+    hindi: 'ਹਿੰਦੀ',
+    marathi: 'ਮਰਾਠੀ',
+    bengali: 'ਬੰਗਾਲੀ',
+    punjabi: 'ਪੰਜਾਬੀ',
+    theme: 'ਥੀਮ',
+    switchToLightTheme: 'ਲਾਈਟ ਥੀਮ ਤੇ ਜਾਓ',
+    switchToDarkTheme: 'ਡਾਰਕ ਥੀਮ ਤੇ ਜਾਓ',
+    lightTheme: 'ਲਾਈਟ ਥੀਮ',
+    darkTheme: 'ਡਾਰਕ ਥੀਮ',
+    saveFavouriteRoute: 'ਮਨਪਸੰਦ ਰੂਟ ਸੇਵ ਕਰੋ',
+    removeFavouriteRoute: 'ਮਨਪਸੰਦ ਰੂਟ ਹਟਾਓ',
+    favouriteRouteSaved: 'ਮਨਪਸੰਦ ਰੂਟ ਸੇਵ ਹੋ ਗਿਆ',
+    favouriteRoutes: 'ਮਨਪਸੰਦ ਰੂਟ',
+    noFavouriteRoutes: 'ਸਟਾਰ ਬਟਨ ਨਾਲ ਰੂਟ ਸੇਵ ਕਰੋ, ਫਿਰ ਉਹ ਇੱਥੇ ਦਿਖੇਗਾ।',
+    fromStation: 'ਸ਼ੁਰੂਆਤੀ ਸਟੇਸ਼ਨ',
+    toStation: 'ਮੰਜ਼ਿਲ ਸਟੇਸ਼ਨ',
+    planJourney: 'ਯਾਤਰਾ ਪਲਾਨ ਕਰੋ',
+    resetSearch: 'ਰੀਸੈਟ',
+    useSmoothRouteAnimation: 'ਸਮੂਥ ਰੂਟ ਐਨੀਮੇਸ਼ਨ ਵਰਤੋ',
+    smoothRouteAnimation: 'ਸਮੂਥ ਰੂਟ ਐਨੀਮੇਸ਼ਨ',
+    stepRouteAnimation: 'ਸਟੈਪ ਰੂਟ ਐਨੀਮੇਸ਼ਨ',
+    smooth: 'ਸਮੂਥ',
+    step: 'ਸਟੈਪ',
+    cinematicExportZoom: 'ਸਿਨੇਮੈਟਿਕ ਐਕਸਪੋਰਟ ਜ਼ੂਮ',
+    swapFromAndToStations: 'ਸ਼ੁਰੂਆਤੀ ਅਤੇ ਮੰਜ਼ਿਲ ਸਟੇਸ਼ਨ ਬਦਲੋ',
+    swapStations: 'ਸਟੇਸ਼ਨ ਬਦਲੋ',
+    chooseRoute: 'ਰੂਟ ਚੁਣੋ',
+    routeTitle: '{{from}} ਤੋਂ {{to}}',
+    routeOptions: 'ਰੂਟ ਵਿਕਲਪ',
+    routeOption: 'ਰੂਟ {{count}}',
+    recommended: 'ਸੁਝਾਇਆ ਗਿਆ',
+    directRoute: 'ਸਿੱਧਾ',
+    viaStation: '{{station}} ਰਾਹੀਂ',
+    moreInterchanges: '+{{count}} ਹੋਰ',
+    sortRoutes: 'ਰੂਟ ਸੋਰਟ ਕਰੋ',
+    sortByInterchanges: 'ਸਭ ਤੋਂ ਘੱਟ ਬਦਲਾਅ',
+    sortByStops: 'ਸਭ ਤੋਂ ਘੱਟ ਸਟਾਪ',
+    playRoute: 'ਰੂਟ ਚਲਾਓ',
+    pauseRoute: 'ਰੂਟ ਰੋਕੋ',
+    routePlanner: 'ਰੂਟ ਪਲਾਨਰ',
+    delhiMetro: 'ਦਿੱਲੀ ਮੈਟਰੋ',
+    fare: 'ਕਿਰਾਇਆ',
+    holidayFare: 'ਐਤ/ਛੁੱਟੀ ₹{{fare}}',
+    specialFare: 'ਖਾਸ ਕਿਰਾਇਆ ₹{{fare}}',
+    stops: 'ਸਟਾਪ',
+    distanceKm: '{{count}} ਕਿਮੀ',
+    time: 'ਸਮਾਂ',
+    timeLimit: 'ਸੀਮਾ {{count}}ਮਿੰ',
+    minutesShort: '{{count}}ਮਿੰ',
+    minutes: '{{count}} ਮਿੰਟ',
+    change: 'ਬਦਲੋ',
+    selectInterchangePrompt: 'ਇੰਟਰਚੇਂਜ ਸਟੇਸ਼ਨ ਵੇਖਣ ਲਈ ਸ਼ੁਰੂਆਤੀ ਅਤੇ ਮੰਜ਼ਿਲ ਸਟੇਸ਼ਨ ਚੁਣੋ।',
+    allStations: 'ਸਾਰੇ ਸਟੇਸ਼ਨ',
+    interchangeStations: 'ਇੰਟਰਚੇਂਜ ਸਟੇਸ਼ਨ',
+    changeMetroLineHere: 'ਇੱਥੇ ਮੈਟਰੋ ਲਾਈਨ ਬਦਲੋ',
+    noInterchangeNeeded: 'ਇਸ ਰੂਟ ਤੇ ਇੰਟਰਚੇਂਜ ਦੀ ਲੋੜ ਨਹੀਂ।',
+    journeyTimelinePrompt: 'ਸਟੇਸ਼ਨ ਟਾਈਮਲਾਈਨ ਵੇਖਣ ਲਈ ਯਾਤਰਾ ਪਲਾਨ ਕਰੋ।',
+    journeyTimeline: 'ਯਾਤਰਾ ਟਾਈਮਲਾਈਨ',
+    stations: '{{count}} ਸਟੇਸ਼ਨ',
+    downloadJourneyTimeline: 'ਯਾਤਰਾ ਟਾਈਮਲਾਈਨ PNG ਵਜੋਂ ਡਾਊਨਲੋਡ ਕਰੋ',
+    downloadTimeline: 'ਟਾਈਮਲਾਈਨ ਡਾਊਨਲੋਡ ਕਰੋ',
+    toward: 'ਵੱਲ',
+    selectDestination: 'ਮੰਜ਼ਿਲ ਚੁਣੋ',
+    creatorLinks: 'ਕ੍ਰੀਏਟਰ ਲਿੰਕ',
+    createdBy: 'ਬਣਾਇਆ',
+    linkedin: 'LinkedIn',
+    github: 'GitHub',
+    youtube: 'YouTube',
+    copySupportEmail: 'ਸਪੋਰਟ ਈਮੇਲ ਕਾਪੀ ਕਰੋ',
+    supportEmailCopied: 'ਈਮੇਲ ਕਾਪੀ ਹੋ ਗਿਆ',
+    shareRoute: 'ਰੂਟ ਸ਼ੇਅਰ ਕਰੋ',
+    copyRouteLink: 'ਰੂਟ ਲਿੰਕ ਕਾਪੀ ਕਰੋ',
+    routeLinkCopied: 'ਰੂਟ ਲਿੰਕ ਕਾਪੀ ਹੋ ਗਿਆ',
+    shareVia: 'ਸ਼ੇਅਰ ਕਰੋ',
+    shareOnTwitter: 'Twitter/X',
+    shareOnReddit: 'Reddit',
+    shareOnInstagram: 'Instagram',
+    instagramLinkCopied: 'Instagram ਲਈ ਲਿੰਕ ਕਾਪੀ ਹੋ ਗਿਆ',
+    downloadRoutePng: 'ਰੂਟ PNG ਡਾਊਨਲੋਡ ਕਰੋ',
+    routePngDownloading: 'PNG ਤਿਆਰ ਹੋ ਰਿਹਾ ਹੈ',
+    routePng: 'ਰੂਟ PNG',
+    shareRouteText: '{{from}} ਤੋਂ {{to}} ਦਿੱਲੀ ਮੈਟਰੋ ਰੂਟ: {{stops}} ਸਟਾਪ, {{time}} ਯਾਤਰਾ ਸਮਾਂ, ਅਤੇ ₹{{fare}} ਕਿਰਾਇਆ।',
   },
 };
 
@@ -678,9 +769,9 @@ const stationNamesHi: Record<string, string> = {
   S55: 'सेक्टर 55-56',
 };
 
-const languageOptions: Language[] = ['en', 'hi', 'mr', 'bn'];
+const languageOptions: Language[] = ['en', 'hi', 'mr', 'bn', 'pa'];
 
-type TransliterationScript = 'devanagari' | 'bengali';
+type TransliterationScript = 'devanagari' | 'bengali' | 'gurmukhi';
 
 const transliterationMaps = {
   devanagari: {
@@ -833,6 +924,81 @@ const transliterationMaps = {
       z: 'জেড',
     },
   },
+  gurmukhi: {
+    virama: '੍',
+    vowels: {
+      a: ['ਅ', ''],
+      aa: ['ਆ', 'ਾ'],
+      i: ['ਇ', 'ਿ'],
+      ee: ['ਈ', 'ੀ'],
+      u: ['ਉ', 'ੁ'],
+      oo: ['ਊ', 'ੂ'],
+      e: ['ਏ', 'ੇ'],
+      ai: ['ਐ', 'ੈ'],
+      o: ['ਓ', 'ੋ'],
+      au: ['ਔ', 'ੌ'],
+    },
+    consonants: {
+      kh: 'ਖ',
+      gh: 'ਘ',
+      chh: 'ਛ',
+      ch: 'ਚ',
+      jh: 'ਝ',
+      th: 'ਥ',
+      dh: 'ਧ',
+      ph: 'ਫ',
+      bh: 'ਭ',
+      sh: 'ਸ਼',
+      k: 'ਕ',
+      g: 'ਗ',
+      j: 'ਜ',
+      t: 'ਟ',
+      d: 'ਡ',
+      n: 'ਨ',
+      p: 'ਪ',
+      b: 'ਬ',
+      m: 'ਮ',
+      y: 'ਯ',
+      r: 'ਰ',
+      l: 'ਲ',
+      v: 'ਵ',
+      w: 'ਵ',
+      s: 'ਸ',
+      h: 'ਹ',
+      f: 'ਫ',
+      z: 'ਜ਼',
+      q: 'ਕ',
+      x: 'ਕਸ',
+    },
+    letters: {
+      a: 'ਏ',
+      b: 'ਬੀ',
+      c: 'ਸੀ',
+      d: 'ਡੀ',
+      e: 'ਈ',
+      f: 'ਐਫ',
+      g: 'ਜੀ',
+      h: 'ਐਚ',
+      i: 'ਆਈ',
+      j: 'ਜੇ',
+      k: 'ਕੇ',
+      l: 'ਐਲ',
+      m: 'ਐਮ',
+      n: 'ਐਨ',
+      o: 'ਓ',
+      p: 'ਪੀ',
+      q: 'ਕਿਊ',
+      r: 'ਆਰ',
+      s: 'ਐਸ',
+      t: 'ਟੀ',
+      u: 'ਯੂ',
+      v: 'ਵੀ',
+      w: 'ਡਬਲਿਊ',
+      x: 'ਐਕਸ',
+      y: 'ਵਾਈ',
+      z: 'ਜ਼ੈਡ',
+    },
+  },
 } as const;
 
 const vowelPatterns = ['ai', 'au', 'aa', 'ee', 'oo', 'ei', 'ou', 'a', 'i', 'u', 'e', 'o'] as const;
@@ -975,6 +1141,7 @@ export const getLocalizedStationName = (id: string, fallbackName: string, langua
   if (language === 'hi') return stationNamesHi[id] || transliterateStationName(fallbackName, 'devanagari');
   if (language === 'mr') return transliterateStationName(fallbackName, 'devanagari');
   if (language === 'bn') return transliterateStationName(fallbackName, 'bengali');
+  if (language === 'pa') return transliterateStationName(fallbackName, 'gurmukhi');
 
   return fallbackName;
 };
