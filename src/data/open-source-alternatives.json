@@ -1,0 +1,65 @@
+[
+  {
+    "slug": "delhi-metro-sarthi-app",
+    "name": "Delhi Metro Sarthi App",
+    "headline": "Open Source Free Alternative to Delhi Metro Sarthi App",
+    "competitorUrl": "https://play.google.com/store/apps/details?id=com.sraoss.dmrc&hl=en_IN",
+    "competitorLabel": "Delhi Metro Sarthi App on Google Play",
+    "description": "Delhi Metro Route Planner is a free and open-source alternative for commuters who mainly need route search, station-to-station planning, fare estimates, stops, interchanges, and a fast metro map.",
+    "officialContext": "The Delhi Metro Sarthi App is published by Delhi Metro Rail Corporation and includes official passenger features such as journey planning, station information, nearest station lookup, and other DMRC services.",
+    "bestFor": [
+      "Planning Delhi Metro journeys without installing a closed app",
+      "Checking station-to-station routes, stops, fare estimates, and interchanges",
+      "Using a browser-based Delhi Metro map on desktop or mobile",
+      "Reviewing or improving the planner because the source code is public"
+    ],
+    "limitations": [
+      "It does not issue QR tickets, virtual smart cards, or official DMRC tickets",
+      "It does not replace official service alerts, safety notices, or customer support",
+      "Fare and time values are planning estimates and should be verified for critical trips"
+    ],
+    "keywords": "open source free alternative to Delhi Metro Sarthi App, Delhi Metro Sarthi App alternative, free Delhi Metro route planner, open source Delhi Metro map"
+  },
+  {
+    "slug": "dmrc-momentum-2-0",
+    "name": "DMRC Momentum 2.0",
+    "headline": "Open Source Free Alternative to DMRC Momentum 2.0",
+    "competitorUrl": "https://play.google.com/store/apps/details?id=com.sraoss.dmrc&hl=en_IN",
+    "competitorLabel": "Current Delhi Metro Sarthi listing",
+    "description": "Delhi Metro Route Planner is a free open-source option for users searching for a lighter DMRC Momentum 2.0 alternative focused on metro route planning, station search, fares, stops, and interchanges.",
+    "officialContext": "DMRC Momentum 2.0 has been referenced as an earlier name for the Delhi Metro Sarthi app experience. The official app is still the place for official ticketing and account-based passenger services.",
+    "bestFor": [
+      "Finding a quick route without signing into an account",
+      "Comparing route options by stops or interchanges",
+      "Sharing a selected Delhi Metro route from the web",
+      "Using an Apache-2.0 licensed codebase that developers can inspect"
+    ],
+    "limitations": [
+      "It is independent and is not affiliated with Delhi Metro Rail Corporation",
+      "It does not provide official account, wallet, virtual-card, or ticketing flows",
+      "Operational changes can happen before third-party planners are updated"
+    ],
+    "keywords": "open source free alternative to DMRC Momentum 2.0, DMRC Momentum 2.0 alternative, Delhi Metro Momentum alternative, free Delhi Metro planner"
+  },
+  {
+    "slug": "delhimetrorail",
+    "name": "delhimetrorail",
+    "headline": "Open Source Free Alternative to delhimetrorail",
+    "competitorUrl": "https://www.delhimetrorail.com/",
+    "competitorLabel": "Delhi Metro Rail official website",
+    "description": "Delhi Metro Route Planner is a free open-source alternative for people who want an independent, map-first route planner alongside the official delhimetrorail website.",
+    "officialContext": "delhimetrorail.com is the official Delhi Metro Rail Corporation website for official information, passenger notices, tenders, corporate updates, and authoritative service details.",
+    "bestFor": [
+      "Opening a route planner directly instead of browsing an official portal",
+      "Checking fare estimates, stops, route distance, and interchange guidance",
+      "Using a mobile-friendly planner that can also be installed as a web app",
+      "Linking directly to station and route pages for common journeys"
+    ],
+    "limitations": [
+      "It is not an official DMRC website or government service",
+      "It should be used alongside official sources for notices and time-critical travel",
+      "It focuses on route planning and does not cover every official DMRC website section"
+    ],
+    "keywords": "open source free alternative to delhimetrorail, delhimetrorail alternative, Delhi Metro Rail website alternative, open source Delhi Metro route planner"
+  }
+]

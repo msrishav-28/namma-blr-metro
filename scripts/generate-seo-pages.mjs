@@ -18,12 +18,14 @@ const latestMtime = async (paths) => {
 const stations = JSON.parse(await readFile(path.join(rootDir, 'src/data/labels.json'), 'utf8'))
   .filter((station) => station.id && station.text);
 const edges = JSON.parse(await readFile(path.join(rootDir, 'src/data/edge.json'), 'utf8'));
+const openSourceAlternatives = JSON.parse(await readFile(path.join(rootDir, 'src/data/open-source-alternatives.json'), 'utf8'));
 const template = await readFile(indexPath, 'utf8');
 const contentLastmod = toLastmodDate(await latestMtime([
   path.join(rootDir, 'index.html'),
   path.join(rootDir, 'scripts/generate-seo-pages.mjs'),
   path.join(rootDir, 'src/data/labels.json'),
   path.join(rootDir, 'src/data/edge.json'),
+  path.join(rootDir, 'src/data/open-source-alternatives.json'),
 ]));
 
 const escapeHtml = (value) =>
@@ -45,6 +47,7 @@ const stationById = new Map(stations.map((station) => [station.id, station]));
 const stationSlug = (stationId) => slugifyStationName(stationById.get(stationId)?.text || stationId);
 const stationPathname = (stationId) => `/stations/${stationSlug(stationId)}/`;
 const routePathname = (from, to) => `/routes/${stationSlug(from)}-to-${stationSlug(to)}/`;
+const openSourceAlternativePathname = (slug) => `/open-source-free-alternative-to-${slug}/`;
 const stationName = (stationId) => stationById.get(stationId)?.text || stationId;
 const routeAnchor = (from, to) =>
   `<a href="${routePathname(from, to)}">${escapeHtml(stationName(from))} to ${escapeHtml(stationName(to))} Metro route</a>`;
@@ -519,6 +522,78 @@ const routeIndexPage = () => {
   };
 };
 
+const openSourceAlternativePage = (alternative) => {
+  const pathname = openSourceAlternativePathname(alternative.slug);
+  const title = `${alternative.headline} | Delhi Metro Route Planner`;
+  const description = alternative.description;
+  const keywords = alternative.keywords;
+  const renderBulletList = (items) => `
+    <ul>
+      ${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}
+    </ul>`;
+  const body = `
+    <main class="seo-prerender">
+      <h1>${escapeHtml(alternative.headline)}</h1>
+      <img src="${showcaseImagePath}" alt="Open source Delhi Metro route planner alternative to ${escapeHtml(alternative.name)}" width="1200" height="630" loading="lazy" />
+      <p>${escapeHtml(description)}</p>
+      <p>
+        Delhi Metro Route Planner is a free web app and open-source project for route search, station-to-station planning,
+        estimated fares, stop counts, distance, interchange guidance, route sharing, and map-based journey planning.
+      </p>
+      <p>
+        Open the <a href="/">Delhi Metro Route Planner</a>, review the
+        <a href="https://github.com/biomathcode/delhi-metro-react" target="_blank" rel="noopener noreferrer">source code on GitHub</a>,
+        or compare with <a href="${escapeHtml(alternative.competitorUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(alternative.competitorLabel)}</a>.
+      </p>
+      <h2>Good alternative to ${escapeHtml(alternative.name)} for</h2>
+      ${renderBulletList(alternative.bestFor)}
+      <h2>Important limits</h2>
+      ${renderBulletList(alternative.limitations)}
+      <h2>How it compares</h2>
+      <dl>
+        <dt>Route planning</dt><dd>Yes, with map, stops, fare estimate, distance, and interchanges.</dd>
+        <dt>Open source</dt><dd>Yes, source code is public on GitHub under Apache-2.0.</dd>
+        <dt>Tickets and official notices</dt><dd>Not provided. Use official DMRC channels for tickets, notices, and support.</dd>
+      </dl>
+      <h2>Official context</h2>
+      <p>${escapeHtml(alternative.officialContext)}</p>
+      <p>
+        This planner is independent and is not affiliated with, endorsed by, or operated by Delhi Metro Rail Corporation.
+        For ticketing, official notices, account support, refunds, virtual smart-card support, or operational updates,
+        use official DMRC sources.
+      </p>
+    </main>`;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: alternative.headline,
+    url: `${baseUrl}${pathname}`,
+    description,
+    about: [
+      'Delhi Metro route planner',
+      `Open source alternative to ${alternative.name}`,
+      'Delhi Metro map',
+    ],
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Delhi Metro Route Planner',
+      url: `${baseUrl}/`,
+    },
+  };
+
+  return {
+    pathname,
+    html: renderHtml({
+      title,
+      description,
+      keywords,
+      canonicalPath: pathname,
+      body,
+      schema,
+    }),
+  };
+};
+
 const legalPages = [
   {
     pathname: '/privacy-policy/',
@@ -603,6 +678,7 @@ for (const origin of stations) {
 
 const pages = [
   routeIndexPage(),
+  ...openSourceAlternatives.map(openSourceAlternativePage),
   ...legalPages.map(legalPage),
   ...stations.map(stationPage),
   ...routes.map(routePage),
@@ -615,6 +691,12 @@ for (const page of pages) {
 const coreSitemapUrls = [
   { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'weekly', lastmod: contentLastmod },
   { loc: `${baseUrl}/routes/`, priority: '0.9', changefreq: 'weekly', lastmod: contentLastmod },
+  ...openSourceAlternatives.map((alternative) => ({
+    loc: `${baseUrl}${openSourceAlternativePathname(alternative.slug)}`,
+    priority: '0.6',
+    changefreq: 'monthly',
+    lastmod: contentLastmod,
+  })),
   ...legalPages.map((page) => ({
     loc: `${baseUrl}${page.pathname}`,
     priority: '0.3',
@@ -678,4 +760,4 @@ Allow: /
 Sitemap: ${baseUrl}/sitemap.xml
 `);
 
-console.log(`Generated ${stations.length} station pages, ${routes.length} route pages, ${sitemapFiles.length} sitemap files, and sitemap.xml index.`);
+console.log(`Generated ${stations.length} station pages, ${routes.length} route pages, ${openSourceAlternatives.length} alternative pages, ${sitemapFiles.length} sitemap files, and sitemap.xml index.`);
