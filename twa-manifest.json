@@ -1,6 +1,6 @@
 {
-  "packageId": "in.coolhead.metroroute",
-  "host": "metro.coolhead.in",
+  "packageId": "com.msrishav28.nammametro",
+  "host": "namma-blr-metro.vercel.app",
   "name": "Namma Metro Route Planner",
   "launcherName": "Namma Metro",
   "display": "standalone",
@@ -13,8 +13,8 @@
   "backgroundColor": "#F4F0E8",
   "enableNotifications": true,
   "startUrl": "/",
-  "iconUrl": "https://metro.coolhead.in/icons/icon-512.png",
-  "maskableIconUrl": "https://metro.coolhead.in/icons/icon-512.png",
+  "iconUrl": "https://namma-blr-metro.vercel.app/icons/icon-512.png",
+  "maskableIconUrl": "https://namma-blr-metro.vercel.app/icons/icon-512.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "android.keystore",
@@ -24,7 +24,7 @@
   "appVersionCode": 5,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "https://metro.coolhead.in/manifest.json",
+  "webManifestUrl": "https://namma-blr-metro.vercel.app/manifest.json",
   "fallbackType": "customtabs",
   "features": {},
   "alphaDependencies": {
@@ -33,7 +33,7 @@
   "enableSiteSettingsShortcut": true,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
-  "fullScopeUrl": "https://metro.coolhead.in/",
+  "fullScopeUrl": "https://namma-blr-metro.vercel.app/",
   "minSdkVersion": 21,
   "orientation": "portrait",
   "fingerprints": [],

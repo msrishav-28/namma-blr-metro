@@ -6,7 +6,7 @@ Site: https://namma-blr-metro.vercel.app/
 Creator: M S Rishav Subhin
 Contact: msrishav28@gmail.com
 Languages: English, Hindi, Marathi, Bengali
-Primary audience: Bengaluru NCR commuters, visitors, students, office travelers, and people comparing Namma Metro station-to-station journeys.
+Primary audience: Bengaluru commuters, visitors, students, office travelers, and people comparing Namma Metro station-to-station journeys.
 
 ## Important URLs
 
@@ -31,7 +31,7 @@ Primary audience: Bengaluru NCR commuters, visitors, students, office travelers,
 
 ## Entity Notes
 
-Namma Metro Route Planner is an independent web application created by M S Rishav Subhin. It is not an official Namma Metro Rail Corporation website. For official service updates, fare rules, operating notices, and passenger information, consult DMRC at https://www.english.bmrc.co.in/.
+Namma Metro Route Planner is an independent web application created by M S Rishav Subhin. It is not an official Namma Metro Rail Corporation website. For official service updates, fare rules, operating notices, and passenger information, consult BMRCL at https://www.english.bmrc.co.in/.
 
 ## Useful Route Patterns
 

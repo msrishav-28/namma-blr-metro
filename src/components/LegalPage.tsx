@@ -91,7 +91,7 @@ function PrivacyPolicy() {
                     For questions about this Privacy Policy, contact us at{' '}
                     <a className="font-semibold text-[#007a3d] underline-offset-4 hover:underline dark:text-emerald-400" href={`mailto:${supportEmail}`}>{supportEmail}</a>{' '}
                     or visit{' '}
-                    <a className="font-semibold text-[#007a3d] underline-offset-4 hover:underline dark:text-emerald-400" href="https://coolhead.in" target="_blank" rel="noreferrer">coolhead.in</a>.
+                    <a className="font-semibold text-[#007a3d] underline-offset-4 hover:underline dark:text-emerald-400" href="https://github.com/msrishav-28" target="_blank" rel="noreferrer">msrishav-28</a>.
                 </p>
             </LegalSection>
         </>

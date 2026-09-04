@@ -1484,7 +1484,7 @@ function SvgComponent({
     context.fillRect(SHORTS_WIDTH - 390, SHORTS_HEIGHT - 96, 326, 48);
     context.fillStyle = '#111827';
     context.font = `800 28px ${EXPORT_FONT_STACK}`;
-    context.fillText('metro.coolhead.in', SHORTS_WIDTH - 366, SHORTS_HEIGHT - 64);
+    context.fillText('namma-blr-metro.vercel.app', SHORTS_WIDTH - 366, SHORTS_HEIGHT - 64);
     drawShortsJourneyTimeline(context, route, routeStops, progress);
   }, [drawSvgToCanvas]);
 
@@ -1763,7 +1763,7 @@ function SvgComponent({
             ) : null}
 
             <g
-              aria-label="metro.coolhead.in"
+              aria-label="namma-blr-metro.vercel.app"
               className="website-map-marker"
               pointerEvents="none"
               transform="translate(1214 1408)"
@@ -1785,7 +1785,7 @@ function SvgComponent({
                 fontWeight={800}
                 dominantBaseline="middle"
               >
-                metro.coolhead.in
+                namma-blr-metro.vercel.app
               </text>
             </g>
 
