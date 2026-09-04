@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "Delhi Metro Route Planner",
-  "short_name": "Delhi Metro",
-  "description": "Plan Delhi Metro journeys with an interactive route map, fare estimate, travel time, stops, and interchange details.",
+  "name": "Namma Metro Route Planner",
+  "short_name": "Namma Metro",
+  "description": "Plan Namma Metro journeys with an interactive route map, fare estimate, travel time, stops, and interchange details.",
   "lang": "en-IN",
   "dir": "ltr",
   "start_url": "/",

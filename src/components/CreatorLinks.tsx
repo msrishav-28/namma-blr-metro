@@ -4,10 +4,10 @@ import { memo, useState } from 'react';
 import { useI18n } from '../i18n';
 import { copyText } from '../utils/clipboard';
 
-const SUPPORT_EMAIL = 'sharma.pratik2016@gmail.com';
-const LINKEDIN_URL = 'https://linkedin.com/in/biomathcode';
-const GITHUB_URL = 'https://github.com/biomathcode';
-const YOUTUBE_URL = 'https://www.youtube.com/@delhi-metro-map';
+const SUPPORT_EMAIL = 'hello@msrishav.dev';
+const LINKEDIN_URL = 'https://portfolio-msrishav.vercel.app/';
+const GITHUB_URL = 'https://github.com/msrishav-28/blr-metro-react';
+const YOUTUBE_URL = 'https://github.com/msrishav-28/blr-metro-react';
 
 function CreatorLinks() {
     const { t } = useI18n();
@@ -64,7 +64,7 @@ function CreatorLinks() {
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold text-neutral-500 dark:text-zinc-400">
                 <a className="underline-offset-4 hover:text-neutral-800 hover:underline dark:hover:text-zinc-100" href="/privacy-policy">Privacy Policy</a>
                 <a className="underline-offset-4 hover:text-neutral-800 hover:underline dark:hover:text-zinc-100" href="/terms-and-conditions">Terms and Conditions</a>
-                <a className="underline-offset-4 hover:text-neutral-800 hover:underline dark:hover:text-zinc-100" href="/open-source-free-alternative-to-delhi-metro-sarthi-app/">Open-source alternatives</a>
+                <a className="underline-offset-4 hover:text-neutral-800 hover:underline dark:hover:text-zinc-100" href="/open-source-free-alternative-to-delhi-metro-sarthi-app/">About this fork</a>
             </div>
 
         </section>
