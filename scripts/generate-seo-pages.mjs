@@ -519,9 +519,8 @@ const routeIndexPage = () => {
   };
 };
 
-const openSourceAlternativePage = (alternative) => {
-  const pathname = openSourceAlternativePathname(alternative.slug);
-  const title = `${alternative.headline} | Namma Metro Route Planner`;
+const legalPages = [
+  {
     pathname: '/privacy-policy/',
     title: 'Privacy Policy | Namma Metro Route Planner',
     description: 'Read the Privacy Policy for Namma Metro Route Planner, including how usage data may be collected, used, retained, and protected.',
