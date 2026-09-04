@@ -12,7 +12,7 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-const themeStorageKey = 'delhi-metro-theme';
+const themeStorageKey = 'namma-metro-theme';
 
 const getBrowserTheme = (): Theme => {
   if (typeof window === 'undefined') return 'light';
