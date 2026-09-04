@@ -1,0 +1,66 @@
+{
+  "name": "blr-metro-react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build && node scripts/generate-seo-pages.mjs",
+    "generate:seo": "node scripts/generate-seo-pages.mjs",
+    "test:svg-path-utils": "node scripts/test-svg-path-utils.mjs",
+    "update:labels": "node scripts/update-labels-metadata.mjs",
+    "update:gates": "node scripts/update-station-gates.mjs",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "doctor": "npx react-doctor@latest"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@radix-ui/react-icons": "^1.3.2",
+    "@tailwindcss/vite": "^4.1.17",
+    "gsap": "^3.13.0",
+    "html-to-image": "^1.11.13",
+    "mediabunny": "^1.45.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.66.1",
+    "react-select": "^5.10.2",
+    "svg-path-utils": "^0.0.3",
+    "tailwindcss": "^4.1.17",
+    "vaul": "^1.1.2",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "react-doctor": "^0.2.9",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vite": "npm:rolldown-vite@7.2.5",
+    "vite-plugin-svgr": "^5.2.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:rolldown-vite@7.2.5",
+      "minimatch@<3.1.3": ">=3.1.3",
+      "minimatch@>=9.0.0 <9.0.6": ">=9.0.6",
+      "minimatch@>=9.0.0 <9.0.7": ">=9.0.7",
+      "minimatch@<3.1.4": ">=3.1.4",
+      "flatted@<3.4.0": ">=3.4.0",
+      "flatted@<=3.4.1": ">=3.4.2",
+      "brace-expansion@<1.1.13": ">=1.1.13",
+      "brace-expansion@>=2.0.0 <2.0.3": ">=2.0.3",
+      "picomatch@>=4.0.0 <4.0.4": ">=4.0.4",
+      "postcss@<8.5.10": ">=8.5.10",
+      "js-yaml@<=4.1.1": ">=4.2.0"
+    }
+  }
+}

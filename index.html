@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <base href="/" />
+  <link rel="icon" type="image/png" href="/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="canonical" href="https://namma-blr-metro.vercel.app/" />
+  <link rel="alternate" hreflang="en" href="https://namma-blr-metro.vercel.app/" />
+  <link rel="alternate" hreflang="hi" href="https://namma-blr-metro.vercel.app/?lang=hi" />
+  <link rel="alternate" hreflang="mr" href="https://namma-blr-metro.vercel.app/?lang=mr" />
+  <link rel="alternate" hreflang="bn" href="https://namma-blr-metro.vercel.app/?lang=bn" />
+  <link rel="alternate" hreflang="pa" href="https://namma-blr-metro.vercel.app/?lang=pa" />
+  <link rel="alternate" hreflang="x-default" href="https://namma-blr-metro.vercel.app/" />
+  <link rel="preconnect" href="https://www.clarity.ms" crossorigin />
+  <link rel="dns-prefetch" href="https://www.clarity.ms" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=overlays-content" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Namma Metro" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="scrolllaunch-verify" content="36123bd46ae1cf8ae73322369ad44c06" />
+  <meta name="description"
+    content="Plan Namma Metro routes with station search, fare estimates, travel time, stop count, interchanges, and an interactive metro map." />
+  <meta name="keywords"
+    content="Namma Metro route planner, Namma Metro map, Namma Metro fare calculator, Namma Metro station search, Namma Metro interchanges, metro route from station to station, Namma Metro travel time, Namma Metro stops" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Namma Metro Route Planner" />
+  <meta name="theme-color" content="#f4f0e8" />
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
+  <style>
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: #f4f0e8;
+    }
+
+    #root {
+      min-height: 100svh;
+      background: #f4f0e8;
+    }
+
+    .js .seo-prerender {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      width: 100vw;
+      height: 100svh;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      contain: layout size style paint;
+    }
+
+    .js .seo-prerender img {
+      display: block;
+      width: min(100vw, 1200px);
+      height: auto;
+      aspect-ratio: 1200 / 630;
+    }
+  </style>
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://namma-blr-metro.vercel.app/" />
+  <meta property="og:title" content="Namma Metro Route Planner | Map, Fare, Stops & Interchanges" />
+  <meta property="og:description"
+    content="Search Namma Metro stations, compare route details, view interchange information, and follow your journey on an animated metro map." />
+  <meta property="og:site_name" content="Namma Metro Route Planner" />
+  <meta property="og:image" content="https://namma-blr-metro.vercel.app/images/showcase-1200x630.png" />
+  <meta property="og:image:alt" content="Namma Metro route planner with interactive map and journey details" />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:locale:alternate" content="hi_IN" />
+  <meta property="og:locale:alternate" content="mr_IN" />
+  <meta property="og:locale:alternate" content="bn_IN" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Namma Metro Route Planner | Map, Fare, Stops & Interchanges" />
+  <meta name="twitter:description"
+    content="Interactive Namma Metro route planning with station search, fare estimate, stop count, interchange details, and line-color route guidance." />
+  <meta name="twitter:image" content="https://namma-blr-metro.vercel.app/images/showcase-1200x630.png" />
+  <meta name="twitter:image:alt" content="Namma Metro route planner with interactive map and journey details" />
+
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://namma-blr-metro.vercel.app/#creator",
+            "name": "M S Rishav Subhin",
+            "email": "mailto:msrishav28@gmail.com",
+            "url": "https://namma-blr-metro.vercel.app/",
+            "sameAs": [
+              "https://linkedin.com/in/msrishav-28",
+              "https://github.com/msrishav-28"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://namma-blr-metro.vercel.app/#website",
+            "name": "Namma Metro Route Planner",
+            "url": "https://namma-blr-metro.vercel.app/",
+            "creator": {
+              "@id": "https://namma-blr-metro.vercel.app/#creator"
+            },
+            "publisher": {
+              "@id": "https://namma-blr-metro.vercel.app/#creator"
+            },
+            "inLanguage": ["en-IN", "hi-IN", "mr-IN", "bn-IN"],
+            "about": [
+              "Namma Metro route planner",
+              "Namma Metro fare estimate",
+              "Namma Metro station-to-station routes",
+              "Namma Metro interchanges"
+            ]
+          }
+        ]
+      }
+    </script>
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Namma Metro Route Planner",
+        "url": "https://namma-blr-metro.vercel.app/",
+        "applicationCategory": "TravelApplication",
+        "operatingSystem": "Web",
+        "inLanguage": ["en-IN", "hi-IN", "mr-IN", "bn-IN"],
+        "image": "https://namma-blr-metro.vercel.app/images/showcase-1200x630.png",
+        "description": "Interactive Namma Metro route planner with station search, animated metro map, fare estimate, travel time, stop count, interchange details, and line-color guidance.",
+        "keywords": "Namma Metro route planner, Namma Metro map, Namma Metro fare calculator, Namma Metro station search, Namma Metro interchanges",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "INR"
+        }
+      }
+    </script>
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I find the shortest Namma Metro route?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Select a source station and destination station in the Namma Metro Route Planner to see the shortest available route, stop count, estimated travel time, fare, and interchange details."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I check Namma Metro fare and travel time?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The planner shows an estimated Namma Metro fare and journey time after you choose the origin and destination stations."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does this planner show Namma Metro interchange stations?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Route results include interchange stations and line-color guidance so you can see where to change metro lines."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Hindi supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The route planner supports English and Hindi for interface labels and Namma Metro station names."
+            }
+          }
+        ]
+      }
+    </script>
+
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <title>Namma Metro Route Planner | Map, Fare, Stops & Interchanges</title>
+</head>
+
+<body>
+  <div id="root">
+    <main class="seo-prerender">
+      <h1>Namma Metro Route Planner</h1>
+      <p>
+        Namma Metro Route Planner helps commuters find practical metro routes across Bengaluru before opening the
+        interactive map. Search by source and destination station to check the recommended route, estimated fare, travel
+        time, stop count, interchange stations, and line-color guidance. The planner is useful for daily office travel,
+        airport trips, college commutes, shopping journeys, and quick station-to-station route checks.
+      </p>
+
+      <p>
+        Popular route examples include
+        <a href="/routes/majestic-to-indiranagar/">Majestic to Indiranagar</a>,
+        <a href="/routes/yeshwanthpur-to-silk-board/">Yeshwanthpur to Silk Board</a>,
+        <a href="/routes/mg-road-to-whitefield/">MG Road to Whitefield</a>, and
+        <a href="/routes/kengeri-to-baiyappanahalli/">Kengeri to Baiyappanahalli</a>. You can also browse important
+        station pages such as <a href="/stations/majestic/">Majestic</a>,
+        <a href="/stations/indiranagar/">Indiranagar</a>, <a href="/stations/yeshwanthpur/">Yeshwanthpur</a>, and
+        <a href="/stations/mg-road/">MG Road</a>.
+      </p>
+      <p>
+        The app supports clean route pages for search engines and shareable planner URLs for users. Each route page
+        opens
+        with the source and destination already selected, then loads the same interactive planner used on the homepage.
+        Browse the <a href="/routes/">Namma Metro routes directory</a> for station-to-station pages grouped around common
+        route map, fare, time, stops, and interchange searches.
+        For official network notices and passenger information, visit the
+        <a href="https://english.bmrc.co.in/" target="_blank" rel="noopener noreferrer">Bangalore Metro Rail
+          Corporation Limited (BMRCL)</a>.
+      </p>
+      <p>
+        Use the planner when you want a quick answer before leaving home, changing lines, or comparing two possible
+        metro journeys. The route result focuses on the details commuters usually need first: where the journey starts,
+        where it ends, how many stations are involved, whether a line change is likely, and how long the trip may take.
+        Because every important route has its own page, you can bookmark a regular commute, share it with someone else,
+        or open the same journey again without manually selecting stations each time.
+      </p>
+      <p>
+        The planner is also built for discovery. Station pages explain connected stations and link to useful routes,
+        while
+        route pages describe the complete journey between two metro stations. This structure helps commuters find
+        answers
+        through search and then continue directly into the interactive experience. Whether you are checking a short
+        neighboring-station trip or a longer journey across multiple Namma Metro lines, the page gives you a starting
+        estimate before you confirm details for the day of travel.
+      </p>
+    </main>
+  </div>
+  <section class="seo-prerender" data-seo-prerender-outside-root aria-label="Namma Metro Route Planner facts">
+    <h2>About Namma Metro Route Planner</h2>
+    <p>
+      Namma Metro Route Planner is an independent commuter tool created by M S Rishav Subhin. It helps users search Namma
+      Metro station-to-station routes, estimate fares, compare travel time, count stops, and identify possible
+      interchange stations before opening the interactive map.
+    </p>
+    <p>
+      The site includes static pages for every ordered Namma Metro station pair, station pages for the network, a
+      sitemap
+      index for crawlers, and an llms.txt file for AI search engines. The planner is not an official Bangalore Metro Rail
+      Corporation Limited (BMRCL) service; official service notices should be checked with BMRCL.
+    </p>
+  </section>
+  <script type="module" src="/src/main.tsx"></script>
+  <script>
+    window.addEventListener('load', function () {
+      var loadClarity = function () {
+        (function (c, l, a, r, i, t, y) {
+          c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+          t = l.createElement(r);
+          t.async = true;
+          t.src = 'https://www.clarity.ms/tag/' + i;
+          y = l.getElementsByTagName(r)[0];
+          y.parentNode.insertBefore(t, y);
+        })(window, document, 'clarity', 'script', 'wxp6miuws0');
+      };
+
+      var loadClarityLater = function () {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(loadClarity, { timeout: 8000 });
+        } else {
+          window.setTimeout(loadClarity, 8000);
+        }
+      };
+
+      window.setTimeout(loadClarityLater, 3500);
+    });
+  </script>
+</body>
+
+</html>

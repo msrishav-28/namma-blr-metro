@@ -1,0 +1,44 @@
+# Namma Metro Route Planner
+
+> Independent Namma Metro route planning web app for station-to-station journeys, fare estimates, travel time, stops, interchanges, and route sharing.
+
+Site: https://namma-blr-metro.vercel.app/
+Creator: M S Rishav Subhin
+Contact: msrishav28@gmail.com
+Languages: English, Hindi, Marathi, Bengali
+Primary audience: Bengaluru NCR commuters, visitors, students, office travelers, and people comparing Namma Metro station-to-station journeys.
+
+## Important URLs
+
+- Homepage and interactive planner: https://namma-blr-metro.vercel.app/
+- Sitemap index: https://namma-blr-metro.vercel.app/sitemap.xml
+- Example route page: https://namma-blr-metro.vercel.app/routes/rajiv-chowk-to-kashmere-gate/
+- Example station page: https://namma-blr-metro.vercel.app/stations/rajiv-chowk/
+- App manifest: https://namma-blr-metro.vercel.app/manifest.json
+
+## What This Site Provides
+
+- Namma Metro station search
+- Source and destination route planning
+- Estimated fare
+- Estimated travel time
+- Stop count
+- Interchange station guidance
+- Line-color route guidance
+- Route-specific static pages
+- Station-specific static pages
+- Shareable planner URLs
+
+## Entity Notes
+
+Namma Metro Route Planner is an independent web application created by M S Rishav Subhin. It is not an official Namma Metro Rail Corporation website. For official service updates, fare rules, operating notices, and passenger information, consult DMRC at https://www.english.bmrc.co.in/.
+
+## Useful Route Patterns
+
+- Route pages use `/routes/{source-station}-to-{destination-station}/`.
+- Station pages use `/stations/{station-name}/`.
+- Query-based planner URLs use `/?from={SOURCE_ID}&to={DESTINATION_ID}`.
+
+## Suggested AI Summary
+
+Namma Metro Route Planner is a free independent web app at https://namma-blr-metro.vercel.app/ that helps users plan Namma Metro trips. It provides station search, route details, fare estimates, travel time, stop count, interchange guidance, route sharing, and static SEO pages for every station-to-station combination.

@@ -1,0 +1,1450 @@
+[
+  {
+    "from": "WFD",
+    "to": "HFC",
+    "stroke": "#7b2cbf",
+    "path": "M1258.77 798.76 L1265.93 765.05",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "HFC",
+    "to": "KTP",
+    "stroke": "#7b2cbf",
+    "path": "M1265.93 765.05 L1299.12 749.91",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "KTP",
+    "to": "PTA",
+    "stroke": "#7b2cbf",
+    "path": "M1299.12 749.91 L1255.37 743.07",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "PTA",
+    "to": "SSH",
+    "stroke": "#7b2cbf",
+    "path": "M1255.37 743.07 L1216.9 733.79",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "SSH",
+    "to": "NLH",
+    "stroke": "#7b2cbf",
+    "path": "M1216.9 733.79 L1173.91 736.72",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "NLH",
+    "to": "KDH",
+    "stroke": "#7b2cbf",
+    "path": "M1173.91 736.72 L1133.93 743.56",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "KDH",
+    "to": "SRP",
+    "stroke": "#7b2cbf",
+    "path": "M1133.93 743.56 L1091.69 746.98",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "SRP",
+    "to": "HOD",
+    "stroke": "#7b2cbf",
+    "path": "M1091.69 746.98 L1130.54 742.58",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "HOD",
+    "to": "GCP",
+    "stroke": "#7b2cbf",
+    "path": "M1130.54 742.58 L1086.41 735.75",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "GCP",
+    "to": "SYP",
+    "stroke": "#7b2cbf",
+    "path": "M1086.41 735.75 L1051.71 728.91",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "SYP",
+    "to": "KRP",
+    "stroke": "#7b2cbf",
+    "path": "M1051.71 728.91 L1055.49 707.9",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "KRP",
+    "to": "BNG",
+    "stroke": "#7b2cbf",
+    "path": "M1055.49 707.9 L952.9 720.6",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "BNG",
+    "to": "BYP",
+    "stroke": "#7b2cbf",
+    "path": "M952.9 720.6 L891.81 747.47",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "BYP",
+    "to": "SVR",
+    "stroke": "#7b2cbf",
+    "path": "M891.81 747.47 L848.81 760.17",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "SVR",
+    "to": "INR",
+    "stroke": "#7b2cbf",
+    "path": "M848.81 760.17 L847.3 777.75",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "INR",
+    "to": "HLS",
+    "stroke": "#7b2cbf",
+    "path": "M847.3 777.75 L800.54 784.59",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "HLS",
+    "to": "TRN",
+    "stroke": "#7b2cbf",
+    "path": "M800.54 784.59 L756.79 790.94",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "TRN",
+    "to": "MGR",
+    "stroke": "#7b2cbf",
+    "path": "M756.79 790.94 L718.32 784.59",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "MGR",
+    "to": "CBP",
+    "stroke": "#7b2cbf",
+    "path": "M718.32 784.59 L676.08 781.66",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "CBP",
+    "to": "VDS",
+    "stroke": "#7b2cbf",
+    "path": "M676.08 781.66 L657.98 775.31",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "VDS",
+    "to": "SMV",
+    "stroke": "#7b2cbf",
+    "path": "M657.98 775.31 L621.02 769.45",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "SMV",
+    "to": "MJS",
+    "stroke": "#7b2cbf",
+    "path": "M621.02 769.45 L590.09 782.15",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "MJS",
+    "to": "KSR",
+    "stroke": "#7b2cbf",
+    "path": "M590.09 782.15 L573.5 783.62",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "KSR",
+    "to": "MGD",
+    "stroke": "#7b2cbf",
+    "path": "M573.5 783.62 L525.22 785.57",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "MGD",
+    "to": "HSL",
+    "stroke": "#7b2cbf",
+    "path": "M525.22 785.57 L486.0 787.52",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "HSL",
+    "to": "VJN",
+    "stroke": "#7b2cbf",
+    "path": "M486.0 787.52 L457.34 795.34",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "VJN",
+    "to": "ATG",
+    "stroke": "#7b2cbf",
+    "path": "M457.34 795.34 L441.5 808.53",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "ATG",
+    "to": "DJN",
+    "stroke": "#7b2cbf",
+    "path": "M441.5 808.53 L454.32 830.51",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "DJN",
+    "to": "MSR",
+    "stroke": "#7b2cbf",
+    "path": "M454.32 830.51 L430.94 852.49",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "MSR",
+    "to": "NYD",
+    "stroke": "#7b2cbf",
+    "path": "M430.94 852.49 L390.21 867.63",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "NYD",
+    "to": "RRN",
+    "stroke": "#7b2cbf",
+    "path": "M390.21 867.63 L390.96 902.31",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "RRN",
+    "to": "JNB",
+    "stroke": "#7b2cbf",
+    "path": "M390.96 902.31 L333.63 870.07",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "JNB",
+    "to": "PTG",
+    "stroke": "#7b2cbf",
+    "path": "M333.63 870.07 L311.76 906.22",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "PTG",
+    "to": "KBT",
+    "stroke": "#7b2cbf",
+    "path": "M311.76 906.22 L268.01 933.08",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "KBT",
+    "to": "KNG",
+    "stroke": "#7b2cbf",
+    "path": "M268.01 933.08 L248.4 948.23",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "KNG",
+    "to": "CHG",
+    "stroke": "#7b2cbf",
+    "path": "M248.4 948.23 L187.3 989.75",
+    "status": "operational",
+    "line": "Purple Line"
+  },
+  {
+    "from": "MDV",
+    "to": "CBK",
+    "stroke": "#2e7d32",
+    "path": "M216.72 574.07 L264.24 591.65",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "CBK",
+    "to": "MJN",
+    "stroke": "#2e7d32",
+    "path": "M264.24 591.65 L304.97 604.84",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "MJN",
+    "to": "NGS",
+    "stroke": "#2e7d32",
+    "path": "M304.97 604.84 L317.04 608.26",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "NGS",
+    "to": "DSH",
+    "stroke": "#2e7d32",
+    "path": "M317.04 608.26 L363.05 619.49",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "DSH",
+    "to": "JLH",
+    "stroke": "#2e7d32",
+    "path": "M363.05 619.49 L390.96 628.77",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "JLH",
+    "to": "PYI",
+    "stroke": "#2e7d32",
+    "path": "M390.96 628.77 L419.62 636.59",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "PYI",
+    "to": "PYA",
+    "stroke": "#2e7d32",
+    "path": "M419.62 636.59 L443.01 647.82",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "PYA",
+    "to": "GGP",
+    "stroke": "#2e7d32",
+    "path": "M443.01 647.82 L479.21 656.13",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "GGP",
+    "to": "YPR",
+    "stroke": "#2e7d32",
+    "path": "M479.21 656.13 L510.14 681.04",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "YPR",
+    "to": "SSF",
+    "stroke": "#2e7d32",
+    "path": "M510.14 681.04 L519.19 699.11",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "SSF",
+    "to": "MHL",
+    "stroke": "#2e7d32",
+    "path": "M519.19 699.11 L531.26 712.3",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "MHL",
+    "to": "RJN",
+    "stroke": "#2e7d32",
+    "path": "M531.26 712.3 L547.1 726.47",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "RJN",
+    "to": "KVR",
+    "stroke": "#2e7d32",
+    "path": "M547.1 726.47 L560.67 740.63",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "KVR",
+    "to": "SRP2",
+    "stroke": "#2e7d32",
+    "path": "M560.67 740.63 L575.01 754.31",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "SRP2",
+    "to": "SMS",
+    "stroke": "#2e7d32",
+    "path": "M575.01 754.31 L584.81 769.45",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "SMS",
+    "to": "MJS",
+    "stroke": "#2e7d32",
+    "path": "M584.81 769.45 L590.09 782.15",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "MJS",
+    "to": "CKP",
+    "stroke": "#2e7d32",
+    "path": "M590.09 782.15 L608.19 798.76",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "CKP",
+    "to": "KRM",
+    "stroke": "#2e7d32",
+    "path": "M608.19 798.76 L602.16 818.3",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "KRM",
+    "to": "NCL",
+    "stroke": "#2e7d32",
+    "path": "M602.16 818.3 L593.86 843.21",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "NCL",
+    "to": "LBG",
+    "stroke": "#2e7d32",
+    "path": "M593.86 843.21 L642.89 855.91",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "LBG",
+    "to": "SEC",
+    "stroke": "#2e7d32",
+    "path": "M642.89 855.91 L619.51 879.35",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "SEC",
+    "to": "JYN",
+    "stroke": "#2e7d32",
+    "path": "M619.51 879.35 L631.58 908.17",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "JYN",
+    "to": "RVR",
+    "stroke": "#2e7d32",
+    "path": "M631.58 908.17 L621.02 925.76",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "RVR",
+    "to": "BSK",
+    "stroke": "#2e7d32",
+    "path": "M621.02 925.76 L505.61 906.71",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "BSK",
+    "to": "JPN",
+    "stroke": "#2e7d32",
+    "path": "M505.61 906.71 L639.12 951.16",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "JPN",
+    "to": "YCH",
+    "stroke": "#2e7d32",
+    "path": "M639.12 951.16 L583.3 977.05",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "YCH",
+    "to": "KKC",
+    "stroke": "#2e7d32",
+    "path": "M583.3 977.05 L566.71 995.61",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "KKC",
+    "to": "DKK",
+    "stroke": "#2e7d32",
+    "path": "M566.71 995.61 L549.36 1019.05",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "DKK",
+    "to": "VJH",
+    "stroke": "#2e7d32",
+    "path": "M549.36 1019.05 L499.58 1041.52",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "VJH",
+    "to": "TGP",
+    "stroke": "#2e7d32",
+    "path": "M499.58 1041.52 L449.04 1064.97",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "TGP",
+    "to": "SLK",
+    "stroke": "#2e7d32",
+    "path": "M449.04 1064.97 L434.71 1094.77",
+    "status": "operational",
+    "line": "Green Line"
+  },
+  {
+    "from": "RVR",
+    "to": "RGD",
+    "stroke": "#f9a825",
+    "path": "M621.02 925.76 L669.29 929.18",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "RGD",
+    "to": "JDH",
+    "stroke": "#f9a825",
+    "path": "M669.29 929.18 L692.67 928.2",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "JDH",
+    "to": "BTM",
+    "stroke": "#f9a825",
+    "path": "M692.67 928.2 L732.65 928.69",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "BTM",
+    "to": "CSB",
+    "stroke": "#f9a825",
+    "path": "M732.65 928.69 L778.66 927.22",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "CSB",
+    "to": "BMH",
+    "stroke": "#f9a825",
+    "path": "M778.66 927.22 L809.59 948.23",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "BMH",
+    "to": "HGA",
+    "stroke": "#f9a825",
+    "path": "M809.59 948.23 L837.5 970.7",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "HGA",
+    "to": "KDG",
+    "stroke": "#f9a825",
+    "path": "M837.5 970.7 L876.72 994.63",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "KDG",
+    "to": "SGS",
+    "stroke": "#f9a825",
+    "path": "M876.72 994.63 L906.14 1016.12",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "SGS",
+    "to": "HSR2",
+    "stroke": "#f9a825",
+    "path": "M906.14 1016.12 L937.82 1042.01",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "HSR2",
+    "to": "BTA",
+    "stroke": "#f9a825",
+    "path": "M937.82 1042.01 L958.18 1065.95",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "BTA",
+    "to": "ELC",
+    "stroke": "#f9a825",
+    "path": "M958.18 1065.95 L920.47 1103.07",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "ELC",
+    "to": "IFK",
+    "stroke": "#f9a825",
+    "path": "M920.47 1103.07 L955.17 1116.75",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "IFK",
+    "to": "HKR",
+    "stroke": "#f9a825",
+    "path": "M955.17 1116.75 L989.86 1138.24",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "HKR",
+    "to": "HBG",
+    "stroke": "#f9a825",
+    "path": "M989.86 1138.24 L1013.25 1158.75",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "HBG",
+    "to": "BMS",
+    "stroke": "#f9a825",
+    "path": "M1013.25 1158.75 L1038.89 1177.8",
+    "status": "operational",
+    "line": "Yellow Line"
+  },
+  {
+    "from": "KLA",
+    "to": "HLM",
+    "stroke": "#e91e8c",
+    "path": "M681.36 1038.59 L713.04 1024.43",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "HLM",
+    "to": "IIM",
+    "stroke": "#e91e8c",
+    "path": "M713.04 1024.43 L702.48 979.98",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "IIM",
+    "to": "JP4",
+    "stroke": "#e91e8c",
+    "path": "M702.48 979.98 L666.27 952.62",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "JP4",
+    "to": "JPN",
+    "stroke": "#e91e8c",
+    "path": "M666.27 952.62 L639.12 951.16",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "JPN",
+    "to": "TVK",
+    "stroke": "#e91e8c",
+    "path": "M639.12 951.16 L711.53 906.71",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "TVK",
+    "to": "DRC",
+    "stroke": "#e91e8c",
+    "path": "M711.53 906.71 L725.86 879.35",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "DRC",
+    "to": "LKS",
+    "stroke": "#e91e8c",
+    "path": "M725.86 879.35 L705.5 862.75",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "LKS",
+    "to": "LFT",
+    "stroke": "#e91e8c",
+    "path": "M705.5 862.75 L721.34 837.83",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "LFT",
+    "to": "RMS",
+    "stroke": "#e91e8c",
+    "path": "M721.34 837.83 L722.85 816.83",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "RMS",
+    "to": "MGR",
+    "stroke": "#e91e8c",
+    "path": "M722.85 816.83 L718.32 784.59",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "MGR",
+    "to": "SVJ",
+    "stroke": "#e91e8c",
+    "path": "M718.32 784.59 L713.04 760.66",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "SVJ",
+    "to": "CNT",
+    "stroke": "#e91e8c",
+    "path": "M713.04 760.66 L688.15 740.63",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "CNT",
+    "to": "PTT",
+    "stroke": "#e91e8c",
+    "path": "M688.15 740.63 L721.34 718.16",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "PTT",
+    "to": "TNR",
+    "stroke": "#e91e8c",
+    "path": "M721.34 718.16 L749.25 699.11",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "TNR",
+    "to": "VNK",
+    "stroke": "#e91e8c",
+    "path": "M749.25 699.11 L774.89 683.97",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "VNK",
+    "to": "KGD",
+    "stroke": "#e91e8c",
+    "path": "M774.89 683.97 L800.54 670.29",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "KGD",
+    "to": "NGW",
+    "stroke": "#e91e8c",
+    "path": "M800.54 670.29 L786.96 638.05",
+    "status": "construction",
+    "line": "Pink Line"
+  },
+  {
+    "from": "CSB",
+    "to": "HSRL",
+    "stroke": "#1565c0",
+    "path": "M778.66 927.22 L839.76 938.95",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "HSRL",
+    "to": "AGR",
+    "stroke": "#1565c0",
+    "path": "M839.76 938.95 L880.49 918.92",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "AGR",
+    "to": "IBL",
+    "stroke": "#1565c0",
+    "path": "M880.49 918.92 L950.64 899.87",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "IBL",
+    "to": "BLR",
+    "stroke": "#1565c0",
+    "path": "M950.64 899.87 L989.11 894.98",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "BLR",
+    "to": "KDB",
+    "stroke": "#1565c0",
+    "path": "M989.11 894.98 L1053.22 872.52",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "KDB",
+    "to": "KBS",
+    "stroke": "#1565c0",
+    "path": "M1053.22 872.52 L1076.61 850.05",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "KBS",
+    "to": "MTH",
+    "stroke": "#1565c0",
+    "path": "M1076.61 850.05 L1075.1 824.65",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "MTH",
+    "to": "ISR",
+    "stroke": "#1565c0",
+    "path": "M1075.1 824.65 L1050.96 802.18",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "ISR",
+    "to": "DNK",
+    "stroke": "#1565c0",
+    "path": "M1050.96 802.18 L1048.7 774.82",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "DNK",
+    "to": "KRP",
+    "stroke": "#1565c0",
+    "path": "M1048.7 774.82 L1055.49 707.9",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "KRP",
+    "to": "BGD",
+    "stroke": "#1565c0",
+    "path": "M1055.49 707.9 L1054.73 752.84",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "BGD",
+    "to": "SWN",
+    "stroke": "#1565c0",
+    "path": "M1054.73 752.84 L1056.99 732.82",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "SWN",
+    "to": "KSN",
+    "stroke": "#1565c0",
+    "path": "M1056.99 732.82 L1050.96 684.95",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "KSN",
+    "to": "HRM",
+    "stroke": "#1565c0",
+    "path": "M1050.96 684.95 L920.47 658.08",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "HRM",
+    "to": "HRB",
+    "stroke": "#1565c0",
+    "path": "M920.47 658.08 L850.32 664.43",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "HRB",
+    "to": "KLN",
+    "stroke": "#1565c0",
+    "path": "M850.32 664.43 L843.53 670.78",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "KLN",
+    "to": "NGW",
+    "stroke": "#1565c0",
+    "path": "M843.53 670.78 L786.96 638.05",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "NGW",
+    "to": "KKN",
+    "stroke": "#1565c0",
+    "path": "M786.96 638.05 L725.86 620.47",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "KKN",
+    "to": "HBR",
+    "stroke": "#1565c0",
+    "path": "M725.86 620.47 L801.29 639.03",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "HBR",
+    "to": "VRP",
+    "stroke": "#1565c0",
+    "path": "M801.29 639.03 L732.65 625.35",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "VRP",
+    "to": "KMP",
+    "stroke": "#1565c0",
+    "path": "M732.65 625.35 L681.36 612.17",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "KMP",
+    "to": "HBL",
+    "stroke": "#1565c0",
+    "path": "M681.36 612.17 L660.24 602.88",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "HBL",
+    "to": "KGH",
+    "stroke": "#1565c0",
+    "path": "M660.24 602.88 L608.19 581.88",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "KGH",
+    "to": "JKC",
+    "stroke": "#1565c0",
+    "path": "M608.19 581.88 L654.21 533.52",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "JKC",
+    "to": "YLH",
+    "stroke": "#1565c0",
+    "path": "M654.21 533.52 L679.47 479.3",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "YLH",
+    "to": "BGC",
+    "stroke": "#1565c0",
+    "path": "M679.47 479.3 L794.5 401.64",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "BGC",
+    "to": "DJL",
+    "stroke": "#1565c0",
+    "path": "M794.5 401.64 L822.41 288.8",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "DJL",
+    "to": "APC",
+    "stroke": "#1565c0",
+    "path": "M822.41 288.8 L903.87 255.1",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "APC",
+    "to": "KIA",
+    "stroke": "#1565c0",
+    "path": "M903.87 255.1 L1093.2 239.22",
+    "status": "construction",
+    "line": "Blue Line (Airport)"
+  },
+  {
+    "from": "JP5",
+    "to": "KDC",
+    "stroke": "#ef6c00",
+    "path": "M619.51 954.09 L565.95 947.74",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "KDC",
+    "to": "KMD",
+    "stroke": "#ef6c00",
+    "path": "M565.95 947.74 L522.96 933.57",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "KMD",
+    "to": "BSK",
+    "stroke": "#ef6c00",
+    "path": "M522.96 933.57 L505.61 906.71",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "BSK",
+    "to": "HSK",
+    "stroke": "#ef6c00",
+    "path": "M505.61 906.71 L461.86 906.71",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "HSK",
+    "to": "PES",
+    "stroke": "#ef6c00",
+    "path": "M461.86 906.71 L445.27 884.24",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "PES",
+    "to": "MSR",
+    "stroke": "#ef6c00",
+    "path": "M445.27 884.24 L430.94 852.49",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "MSR",
+    "to": "NGB",
+    "stroke": "#ef6c00",
+    "path": "M430.94 852.49 L364.56 835.88",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "NGB",
+    "to": "NBC",
+    "stroke": "#ef6c00",
+    "path": "M364.56 835.88 L347.97 818.3",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "NBC",
+    "to": "VNL",
+    "stroke": "#ef6c00",
+    "path": "M347.97 818.3 L318.55 801.2",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "VNL",
+    "to": "FFC",
+    "stroke": "#ef6c00",
+    "path": "M318.55 801.2 L289.13 772.87",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "FFC",
+    "to": "GGP",
+    "stroke": "#ef6c00",
+    "path": "M289.13 772.87 L479.21 656.13",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "GGP",
+    "to": "KTS",
+    "stroke": "#ef6c00",
+    "path": "M479.21 656.13 L438.48 694.23",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "KTS",
+    "to": "BEL",
+    "stroke": "#ef6c00",
+    "path": "M438.48 694.23 L510.89 613.14",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "BEL",
+    "to": "NSH",
+    "stroke": "#ef6c00",
+    "path": "M510.89 613.14 L584.81 626.82",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "NSH",
+    "to": "HBL",
+    "stroke": "#ef6c00",
+    "path": "M584.81 626.82 L660.24 602.88",
+    "status": "planned",
+    "line": "Orange Line"
+  },
+  {
+    "from": "HSL",
+    "to": "SMC",
+    "stroke": "#607d8b",
+    "path": "M486.0 787.52 L363.05 765.05",
+    "status": "planned",
+    "line": "Grey Line"
+  },
+  {
+    "from": "SMC",
+    "to": "KHB",
+    "stroke": "#607d8b",
+    "path": "M363.05 765.05 L311.01 748.93",
+    "status": "planned",
+    "line": "Grey Line"
+  },
+  {
+    "from": "KHB",
+    "to": "HRH",
+    "stroke": "#607d8b",
+    "path": "M311.01 748.93 L258.96 733.79",
+    "status": "planned",
+    "line": "Grey Line"
+  },
+  {
+    "from": "HRH",
+    "to": "FGT",
+    "stroke": "#607d8b",
+    "path": "M258.96 733.79 L212.95 718.16",
+    "status": "planned",
+    "line": "Grey Line"
+  },
+  {
+    "from": "FGT",
+    "to": "BYD",
+    "stroke": "#607d8b",
+    "path": "M212.95 718.16 L166.94 704.0",
+    "status": "planned",
+    "line": "Grey Line"
+  },
+  {
+    "from": "BYD",
+    "to": "KBG",
+    "stroke": "#607d8b",
+    "path": "M166.94 704.0 L115.65 688.85",
+    "status": "planned",
+    "line": "Grey Line"
+  },
+  {
+    "from": "SJP",
+    "to": "DDM",
+    "stroke": "#c62828",
+    "path": "M1396.42 1066.43 L1284.79 1021.98",
+    "status": "planned",
+    "line": "Red Line"
+  },
+  {
+    "from": "DDM",
+    "to": "CRL",
+    "stroke": "#c62828",
+    "path": "M1284.79 1021.98 L1114.32 948.23",
+    "status": "planned",
+    "line": "Red Line"
+  },
+  {
+    "from": "CRL",
+    "to": "BGG",
+    "stroke": "#c62828",
+    "path": "M1114.32 948.23 L1010.98 914.52",
+    "status": "planned",
+    "line": "Red Line"
+  },
+  {
+    "from": "BGG",
+    "to": "KRM2",
+    "stroke": "#c62828",
+    "path": "M1010.98 914.52 L785.45 883.26",
+    "status": "planned",
+    "line": "Red Line"
+  },
+  {
+    "from": "KRM2",
+    "to": "SHN",
+    "stroke": "#c62828",
+    "path": "M785.45 883.26 L676.08 828.55",
+    "status": "planned",
+    "line": "Red Line"
+  },
+  {
+    "from": "SHN",
+    "to": "MJS",
+    "stroke": "#c62828",
+    "path": "M676.08 828.55 L590.09 782.15",
+    "status": "planned",
+    "line": "Red Line"
+  },
+  {
+    "from": "MJS",
+    "to": "MLS",
+    "stroke": "#c62828",
+    "path": "M590.09 782.15 L557.66 716.45",
+    "status": "planned",
+    "line": "Red Line"
+  },
+  {
+    "from": "MLS",
+    "to": "MCK",
+    "stroke": "#c62828",
+    "path": "M557.66 716.45 L639.12 693.74",
+    "status": "planned",
+    "line": "Red Line"
+  },
+  {
+    "from": "MCK",
+    "to": "HBL",
+    "stroke": "#c62828",
+    "path": "M639.12 693.74 L660.24 602.88",
+    "status": "planned",
+    "line": "Red Line"
+  },
+  {
+    "from": "KRP",
+    "to": "BYE",
+    "stroke": "#00897b",
+    "path": "M1055.49 707.9 L794.5 737.7",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Sampige"
+  },
+  {
+    "from": "BYE",
+    "to": "BNG",
+    "stroke": "#00897b",
+    "path": "M794.5 737.7 L952.9 720.6",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Sampige"
+  },
+  {
+    "from": "BNG",
+    "to": "BYP",
+    "stroke": "#00897b",
+    "path": "M952.9 720.6 L891.81 747.47",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Sampige"
+  },
+  {
+    "from": "BYP",
+    "to": "HLG",
+    "stroke": "#00897b",
+    "path": "M891.81 747.47 L1091.69 1348.28",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Sampige"
+  },
+  {
+    "from": "KNG",
+    "to": "YPR",
+    "stroke": "#43a047",
+    "path": "M248.4 948.23 L510.14 681.04",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Mallige"
+  },
+  {
+    "from": "YPR",
+    "to": "MTN",
+    "stroke": "#43a047",
+    "path": "M510.14 681.04 L522.96 650.27",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Mallige"
+  },
+  {
+    "from": "MTN",
+    "to": "LTG",
+    "stroke": "#43a047",
+    "path": "M522.96 650.27 L548.61 610.7",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Mallige"
+  },
+  {
+    "from": "LTG",
+    "to": "JDL",
+    "stroke": "#43a047",
+    "path": "M548.61 610.7 L589.34 532.55",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Mallige"
+  },
+  {
+    "from": "JDL",
+    "to": "YLH",
+    "stroke": "#43a047",
+    "path": "M589.34 532.55 L679.47 479.3",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Mallige"
+  },
+  {
+    "from": "YLH",
+    "to": "NIT",
+    "stroke": "#43a047",
+    "path": "M679.47 479.3 L725.86 411.41",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Mallige"
+  },
+  {
+    "from": "NIT",
+    "to": "BTH",
+    "stroke": "#43a047",
+    "path": "M725.86 411.41 L762.82 346.93",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Mallige"
+  },
+  {
+    "from": "BTH",
+    "to": "APT",
+    "stroke": "#43a047",
+    "path": "M762.82 346.93 L951.39 264.38",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Mallige"
+  },
+  {
+    "from": "APT",
+    "to": "DVN",
+    "stroke": "#43a047",
+    "path": "M951.39 264.38 L1123.37 119.31",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Mallige"
+  },
+  {
+    "from": "WFD",
+    "to": "KSN2",
+    "stroke": "#8d6e63",
+    "path": "M1258.77 798.76 L926.5 716.21",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Parijaata"
+  },
+  {
+    "from": "KSN2",
+    "to": "SVN",
+    "stroke": "#8d6e63",
+    "path": "M926.5 716.21 L876.72 699.6",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Parijaata"
+  },
+  {
+    "from": "SVN",
+    "to": "BNW",
+    "stroke": "#8d6e63",
+    "path": "M876.72 699.6 L824.67 686.41",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Parijaata"
+  },
+  {
+    "from": "BNW",
+    "to": "HNR",
+    "stroke": "#8d6e63",
+    "path": "M824.67 686.41 L839.01 650.27",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Parijaata"
+  },
+  {
+    "from": "HNR",
+    "to": "TNS",
+    "stroke": "#8d6e63",
+    "path": "M839.01 650.27 L815.62 591.16",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Parijaata"
+  },
+  {
+    "from": "TNS",
+    "to": "RJK",
+    "stroke": "#8d6e63",
+    "path": "M815.62 591.16 L556.9 310.78",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Parijaata"
+  },
+  {
+    "from": "KSR",
+    "to": "YPR",
+    "stroke": "#d84315",
+    "path": "M573.5 783.62 L510.14 681.04",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Kanaka"
+  },
+  {
+    "from": "YPR",
+    "to": "STH",
+    "stroke": "#d84315",
+    "path": "M510.14 681.04 L423.39 659.55",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Kanaka"
+  },
+  {
+    "from": "STH",
+    "to": "MYD",
+    "stroke": "#d84315",
+    "path": "M423.39 659.55 L363.81 640.5",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Kanaka"
+  },
+  {
+    "from": "MYD",
+    "to": "CBV",
+    "stroke": "#d84315",
+    "path": "M363.81 640.5 L323.07 572.6",
+    "status": "suburban",
+    "line": "Suburban \u00b7 Kanaka"
+  }
+]

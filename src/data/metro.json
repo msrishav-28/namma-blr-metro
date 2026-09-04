@@ -1,0 +1,1160 @@
+[
+  {
+    "Station": "Whitefield (Kadugodi)",
+    "Line": "Purple Line",
+    "Latitude": 12.9698,
+    "Longitude": 77.7499
+  },
+  {
+    "Station": "Whitefield (Kadugodi)",
+    "Line": "Suburban \u00b7 Parijaata",
+    "Latitude": 12.9698,
+    "Longitude": 77.7499
+  },
+  {
+    "Station": "Hopefarm Channasandra",
+    "Line": "Purple Line",
+    "Latitude": 12.9836,
+    "Longitude": 77.7518
+  },
+  {
+    "Station": "Kadugodi Tree Park",
+    "Line": "Purple Line",
+    "Latitude": 12.9898,
+    "Longitude": 77.7606
+  },
+  {
+    "Station": "Pattandur Agrahara",
+    "Line": "Purple Line",
+    "Latitude": 12.9926,
+    "Longitude": 77.749
+  },
+  {
+    "Station": "Sri Sathya Sai Hospital",
+    "Line": "Purple Line",
+    "Latitude": 12.9964,
+    "Longitude": 77.7388
+  },
+  {
+    "Station": "Nallurhalli",
+    "Line": "Purple Line",
+    "Latitude": 12.9952,
+    "Longitude": 77.7274
+  },
+  {
+    "Station": "Kundalahalli",
+    "Line": "Purple Line",
+    "Latitude": 12.9924,
+    "Longitude": 77.7168
+  },
+  {
+    "Station": "Seetharampalya",
+    "Line": "Purple Line",
+    "Latitude": 12.991,
+    "Longitude": 77.7056
+  },
+  {
+    "Station": "Hoodi",
+    "Line": "Purple Line",
+    "Latitude": 12.9928,
+    "Longitude": 77.7159
+  },
+  {
+    "Station": "Garudacharpalya",
+    "Line": "Purple Line",
+    "Latitude": 12.9956,
+    "Longitude": 77.7042
+  },
+  {
+    "Station": "Singayyanapalya",
+    "Line": "Purple Line",
+    "Latitude": 12.9984,
+    "Longitude": 77.695
+  },
+  {
+    "Station": "Krishnarajapura (KR Puram)",
+    "Line": "Purple Line",
+    "Latitude": 13.007,
+    "Longitude": 77.696
+  },
+  {
+    "Station": "Krishnarajapura (KR Puram)",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.007,
+    "Longitude": 77.696
+  },
+  {
+    "Station": "Krishnarajapura (KR Puram)",
+    "Line": "Suburban \u00b7 Sampige",
+    "Latitude": 13.007,
+    "Longitude": 77.696
+  },
+  {
+    "Station": "Benniganahalli",
+    "Line": "Purple Line",
+    "Latitude": 13.0018,
+    "Longitude": 77.6688
+  },
+  {
+    "Station": "Benniganahalli",
+    "Line": "Suburban \u00b7 Sampige",
+    "Latitude": 13.0018,
+    "Longitude": 77.6688
+  },
+  {
+    "Station": "Baiyappanahalli",
+    "Line": "Purple Line",
+    "Latitude": 12.9908,
+    "Longitude": 77.6526
+  },
+  {
+    "Station": "Baiyappanahalli",
+    "Line": "Suburban \u00b7 Sampige",
+    "Latitude": 12.9908,
+    "Longitude": 77.6526
+  },
+  {
+    "Station": "Swami Vivekananda Road",
+    "Line": "Purple Line",
+    "Latitude": 12.9856,
+    "Longitude": 77.6412
+  },
+  {
+    "Station": "Indiranagar",
+    "Line": "Purple Line",
+    "Latitude": 12.9784,
+    "Longitude": 77.6408
+  },
+  {
+    "Station": "Halasuru",
+    "Line": "Purple Line",
+    "Latitude": 12.9756,
+    "Longitude": 77.6284
+  },
+  {
+    "Station": "Trinity",
+    "Line": "Purple Line",
+    "Latitude": 12.973,
+    "Longitude": 77.6168
+  },
+  {
+    "Station": "Mahatma Gandhi Road",
+    "Line": "Purple Line",
+    "Latitude": 12.9756,
+    "Longitude": 77.6066
+  },
+  {
+    "Station": "Mahatma Gandhi Road",
+    "Line": "Pink Line",
+    "Latitude": 12.9756,
+    "Longitude": 77.6066
+  },
+  {
+    "Station": "Cubbon Park",
+    "Line": "Purple Line",
+    "Latitude": 12.9768,
+    "Longitude": 77.5954
+  },
+  {
+    "Station": "Vidhana Soudha",
+    "Line": "Purple Line",
+    "Latitude": 12.9794,
+    "Longitude": 77.5906
+  },
+  {
+    "Station": "Sir M. Visvesvaraya Central College",
+    "Line": "Purple Line",
+    "Latitude": 12.9818,
+    "Longitude": 77.5808
+  },
+  {
+    "Station": "Nadaprabhu Kempegowda Stn, Majestic",
+    "Line": "Purple Line",
+    "Latitude": 12.9766,
+    "Longitude": 77.5726
+  },
+  {
+    "Station": "Nadaprabhu Kempegowda Stn, Majestic",
+    "Line": "Green Line",
+    "Latitude": 12.9766,
+    "Longitude": 77.5726
+  },
+  {
+    "Station": "Nadaprabhu Kempegowda Stn, Majestic",
+    "Line": "Red Line",
+    "Latitude": 12.9766,
+    "Longitude": 77.5726
+  },
+  {
+    "Station": "Krantiveera Sangolli Rayanna (KSR)",
+    "Line": "Purple Line",
+    "Latitude": 12.976,
+    "Longitude": 77.5682
+  },
+  {
+    "Station": "Krantiveera Sangolli Rayanna (KSR)",
+    "Line": "Suburban \u00b7 Kanaka",
+    "Latitude": 12.976,
+    "Longitude": 77.5682
+  },
+  {
+    "Station": "Magadi Road",
+    "Line": "Purple Line",
+    "Latitude": 12.9752,
+    "Longitude": 77.5554
+  },
+  {
+    "Station": "Sri Balagangadharanatha Swamiji Hosahalli",
+    "Line": "Purple Line",
+    "Latitude": 12.9744,
+    "Longitude": 77.545
+  },
+  {
+    "Station": "Sri Balagangadharanatha Swamiji Hosahalli",
+    "Line": "Grey Line",
+    "Latitude": 12.9744,
+    "Longitude": 77.545
+  },
+  {
+    "Station": "Vijayanagar",
+    "Line": "Purple Line",
+    "Latitude": 12.9712,
+    "Longitude": 77.5374
+  },
+  {
+    "Station": "Attiguppe",
+    "Line": "Purple Line",
+    "Latitude": 12.9658,
+    "Longitude": 77.5332
+  },
+  {
+    "Station": "Deepanjali Nagar",
+    "Line": "Purple Line",
+    "Latitude": 12.9568,
+    "Longitude": 77.5366
+  },
+  {
+    "Station": "Mysuru Road",
+    "Line": "Purple Line",
+    "Latitude": 12.9478,
+    "Longitude": 77.5304
+  },
+  {
+    "Station": "Mysuru Road",
+    "Line": "Orange Line",
+    "Latitude": 12.9478,
+    "Longitude": 77.5304
+  },
+  {
+    "Station": "Pantharapalya Nayandahalli",
+    "Line": "Purple Line",
+    "Latitude": 12.9416,
+    "Longitude": 77.5196
+  },
+  {
+    "Station": "Rajarajeshwari Nagar",
+    "Line": "Purple Line",
+    "Latitude": 12.9274,
+    "Longitude": 77.5198
+  },
+  {
+    "Station": "Jnanabharathi",
+    "Line": "Purple Line",
+    "Latitude": 12.9406,
+    "Longitude": 77.5046
+  },
+  {
+    "Station": "Pattanagere",
+    "Line": "Purple Line",
+    "Latitude": 12.9258,
+    "Longitude": 77.4988
+  },
+  {
+    "Station": "Kengeri Bus Terminal",
+    "Line": "Purple Line",
+    "Latitude": 12.9148,
+    "Longitude": 77.4872
+  },
+  {
+    "Station": "Kengeri",
+    "Line": "Purple Line",
+    "Latitude": 12.9086,
+    "Longitude": 77.482
+  },
+  {
+    "Station": "Kengeri",
+    "Line": "Suburban \u00b7 Mallige",
+    "Latitude": 12.9086,
+    "Longitude": 77.482
+  },
+  {
+    "Station": "Challaghatta",
+    "Line": "Purple Line",
+    "Latitude": 12.8916,
+    "Longitude": 77.4658
+  },
+  {
+    "Station": "Madavara",
+    "Line": "Green Line",
+    "Latitude": 13.0618,
+    "Longitude": 77.4736
+  },
+  {
+    "Station": "Chikkabidarakallu",
+    "Line": "Green Line",
+    "Latitude": 13.0546,
+    "Longitude": 77.4862
+  },
+  {
+    "Station": "Manjunathanagar",
+    "Line": "Green Line",
+    "Latitude": 13.0492,
+    "Longitude": 77.497
+  },
+  {
+    "Station": "Nagasandra",
+    "Line": "Green Line",
+    "Latitude": 13.0478,
+    "Longitude": 77.5002
+  },
+  {
+    "Station": "Dasarahalli",
+    "Line": "Green Line",
+    "Latitude": 13.0432,
+    "Longitude": 77.5124
+  },
+  {
+    "Station": "Jalahalli",
+    "Line": "Green Line",
+    "Latitude": 13.0394,
+    "Longitude": 77.5198
+  },
+  {
+    "Station": "Peenya Industry",
+    "Line": "Green Line",
+    "Latitude": 13.0362,
+    "Longitude": 77.5274
+  },
+  {
+    "Station": "Peenya",
+    "Line": "Green Line",
+    "Latitude": 13.0316,
+    "Longitude": 77.5336
+  },
+  {
+    "Station": "Goraguntepalya",
+    "Line": "Green Line",
+    "Latitude": 13.0282,
+    "Longitude": 77.5432
+  },
+  {
+    "Station": "Goraguntepalya",
+    "Line": "Orange Line",
+    "Latitude": 13.0282,
+    "Longitude": 77.5432
+  },
+  {
+    "Station": "Yeshwanthpur",
+    "Line": "Green Line",
+    "Latitude": 13.018,
+    "Longitude": 77.5514
+  },
+  {
+    "Station": "Yeshwanthpur",
+    "Line": "Suburban \u00b7 Mallige",
+    "Latitude": 13.018,
+    "Longitude": 77.5514
+  },
+  {
+    "Station": "Yeshwanthpur",
+    "Line": "Suburban \u00b7 Kanaka",
+    "Latitude": 13.018,
+    "Longitude": 77.5514
+  },
+  {
+    "Station": "Sandal Soap Factory",
+    "Line": "Green Line",
+    "Latitude": 13.0106,
+    "Longitude": 77.5538
+  },
+  {
+    "Station": "Mahalakshmi",
+    "Line": "Green Line",
+    "Latitude": 13.0052,
+    "Longitude": 77.557
+  },
+  {
+    "Station": "Rajajinagar",
+    "Line": "Green Line",
+    "Latitude": 12.9994,
+    "Longitude": 77.5612
+  },
+  {
+    "Station": "Kuvempu Road",
+    "Line": "Green Line",
+    "Latitude": 12.9936,
+    "Longitude": 77.5648
+  },
+  {
+    "Station": "Srirampura",
+    "Line": "Green Line",
+    "Latitude": 12.988,
+    "Longitude": 77.5686
+  },
+  {
+    "Station": "Mantri Square Sampige Road",
+    "Line": "Green Line",
+    "Latitude": 12.9818,
+    "Longitude": 77.5712
+  },
+  {
+    "Station": "Chickpete",
+    "Line": "Green Line",
+    "Latitude": 12.9698,
+    "Longitude": 77.5774
+  },
+  {
+    "Station": "Krishna Rajendra Market",
+    "Line": "Green Line",
+    "Latitude": 12.9618,
+    "Longitude": 77.5758
+  },
+  {
+    "Station": "National College",
+    "Line": "Green Line",
+    "Latitude": 12.9516,
+    "Longitude": 77.5736
+  },
+  {
+    "Station": "Lalbagh",
+    "Line": "Green Line",
+    "Latitude": 12.9464,
+    "Longitude": 77.5866
+  },
+  {
+    "Station": "South End Circle",
+    "Line": "Green Line",
+    "Latitude": 12.9368,
+    "Longitude": 77.5804
+  },
+  {
+    "Station": "Jayanagar",
+    "Line": "Green Line",
+    "Latitude": 12.925,
+    "Longitude": 77.5836
+  },
+  {
+    "Station": "Rashtreeya Vidyalaya Road",
+    "Line": "Green Line",
+    "Latitude": 12.9178,
+    "Longitude": 77.5808
+  },
+  {
+    "Station": "Rashtreeya Vidyalaya Road",
+    "Line": "Yellow Line",
+    "Latitude": 12.9178,
+    "Longitude": 77.5808
+  },
+  {
+    "Station": "Banashankari",
+    "Line": "Green Line",
+    "Latitude": 12.9256,
+    "Longitude": 77.5502
+  },
+  {
+    "Station": "Banashankari",
+    "Line": "Orange Line",
+    "Latitude": 12.9256,
+    "Longitude": 77.5502
+  },
+  {
+    "Station": "Jaya Prakash Nagar",
+    "Line": "Green Line",
+    "Latitude": 12.9074,
+    "Longitude": 77.5856
+  },
+  {
+    "Station": "Jaya Prakash Nagar",
+    "Line": "Pink Line",
+    "Latitude": 12.9074,
+    "Longitude": 77.5856
+  },
+  {
+    "Station": "Yelachenahalli",
+    "Line": "Green Line",
+    "Latitude": 12.8968,
+    "Longitude": 77.5708
+  },
+  {
+    "Station": "Konanakunte Cross",
+    "Line": "Green Line",
+    "Latitude": 12.8892,
+    "Longitude": 77.5664
+  },
+  {
+    "Station": "Doddakallasandra",
+    "Line": "Green Line",
+    "Latitude": 12.8796,
+    "Longitude": 77.5618
+  },
+  {
+    "Station": "Vajarahalli",
+    "Line": "Green Line",
+    "Latitude": 12.8704,
+    "Longitude": 77.5486
+  },
+  {
+    "Station": "Thalaghattapura",
+    "Line": "Green Line",
+    "Latitude": 12.8608,
+    "Longitude": 77.5352
+  },
+  {
+    "Station": "Silk Institute",
+    "Line": "Green Line",
+    "Latitude": 12.8486,
+    "Longitude": 77.5314
+  },
+  {
+    "Station": "Ragigudda",
+    "Line": "Yellow Line",
+    "Latitude": 12.9164,
+    "Longitude": 77.5936
+  },
+  {
+    "Station": "Jayadeva Hospital",
+    "Line": "Yellow Line",
+    "Latitude": 12.9168,
+    "Longitude": 77.5998
+  },
+  {
+    "Station": "BTM Layout",
+    "Line": "Yellow Line",
+    "Latitude": 12.9166,
+    "Longitude": 77.6104
+  },
+  {
+    "Station": "Central Silk Board",
+    "Line": "Yellow Line",
+    "Latitude": 12.9172,
+    "Longitude": 77.6226
+  },
+  {
+    "Station": "Central Silk Board",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9172,
+    "Longitude": 77.6226
+  },
+  {
+    "Station": "Bommanahalli",
+    "Line": "Yellow Line",
+    "Latitude": 12.9086,
+    "Longitude": 77.6308
+  },
+  {
+    "Station": "Hongasandra",
+    "Line": "Yellow Line",
+    "Latitude": 12.8994,
+    "Longitude": 77.6382
+  },
+  {
+    "Station": "Kudlu Gate",
+    "Line": "Yellow Line",
+    "Latitude": 12.8896,
+    "Longitude": 77.6486
+  },
+  {
+    "Station": "Singasandra",
+    "Line": "Yellow Line",
+    "Latitude": 12.8808,
+    "Longitude": 77.6564
+  },
+  {
+    "Station": "Hosa Road",
+    "Line": "Yellow Line",
+    "Latitude": 12.8702,
+    "Longitude": 77.6648
+  },
+  {
+    "Station": "Beratena Agrahara",
+    "Line": "Yellow Line",
+    "Latitude": 12.8604,
+    "Longitude": 77.6702
+  },
+  {
+    "Station": "Electronic City",
+    "Line": "Yellow Line",
+    "Latitude": 12.8452,
+    "Longitude": 77.6602
+  },
+  {
+    "Station": "Infosys Foundation Konappana Agrahara",
+    "Line": "Yellow Line",
+    "Latitude": 12.8396,
+    "Longitude": 77.6694
+  },
+  {
+    "Station": "Huskur Road",
+    "Line": "Yellow Line",
+    "Latitude": 12.8308,
+    "Longitude": 77.6786
+  },
+  {
+    "Station": "Biocon Hebbagodi",
+    "Line": "Yellow Line",
+    "Latitude": 12.8224,
+    "Longitude": 77.6848
+  },
+  {
+    "Station": "Delta Electronics Bommasandra",
+    "Line": "Yellow Line",
+    "Latitude": 12.8146,
+    "Longitude": 77.6916
+  },
+  {
+    "Station": "Kalena Agrahara",
+    "Line": "Pink Line",
+    "Latitude": 12.8716,
+    "Longitude": 77.5968
+  },
+  {
+    "Station": "Hulimavu",
+    "Line": "Pink Line",
+    "Latitude": 12.8774,
+    "Longitude": 77.6052
+  },
+  {
+    "Station": "IIM Bangalore",
+    "Line": "Pink Line",
+    "Latitude": 12.8956,
+    "Longitude": 77.6024
+  },
+  {
+    "Station": "JP Nagar 4th Phase",
+    "Line": "Pink Line",
+    "Latitude": 12.9068,
+    "Longitude": 77.5928
+  },
+  {
+    "Station": "Tavarekere",
+    "Line": "Pink Line",
+    "Latitude": 12.9256,
+    "Longitude": 77.6048
+  },
+  {
+    "Station": "Dairy Circle",
+    "Line": "Pink Line",
+    "Latitude": 12.9368,
+    "Longitude": 77.6086
+  },
+  {
+    "Station": "Lakkasandra",
+    "Line": "Pink Line",
+    "Latitude": 12.9436,
+    "Longitude": 77.6032
+  },
+  {
+    "Station": "Langford Town",
+    "Line": "Pink Line",
+    "Latitude": 12.9538,
+    "Longitude": 77.6074
+  },
+  {
+    "Station": "Rashtriya Military School",
+    "Line": "Pink Line",
+    "Latitude": 12.9624,
+    "Longitude": 77.6078
+  },
+  {
+    "Station": "Shivajinagar",
+    "Line": "Pink Line",
+    "Latitude": 12.9854,
+    "Longitude": 77.6052
+  },
+  {
+    "Station": "Cantonment",
+    "Line": "Pink Line",
+    "Latitude": 12.9936,
+    "Longitude": 77.5986
+  },
+  {
+    "Station": "Pottery Town",
+    "Line": "Pink Line",
+    "Latitude": 13.0028,
+    "Longitude": 77.6074
+  },
+  {
+    "Station": "Tannery Road",
+    "Line": "Pink Line",
+    "Latitude": 13.0106,
+    "Longitude": 77.6148
+  },
+  {
+    "Station": "Venkateshpura",
+    "Line": "Pink Line",
+    "Latitude": 13.0168,
+    "Longitude": 77.6216
+  },
+  {
+    "Station": "Kadugundanahalli",
+    "Line": "Pink Line",
+    "Latitude": 13.0224,
+    "Longitude": 77.6284
+  },
+  {
+    "Station": "Nagawara",
+    "Line": "Pink Line",
+    "Latitude": 13.0356,
+    "Longitude": 77.6248
+  },
+  {
+    "Station": "Nagawara",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0356,
+    "Longitude": 77.6248
+  },
+  {
+    "Station": "HSR Layout",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9124,
+    "Longitude": 77.6388
+  },
+  {
+    "Station": "Agara",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9206,
+    "Longitude": 77.6496
+  },
+  {
+    "Station": "Ibbaluru",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9284,
+    "Longitude": 77.6682
+  },
+  {
+    "Station": "Bellandur",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9304,
+    "Longitude": 77.6784
+  },
+  {
+    "Station": "Kadubeesanahalli",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9396,
+    "Longitude": 77.6954
+  },
+  {
+    "Station": "Kodibeesanahalli",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9488,
+    "Longitude": 77.7016
+  },
+  {
+    "Station": "Marathahalli",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9592,
+    "Longitude": 77.7012
+  },
+  {
+    "Station": "ISRO",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9684,
+    "Longitude": 77.6948
+  },
+  {
+    "Station": "Doddanekundi",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9796,
+    "Longitude": 77.6942
+  },
+  {
+    "Station": "DRDO / Bagmane",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9886,
+    "Longitude": 77.6958
+  },
+  {
+    "Station": "Saraswathi Nagar",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 12.9968,
+    "Longitude": 77.6964
+  },
+  {
+    "Station": "Kasturinagara",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0164,
+    "Longitude": 77.6948
+  },
+  {
+    "Station": "Horamavu",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0274,
+    "Longitude": 77.6602
+  },
+  {
+    "Station": "HRBR Layout",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0248,
+    "Longitude": 77.6416
+  },
+  {
+    "Station": "Kalyan Nagar",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0222,
+    "Longitude": 77.6398
+  },
+  {
+    "Station": "HBR Layout",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0352,
+    "Longitude": 77.6286
+  },
+  {
+    "Station": "Veerannapalya",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0408,
+    "Longitude": 77.6104
+  },
+  {
+    "Station": "Kempapura",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0462,
+    "Longitude": 77.5968
+  },
+  {
+    "Station": "Hebbala",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.05,
+    "Longitude": 77.5912
+  },
+  {
+    "Station": "Hebbala",
+    "Line": "Orange Line",
+    "Latitude": 13.05,
+    "Longitude": 77.5912
+  },
+  {
+    "Station": "Hebbala",
+    "Line": "Red Line",
+    "Latitude": 13.05,
+    "Longitude": 77.5912
+  },
+  {
+    "Station": "Kodigehalli",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0586,
+    "Longitude": 77.5774
+  },
+  {
+    "Station": "Jakkur Cross",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0784,
+    "Longitude": 77.5896
+  },
+  {
+    "Station": "Yelahanka",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.1006,
+    "Longitude": 77.5963
+  },
+  {
+    "Station": "Yelahanka",
+    "Line": "Suburban \u00b7 Mallige",
+    "Latitude": 13.1006,
+    "Longitude": 77.5963
+  },
+  {
+    "Station": "Bagalur Cross",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.1324,
+    "Longitude": 77.6268
+  },
+  {
+    "Station": "Doddajala",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.1786,
+    "Longitude": 77.6342
+  },
+  {
+    "Station": "Airport City",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.1924,
+    "Longitude": 77.6558
+  },
+  {
+    "Station": "KIAL Terminals",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.1989,
+    "Longitude": 77.706
+  },
+  {
+    "Station": "JP Nagar 5th Phase",
+    "Line": "Orange Line",
+    "Latitude": 12.9062,
+    "Longitude": 77.5804
+  },
+  {
+    "Station": "Kadirenahalli Cross",
+    "Line": "Orange Line",
+    "Latitude": 12.9088,
+    "Longitude": 77.5662
+  },
+  {
+    "Station": "Kamakya",
+    "Line": "Orange Line",
+    "Latitude": 12.9146,
+    "Longitude": 77.5548
+  },
+  {
+    "Station": "Hosakerehalli",
+    "Line": "Orange Line",
+    "Latitude": 12.9256,
+    "Longitude": 77.5386
+  },
+  {
+    "Station": "PES University",
+    "Line": "Orange Line",
+    "Latitude": 12.9348,
+    "Longitude": 77.5342
+  },
+  {
+    "Station": "Nagarbhavi",
+    "Line": "Orange Line",
+    "Latitude": 12.9546,
+    "Longitude": 77.5128
+  },
+  {
+    "Station": "Nagarbhavi Circle",
+    "Line": "Orange Line",
+    "Latitude": 12.9618,
+    "Longitude": 77.5084
+  },
+  {
+    "Station": "Vinayaka Layout",
+    "Line": "Orange Line",
+    "Latitude": 12.9688,
+    "Longitude": 77.5006
+  },
+  {
+    "Station": "Freedom Park / Magadi West",
+    "Line": "Orange Line",
+    "Latitude": 12.9804,
+    "Longitude": 77.4928
+  },
+  {
+    "Station": "Kanteerava Studio",
+    "Line": "Orange Line",
+    "Latitude": 13.0126,
+    "Longitude": 77.5324
+  },
+  {
+    "Station": "BEL Circle",
+    "Line": "Orange Line",
+    "Latitude": 13.0458,
+    "Longitude": 77.5516
+  },
+  {
+    "Station": "Nagashettyhalli",
+    "Line": "Orange Line",
+    "Latitude": 13.0402,
+    "Longitude": 77.5712
+  },
+  {
+    "Station": "Sumanahalli Cross",
+    "Line": "Grey Line",
+    "Latitude": 12.9836,
+    "Longitude": 77.5124
+  },
+  {
+    "Station": "KHB Colony",
+    "Line": "Grey Line",
+    "Latitude": 12.9902,
+    "Longitude": 77.4986
+  },
+  {
+    "Station": "Herohalli",
+    "Line": "Grey Line",
+    "Latitude": 12.9964,
+    "Longitude": 77.4848
+  },
+  {
+    "Station": "Forest Gate",
+    "Line": "Grey Line",
+    "Latitude": 13.0028,
+    "Longitude": 77.4726
+  },
+  {
+    "Station": "Byadarahalli",
+    "Line": "Grey Line",
+    "Latitude": 13.0086,
+    "Longitude": 77.4604
+  },
+  {
+    "Station": "Kadabagere",
+    "Line": "Grey Line",
+    "Latitude": 13.0148,
+    "Longitude": 77.4468
+  },
+  {
+    "Station": "Sarjapur",
+    "Line": "Red Line",
+    "Latitude": 12.8602,
+    "Longitude": 77.7864
+  },
+  {
+    "Station": "Dommasandra",
+    "Line": "Red Line",
+    "Latitude": 12.8784,
+    "Longitude": 77.7568
+  },
+  {
+    "Station": "Carmelaram",
+    "Line": "Red Line",
+    "Latitude": 12.9086,
+    "Longitude": 77.7116
+  },
+  {
+    "Station": "Bellandur Gate",
+    "Line": "Red Line",
+    "Latitude": 12.9224,
+    "Longitude": 77.6842
+  },
+  {
+    "Station": "Koramangala",
+    "Line": "Red Line",
+    "Latitude": 12.9352,
+    "Longitude": 77.6244
+  },
+  {
+    "Station": "Shanthinagar",
+    "Line": "Red Line",
+    "Latitude": 12.9576,
+    "Longitude": 77.5954
+  },
+  {
+    "Station": "Mekhri Circle",
+    "Line": "Red Line",
+    "Latitude": 13.0128,
+    "Longitude": 77.5856
+  },
+  {
+    "Station": "Malleshwaram",
+    "Line": "Red Line",
+    "Latitude": 13.0035,
+    "Longitude": 77.564
+  },
+  {
+    "Station": "Muthyalanagar",
+    "Line": "Suburban \u00b7 Mallige",
+    "Latitude": 13.0306,
+    "Longitude": 77.5548
+  },
+  {
+    "Station": "Lottegollahalli",
+    "Line": "Suburban \u00b7 Mallige",
+    "Latitude": 13.0468,
+    "Longitude": 77.5616
+  },
+  {
+    "Station": "Judicial Layout",
+    "Line": "Suburban \u00b7 Mallige",
+    "Latitude": 13.0788,
+    "Longitude": 77.5724
+  },
+  {
+    "Station": "Nitte Meenakshi",
+    "Line": "Suburban \u00b7 Mallige",
+    "Latitude": 13.1284,
+    "Longitude": 77.6086
+  },
+  {
+    "Station": "Bettahalasuru",
+    "Line": "Suburban \u00b7 Mallige",
+    "Latitude": 13.1548,
+    "Longitude": 77.6184
+  },
+  {
+    "Station": "Airport Trumpet",
+    "Line": "Suburban \u00b7 Mallige",
+    "Latitude": 13.1886,
+    "Longitude": 77.6684
+  },
+  {
+    "Station": "Devanahalli",
+    "Line": "Suburban \u00b7 Mallige",
+    "Latitude": 13.248,
+    "Longitude": 77.714
+  },
+  {
+    "Station": "Kasturi Nagar",
+    "Line": "Suburban \u00b7 Parijaata",
+    "Latitude": 13.0036,
+    "Longitude": 77.6618
+  },
+  {
+    "Station": "Seva Nagar",
+    "Line": "Suburban \u00b7 Parijaata",
+    "Latitude": 13.0104,
+    "Longitude": 77.6486
+  },
+  {
+    "Station": "Banaswadi",
+    "Line": "Suburban \u00b7 Parijaata",
+    "Latitude": 13.0158,
+    "Longitude": 77.6348
+  },
+  {
+    "Station": "Kanaka Nagar",
+    "Line": "Blue Line (Airport)",
+    "Latitude": 13.0428,
+    "Longitude": 77.6086
+  },
+  {
+    "Station": "Shettyhalli",
+    "Line": "Suburban \u00b7 Kanaka",
+    "Latitude": 13.0268,
+    "Longitude": 77.5284
+  },
+  {
+    "Station": "Myadarahalli",
+    "Line": "Suburban \u00b7 Kanaka",
+    "Latitude": 13.0346,
+    "Longitude": 77.5126
+  },
+  {
+    "Station": "Chikkabanavara",
+    "Line": "Suburban \u00b7 Kanaka",
+    "Latitude": 13.0624,
+    "Longitude": 77.5018
+  },
+  {
+    "Station": "Bengaluru East",
+    "Line": "Suburban \u00b7 Sampige",
+    "Latitude": 12.9948,
+    "Longitude": 77.6268
+  },
+  {
+    "Station": "Heelalige",
+    "Line": "Suburban \u00b7 Sampige",
+    "Latitude": 12.7448,
+    "Longitude": 77.7056
+  },
+  {
+    "Station": "Hennur",
+    "Line": "Suburban \u00b7 Parijaata",
+    "Latitude": 13.0306,
+    "Longitude": 77.6386
+  },
+  {
+    "Station": "Thanisandra",
+    "Line": "Suburban \u00b7 Parijaata",
+    "Latitude": 13.0548,
+    "Longitude": 77.6324
+  },
+  {
+    "Station": "Rajanukunte",
+    "Line": "Suburban \u00b7 Parijaata",
+    "Latitude": 13.1696,
+    "Longitude": 77.5638
+  }
+]
